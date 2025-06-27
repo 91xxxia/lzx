@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.BiobankSys.mapper.CrfSampleCollectionMapper">
+    
+    <resultMap type="CrfSampleCollection" id="CrfSampleCollectionResult">
+        <result property="crfId"    column="crf_id"    />
+        <result property="specimenId"    column="specimen_id"    />
+        <result property="formCompletedBy"    column="form_completed_by"    />
+        <result property="formCompletionDate"    column="form_completion_date"    />
+        <result property="patientFasting"    column="patient_fasting"    />
+        <result property="lastMealTime"    column="last_meal_time"    />
+        <result property="medicationHold"    column="medication_hold"    />
+        <result property="collectionTime"    column="collection_time"    />
+        <result property="collectionComplications"    column="collection_complications"    />
+        <result property="processingDelayMinutes"    column="processing_delay_minutes"    />
+        <result property="aliquotVolume"    column="aliquot_volume"    />
+        <result property="additiveType"    column="additive_type"    />
+        <result property="collectorSignature"    column="collector_signature"    />
+        <result property="supervisorSignature"    column="supervisor_signature"    />
+    </resultMap>
+
+    <sql id="selectCrfSampleCollectionVo">
+        select crf_id, specimen_id, form_completed_by, form_completion_date, patient_fasting, last_meal_time, medication_hold, collection_time, collection_complications, processing_delay_minutes, aliquot_volume, additive_type, collector_signature, supervisor_signature from crf_sample_collection
+    </sql>
+
+    <select id="selectCrfSampleCollectionList" parameterType="CrfSampleCollection" resultMap="CrfSampleCollectionResult">
+        <include refid="selectCrfSampleCollectionVo"/>
+        <where>  
+            <if test="specimenId != null  and specimenId != ''"> and specimen_id = #{specimenId}</if>
+            <if test="formCompletedBy != null  and formCompletedBy != ''"> and form_completed_by = #{formCompletedBy}</if>
+            <if test="formCompletionDate != null "> and form_completion_date = #{formCompletionDate}</if>
+            <if test="patientFasting != null "> and patient_fasting = #{patientFasting}</if>
+            <if test="lastMealTime != null "> and last_meal_time = #{lastMealTime}</if>
+            <if test="medicationHold != null  and medicationHold != ''"> and medication_hold = #{medicationHold}</if>
+            <if test="collectionTime != null "> and collection_time = #{collectionTime}</if>
+            <if test="collectionComplications != null  and collectionComplications != ''"> and collection_complications = #{collectionComplications}</if>
+            <if test="processingDelayMinutes != null "> and processing_delay_minutes = #{processingDelayMinutes}</if>
+            <if test="aliquotVolume != null "> and aliquot_volume = #{aliquotVolume}</if>
+            <if test="additiveType != null  and additiveType != ''"> and additive_type = #{additiveType}</if>
+            <if test="collectorSignature != null  and collectorSignature != ''"> and collector_signature = #{collectorSignature}</if>
+            <if test="supervisorSignature != null  and supervisorSignature != ''"> and supervisor_signature = #{supervisorSignature}</if>
+        </where>
+    </select>
+    
+    <select id="selectCrfSampleCollectionByCrfId" parameterType="Long" resultMap="CrfSampleCollectionResult">
+        <include refid="selectCrfSampleCollectionVo"/>
+        where crf_id = #{crfId}
+    </select>
+
+    <insert id="insertCrfSampleCollection" parameterType="CrfSampleCollection" useGeneratedKeys="true" keyProperty="crfId">
+        insert into crf_sample_collection
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="specimenId != null and specimenId != ''">specimen_id,</if>
+            <if test="formCompletedBy != null">form_completed_by,</if>
+            <if test="formCompletionDate != null">form_completion_date,</if>
+            <if test="patientFasting != null">patient_fasting,</if>
+            <if test="lastMealTime != null">last_meal_time,</if>
+            <if test="medicationHold != null">medication_hold,</if>
+            <if test="collectionTime != null">collection_time,</if>
+            <if test="collectionComplications != null">collection_complications,</if>
+            <if test="processingDelayMinutes != null">processing_delay_minutes,</if>
+            <if test="aliquotVolume != null">aliquot_volume,</if>
+            <if test="additiveType != null">additive_type,</if>
+            <if test="collectorSignature != null">collector_signature,</if>
+            <if test="supervisorSignature != null">supervisor_signature,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="specimenId != null and specimenId != ''">#{specimenId},</if>
+            <if test="formCompletedBy != null">#{formCompletedBy},</if>
+            <if test="formCompletionDate != null">#{formCompletionDate},</if>
+            <if test="patientFasting != null">#{patientFasting},</if>
+            <if test="lastMealTime != null">#{lastMealTime},</if>
+            <if test="medicationHold != null">#{medicationHold},</if>
+            <if test="collectionTime != null">#{collectionTime},</if>
+            <if test="collectionComplications != null">#{collectionComplications},</if>
+            <if test="processingDelayMinutes != null">#{processingDelayMinutes},</if>
+            <if test="aliquotVolume != null">#{aliquotVolume},</if>
+            <if test="additiveType != null">#{additiveType},</if>
+            <if test="collectorSignature != null">#{collectorSignature},</if>
+            <if test="supervisorSignature != null">#{supervisorSignature},</if>
+         </trim>
+    </insert>
+
+    <update id="updateCrfSampleCollection" parameterType="CrfSampleCollection">
+        update crf_sample_collection
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="specimenId != null and specimenId != ''">specimen_id = #{specimenId},</if>
+            <if test="formCompletedBy != null">form_completed_by = #{formCompletedBy},</if>
+            <if test="formCompletionDate != null">form_completion_date = #{formCompletionDate},</if>
+            <if test="patientFasting != null">patient_fasting = #{patientFasting},</if>
+            <if test="lastMealTime != null">last_meal_time = #{lastMealTime},</if>
+            <if test="medicationHold != null">medication_hold = #{medicationHold},</if>
+            <if test="collectionTime != null">collection_time = #{collectionTime},</if>
+            <if test="collectionComplications != null">collection_complications = #{collectionComplications},</if>
+            <if test="processingDelayMinutes != null">processing_delay_minutes = #{processingDelayMinutes},</if>
+            <if test="aliquotVolume != null">aliquot_volume = #{aliquotVolume},</if>
+            <if test="additiveType != null">additive_type = #{additiveType},</if>
+            <if test="collectorSignature != null">collector_signature = #{collectorSignature},</if>
+            <if test="supervisorSignature != null">supervisor_signature = #{supervisorSignature},</if>
+        </trim>
+        where crf_id = #{crfId}
+    </update>
+
+    <delete id="deleteCrfSampleCollectionByCrfId" parameterType="Long">
+        delete from crf_sample_collection where crf_id = #{crfId}
+    </delete>
+
+    <delete id="deleteCrfSampleCollectionByCrfIds" parameterType="String">
+        delete from crf_sample_collection where crf_id in 
+        <foreach item="crfId" collection="array" open="(" separator="," close=")">
+            #{crfId}
+        </foreach>
+    </delete>
+</mapper>
