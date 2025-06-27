@@ -25,7 +25,7 @@ import com.ruoyi.common.core.page.TableDataInfo;
 
 /**
  * 患者基本信息Controller
- * 
+ *
  * @author ruoyi
  * @date 2025-06-27
  */
@@ -104,7 +104,7 @@ public class PatientsController extends BaseController
      */
     @PreAuthorize("@ss.hasPermi('ClinicalSys:patients:remove')")
     @Log(title = "患者基本信息", businessType = BusinessType.DELETE)
-	@DeleteMapping("/{patientIds}")
+    @DeleteMapping("/{patientIds}")
     public AjaxResult remove(@PathVariable String[] patientIds)
     {
         return toAjax(patientsService.deletePatientsByPatientIds(patientIds));

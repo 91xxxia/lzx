@@ -23,7 +23,7 @@
           icon="el-icon-plus"
           size="mini"
           @click="handleAdd"
-          v-hasPermi="['ClinicalSys:expenses:add']"
+          v-hasPermi="['ClinicalSys:lungtests:add']"
         >新增</el-button>
       </el-col>
       <el-col :span="1.5">
@@ -34,7 +34,7 @@
           size="mini"
           :disabled="single"
           @click="handleUpdate"
-          v-hasPermi="['ClinicalSys:expenses:edit']"
+          v-hasPermi="['ClinicalSys:lungtests:edit']"
         >修改</el-button>
       </el-col>
       <el-col :span="1.5">
@@ -45,7 +45,7 @@
           size="mini"
           :disabled="multiple"
           @click="handleDelete"
-          v-hasPermi="['ClinicalSys:expenses:remove']"
+          v-hasPermi="['ClinicalSys:lungtests:remove']"
         >删除</el-button>
       </el-col>
       <el-col :span="1.5">
@@ -55,18 +55,23 @@
           icon="el-icon-download"
           size="mini"
           @click="handleExport"
-          v-hasPermi="['ClinicalSys:expenses:export']"
+          v-hasPermi="['ClinicalSys:lungtests:export']"
         >导出</el-button>
       </el-col>
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
     </el-row>
 
-    <el-table v-loading="loading" :data="expensesList" @selection-change="handleSelectionChange">
+    <el-table v-loading="loading" :data="lungtestsList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center" />
-      <el-table-column label="费用号" align="center" prop="expenseId" />
+      <el-table-column label="肺功能检查号" align="center" prop="lungId" />
       <el-table-column label="病人号" align="center" prop="patientId" />
-      <el-table-column label="费用类别" align="center" prop="expenseType" />
-      <el-table-column label="费用" align="center" prop="amount" />
+      <el-table-column label="检查名称" align="center" prop="testName" />
+      <el-table-column label="检查日期" align="center" prop="testDate" width="180">
+        <template slot-scope="scope">
+          <span>{{ parseTime(scope.row.testDate, '{y}-{m}-{d}') }}</span>
+        </template>
+      </el-table-column>
+      <el-table-column label="检查值" align="center" prop="testResult" />
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button
@@ -74,14 +79,14 @@
             type="text"
             icon="el-icon-edit"
             @click="handleUpdate(scope.row)"
-            v-hasPermi="['ClinicalSys:expenses:edit']"
+            v-hasPermi="['ClinicalSys:lungtests:edit']"
           >修改</el-button>
           <el-button
             size="mini"
             type="text"
             icon="el-icon-delete"
             @click="handleDelete(scope.row)"
-            v-hasPermi="['ClinicalSys:expenses:remove']"
+            v-hasPermi="['ClinicalSys:lungtests:remove']"
           >删除</el-button>
         </template>
       </el-table-column>
@@ -95,17 +100,25 @@
       @pagination="getList"
     />
 
-    <!-- 添加或修改费用对话框 -->
+    <!-- 添加或修改肺功能检查对话框 -->
     <el-dialog :title="title" :visible.sync="open" width="500px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
         <el-form-item label="病人号" prop="patientId">
           <el-input v-model="form.patientId" placeholder="请输入病人号" />
         </el-form-item>
-        <el-form-item label="费用类别" prop="expenseType">
-          <el-input v-model="form.expenseType" placeholder="请输入费用类别" />
+        <el-form-item label="检查名称" prop="testName">
+          <el-input v-model="form.testName" placeholder="请输入检查名称" />
         </el-form-item>
-        <el-form-item label="费用" prop="amount">
-          <el-input v-model="form.amount" placeholder="请输入费用" />
+        <el-form-item label="检查日期" prop="testDate">
+          <el-date-picker clearable
+            v-model="form.testDate"
+            type="date"
+            value-format="yyyy-MM-dd"
+            placeholder="请选择检查日期">
+          </el-date-picker>
+        </el-form-item>
+        <el-form-item label="检查值" prop="testResult">
+          <el-input v-model="form.testResult" type="textarea" placeholder="请输入内容" />
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -117,10 +130,10 @@
 </template>
 
 <script>
-import { listExpenses, getExpenses, delExpenses, addExpenses, updateExpenses } from "@/api/ClinicalSys/expenses"
+import { listLungtests, getLungtests, delLungtests, addLungtests, updateLungtests } from "@/api/ClinicalSys/lungtests"
 
 export default {
-  name: "Expenses",
+  name: "Lungtests",
   data() {
     return {
       // 遮罩层
@@ -135,8 +148,8 @@ export default {
       showSearch: true,
       // 总条数
       total: 0,
-      // 费用表格数据
-      expensesList: [],
+      // 肺功能检查表格数据
+      lungtestsList: [],
       // 弹出层标题
       title: "",
       // 是否显示弹出层
@@ -161,11 +174,11 @@ export default {
     this.getList()
   },
   methods: {
-    /** 查询费用列表 */
+    /** 查询肺功能检查列表 */
     getList() {
       this.loading = true
-      listExpenses(this.queryParams).then(response => {
-        this.expensesList = response.rows
+      listLungtests(this.queryParams).then(response => {
+        this.lungtestsList = response.rows
         this.total = response.total
         this.loading = false
       })
@@ -178,10 +191,11 @@ export default {
     // 表单重置
     reset() {
       this.form = {
-        expenseId: null,
+        lungId: null,
         patientId: null,
-        expenseType: null,
-        amount: null
+        testName: null,
+        testDate: null,
+        testResult: null
       }
       this.resetForm("form")
     },
@@ -197,7 +211,7 @@ export default {
     },
     // 多选框选中数据
     handleSelectionChange(selection) {
-      this.ids = selection.map(item => item.expenseId)
+      this.ids = selection.map(item => item.lungId)
       this.single = selection.length!==1
       this.multiple = !selection.length
     },
@@ -205,30 +219,30 @@ export default {
     handleAdd() {
       this.reset()
       this.open = true
-      this.title = "添加费用"
+      this.title = "添加肺功能检查"
     },
     /** 修改按钮操作 */
     handleUpdate(row) {
       this.reset()
-      const expenseId = row.expenseId || this.ids
-      getExpenses(expenseId).then(response => {
+      const lungId = row.lungId || this.ids
+      getLungtests(lungId).then(response => {
         this.form = response.data
         this.open = true
-        this.title = "修改费用"
+        this.title = "修改肺功能检查"
       })
     },
     /** 提交按钮 */
     submitForm() {
       this.$refs["form"].validate(valid => {
         if (valid) {
-          if (this.form.expenseId != null) {
-            updateExpenses(this.form).then(response => {
+          if (this.form.lungId != null) {
+            updateLungtests(this.form).then(response => {
               this.$modal.msgSuccess("修改成功")
               this.open = false
               this.getList()
             })
           } else {
-            addExpenses(this.form).then(response => {
+            addLungtests(this.form).then(response => {
               this.$modal.msgSuccess("新增成功")
               this.open = false
               this.getList()
@@ -239,9 +253,9 @@ export default {
     },
     /** 删除按钮操作 */
     handleDelete(row) {
-      const expenseIds = row.expenseId || this.ids
-      this.$modal.confirm('是否确认删除费用编号为"' + expenseIds + '"的数据项？').then(function() {
-        return delExpenses(expenseIds)
+      const lungIds = row.lungId || this.ids
+      this.$modal.confirm('是否确认删除肺功能检查编号为"' + lungIds + '"的数据项？').then(function() {
+        return delLungtests(lungIds)
       }).then(() => {
         this.getList()
         this.$modal.msgSuccess("删除成功")
@@ -249,9 +263,9 @@ export default {
     },
     /** 导出按钮操作 */
     handleExport() {
-      this.download('ClinicalSys/expenses/export', {
+      this.download('ClinicalSys/lungtests/export', {
         ...this.queryParams
-      }, `expenses_${new Date().getTime()}.xlsx`)
+      }, `lungtests_${new Date().getTime()}.xlsx`)
     }
   }
 }

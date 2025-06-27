@@ -28,7 +28,7 @@ import com.ruoyi.common.core.page.TableDataInfo;
  * @date 2025-06-27
  */
 @RestController
-@RequestMapping("/ClinicalSys/lung_tests")
+@RequestMapping("/ClinicalSys/lungtests")
 public class LungTestsController extends BaseController
 {
     @Autowired
@@ -37,7 +37,7 @@ public class LungTestsController extends BaseController
     /**
      * 查询肺功能检查列表
      */
-    @PreAuthorize("@ss.hasPermi('ClinicalSys:lung_tests:list')")
+    @PreAuthorize("@ss.hasPermi('ClinicalSys:lungtests:list')")
     @GetMapping("/list")
     public TableDataInfo list(LungTests lungTests)
     {
@@ -49,7 +49,7 @@ public class LungTestsController extends BaseController
     /**
      * 导出肺功能检查列表
      */
-    @PreAuthorize("@ss.hasPermi('ClinicalSys:lung_tests:export')")
+    @PreAuthorize("@ss.hasPermi('ClinicalSys:lungtests:export')")
     @Log(title = "肺功能检查", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
     public void export(HttpServletResponse response, LungTests lungTests)
@@ -62,7 +62,7 @@ public class LungTestsController extends BaseController
     /**
      * 获取肺功能检查详细信息
      */
-    @PreAuthorize("@ss.hasPermi('ClinicalSys:lung_tests:query')")
+    @PreAuthorize("@ss.hasPermi('ClinicalSys:lungtests:query')")
     @GetMapping(value = "/{lungId}")
     public AjaxResult getInfo(@PathVariable("lungId") Long lungId)
     {
@@ -72,7 +72,7 @@ public class LungTestsController extends BaseController
     /**
      * 新增肺功能检查
      */
-    @PreAuthorize("@ss.hasPermi('ClinicalSys:lung_tests:add')")
+    @PreAuthorize("@ss.hasPermi('ClinicalSys:lungtests:add')")
     @Log(title = "肺功能检查", businessType = BusinessType.INSERT)
     @PostMapping
     public AjaxResult add(@RequestBody LungTests lungTests)
@@ -83,7 +83,7 @@ public class LungTestsController extends BaseController
     /**
      * 修改肺功能检查
      */
-    @PreAuthorize("@ss.hasPermi('ClinicalSys:lung_tests:edit')")
+    @PreAuthorize("@ss.hasPermi('ClinicalSys:lungtests:edit')")
     @Log(title = "肺功能检查", businessType = BusinessType.UPDATE)
     @PutMapping
     public AjaxResult edit(@RequestBody LungTests lungTests)
@@ -94,7 +94,7 @@ public class LungTestsController extends BaseController
     /**
      * 删除肺功能检查
      */
-    @PreAuthorize("@ss.hasPermi('ClinicalSys:lung_tests:remove')")
+    @PreAuthorize("@ss.hasPermi('ClinicalSys:lungtests:remove')")
     @Log(title = "肺功能检查", businessType = BusinessType.DELETE)
 	@DeleteMapping("/{lungIds}")
     public AjaxResult remove(@PathVariable Long[] lungIds)

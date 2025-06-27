@@ -11,19 +11,19 @@ import com.ruoyi.ClinicalSys.service.IPatientsService;
 
 /**
  * 患者基本信息Service业务层处理
- * 
+ *
  * @author ruoyi
  * @date 2025-06-27
  */
 @Service
-public class PatientsServiceImpl implements IPatientsService 
+public class PatientsServiceImpl implements IPatientsService
 {
     @Autowired
     private PatientsMapper patientsMapper;
 
     /**
      * 查询患者基本信息
-     * 
+     *
      * @param patientId 患者基本信息主键
      * @return 患者基本信息
      */
@@ -35,7 +35,7 @@ public class PatientsServiceImpl implements IPatientsService
 
     /**
      * 查询患者基本信息列表
-     * 
+     *
      * @param patients 患者基本信息
      * @return 患者基本信息
      */
@@ -47,7 +47,7 @@ public class PatientsServiceImpl implements IPatientsService
 
     /**
      * 新增患者基本信息
-     * 
+     *
      * @param patients 患者基本信息
      * @return 结果
      */
@@ -62,7 +62,7 @@ public class PatientsServiceImpl implements IPatientsService
 
     /**
      * 修改患者基本信息
-     * 
+     *
      * @param patients 患者基本信息
      * @return 结果
      */
@@ -78,7 +78,7 @@ public class PatientsServiceImpl implements IPatientsService
 
     /**
      * 批量删除患者基本信息
-     * 
+     *
      * @param patientIds 需要删除的患者基本信息主键
      * @return 结果
      */
@@ -90,7 +90,7 @@ public class PatientsServiceImpl implements IPatientsService
 
     /**
      * 删除患者基本信息信息
-     * 
+     *
      * @param patientId 患者基本信息主键
      * @return 结果
      */
