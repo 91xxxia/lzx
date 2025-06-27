@@ -1,0 +1,61 @@
+package com.ruoyi.ClinicalSys.mapper;
+
+import java.util.List;
+import com.ruoyi.ClinicalSys.domain.History;
+
+/**
+ * 既往史Mapper接口
+ * 
+ * @author ruoyi
+ * @date 2025-06-27
+ */
+public interface HistoryMapper 
+{
+    /**
+     * 查询既往史
+     * 
+     * @param historyId 既往史主键
+     * @return 既往史
+     */
+    public History selectHistoryByHistoryId(Long historyId);
+
+    /**
+     * 查询既往史列表
+     * 
+     * @param history 既往史
+     * @return 既往史集合
+     */
+    public List<History> selectHistoryList(History history);
+
+    /**
+     * 新增既往史
+     * 
+     * @param history 既往史
+     * @return 结果
+     */
+    public int insertHistory(History history);
+
+    /**
+     * 修改既往史
+     * 
+     * @param history 既往史
+     * @return 结果
+     */
+    public int updateHistory(History history);
+
+    /**
+     * 删除既往史
+     * 
+     * @param historyId 既往史主键
+     * @return 结果
+     */
+    public int deleteHistoryByHistoryId(Long historyId);
+
+    /**
+     * 批量删除既往史
+     * 
+     * @param historyIds 需要删除的数据主键集合
+     * @return 结果
+     */
+    public int deleteHistoryByHistoryIds(Long[] historyIds);
+}

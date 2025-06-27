@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.ClinicalSys.mapper.MedicationsMapper">
+    
+    <resultMap type="Medications" id="MedicationsResult">
+        <result property="medId"    column="med_id"    />
+        <result property="patientId"    column="patient_id"    />
+        <result property="medicationName"    column="medication_name"    />
+        <result property="medicationSpecification"    column="medication_specification"    />
+        <result property="singleDose"    column="single_dose"    />
+        <result property="usageDays"    column="usage_days"    />
+        <result property="frequency"    column="frequency"    />
+        <result property="administrationRoute"    column="administration_route"    />
+        <result property="administrationSite"    column="administration_site"    />
+        <result property="treatmentStart"    column="treatment_start"    />
+        <result property="treatmentEnd"    column="treatment_end"    />
+        <result property="medicationGuidance"    column="medication_guidance"    />
+        <result property="precautions"    column="precautions"    />
+    </resultMap>
+
+    <sql id="selectMedicationsVo">
+        select med_id, patient_id, medication_name, medication_specification, single_dose, usage_days, frequency, administration_route, administration_site, treatment_start, treatment_end, medication_guidance, precautions from medications
+    </sql>
+
+    <select id="selectMedicationsList" parameterType="Medications" resultMap="MedicationsResult">
+        <include refid="selectMedicationsVo"/>
+        <where>  
+            <if test="patientId != null  and patientId != ''"> and patient_id = #{patientId}</if>
+            <if test="treatmentStart != null "> and treatment_start = #{treatmentStart}</if>
+            <if test="treatmentEnd != null "> and treatment_end = #{treatmentEnd}</if>
+            <if test="medicationGuidance != null  and medicationGuidance != ''"> and medication_guidance = #{medicationGuidance}</if>
+            <if test="precautions != null  and precautions != ''"> and precautions = #{precautions}</if>
+        </where>
+    </select>
+    
+    <select id="selectMedicationsByMedId" parameterType="Long" resultMap="MedicationsResult">
+        <include refid="selectMedicationsVo"/>
+        where med_id = #{medId}
+    </select>
+
+    <insert id="insertMedications" parameterType="Medications" useGeneratedKeys="true" keyProperty="medId">
+        insert into medications
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="patientId != null and patientId != ''">patient_id,</if>
+            <if test="medicationName != null">medication_name,</if>
+            <if test="medicationSpecification != null">medication_specification,</if>
+            <if test="singleDose != null">single_dose,</if>
+            <if test="usageDays != null">usage_days,</if>
+            <if test="frequency != null">frequency,</if>
+            <if test="administrationRoute != null">administration_route,</if>
+            <if test="administrationSite != null">administration_site,</if>
+            <if test="treatmentStart != null">treatment_start,</if>
+            <if test="treatmentEnd != null">treatment_end,</if>
+            <if test="medicationGuidance != null">medication_guidance,</if>
+            <if test="precautions != null">precautions,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="patientId != null and patientId != ''">#{patientId},</if>
+            <if test="medicationName != null">#{medicationName},</if>
+            <if test="medicationSpecification != null">#{medicationSpecification},</if>
+            <if test="singleDose != null">#{singleDose},</if>
+            <if test="usageDays != null">#{usageDays},</if>
+            <if test="frequency != null">#{frequency},</if>
+            <if test="administrationRoute != null">#{administrationRoute},</if>
+            <if test="administrationSite != null">#{administrationSite},</if>
+            <if test="treatmentStart != null">#{treatmentStart},</if>
+            <if test="treatmentEnd != null">#{treatmentEnd},</if>
+            <if test="medicationGuidance != null">#{medicationGuidance},</if>
+            <if test="precautions != null">#{precautions},</if>
+         </trim>
+    </insert>
+
+    <update id="updateMedications" parameterType="Medications">
+        update medications
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="patientId != null and patientId != ''">patient_id = #{patientId},</if>
+            <if test="medicationName != null">medication_name = #{medicationName},</if>
+            <if test="medicationSpecification != null">medication_specification = #{medicationSpecification},</if>
+            <if test="singleDose != null">single_dose = #{singleDose},</if>
+            <if test="usageDays != null">usage_days = #{usageDays},</if>
+            <if test="frequency != null">frequency = #{frequency},</if>
+            <if test="administrationRoute != null">administration_route = #{administrationRoute},</if>
+            <if test="administrationSite != null">administration_site = #{administrationSite},</if>
+            <if test="treatmentStart != null">treatment_start = #{treatmentStart},</if>
+            <if test="treatmentEnd != null">treatment_end = #{treatmentEnd},</if>
+            <if test="medicationGuidance != null">medication_guidance = #{medicationGuidance},</if>
+            <if test="precautions != null">precautions = #{precautions},</if>
+        </trim>
+        where med_id = #{medId}
+    </update>
+
+    <delete id="deleteMedicationsByMedId" parameterType="Long">
+        delete from medications where med_id = #{medId}
+    </delete>
+
+    <delete id="deleteMedicationsByMedIds" parameterType="String">
+        delete from medications where med_id in 
+        <foreach item="medId" collection="array" open="(" separator="," close=")">
+            #{medId}
+        </foreach>
+    </delete>
+</mapper>

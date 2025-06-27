@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.EpidemSys.mapper.SurveyAreaEnvironmentMapper">
+    
+    <resultMap type="SurveyAreaEnvironment" id="SurveyAreaEnvironmentResult">
+        <result property="envAreaId"    column="env_area_id"    />
+        <result property="surveyId"    column="survey_id"    />
+        <result property="urbanPm25Avg"    column="urban_pm25_avg"    />
+        <result property="urbanPm25Seasonal"    column="urban_pm25_seasonal"    />
+        <result property="urbanPollenTypes"    column="urban_pollen_types"    />
+        <result property="urbanPollenDistribution"    column="urban_pollen_distribution"    />
+        <result property="urbanPollenPeak"    column="urban_pollen_peak"    />
+        <result property="urbanPollutants"    column="urban_pollutants"    />
+        <result property="urbanMonitorLocation"    column="urban_monitor_location"    />
+        <result property="ruralPm25Burning"    column="rural_pm25_burning"    />
+        <result property="ruralPm25Avg"    column="rural_pm25_avg"    />
+        <result property="ruralPollenTypes"    column="rural_pollen_types"    />
+        <result property="ruralBiomassPollution"    column="rural_biomass_pollution"    />
+        <result property="ruralWaterSource"    column="rural_water_source"    />
+    </resultMap>
+
+    <sql id="selectSurveyAreaEnvironmentVo">
+        select env_area_id, survey_id, urban_pm25_avg, urban_pm25_seasonal, urban_pollen_types, urban_pollen_distribution, urban_pollen_peak, urban_pollutants, urban_monitor_location, rural_pm25_burning, rural_pm25_avg, rural_pollen_types, rural_biomass_pollution, rural_water_source from survey_area_environment
+    </sql>
+
+    <select id="selectSurveyAreaEnvironmentList" parameterType="SurveyAreaEnvironment" resultMap="SurveyAreaEnvironmentResult">
+        <include refid="selectSurveyAreaEnvironmentVo"/>
+        <where>  
+            <if test="surveyId != null "> and survey_id = #{surveyId}</if>
+        </where>
+    </select>
+    
+    <select id="selectSurveyAreaEnvironmentByEnvAreaId" parameterType="Long" resultMap="SurveyAreaEnvironmentResult">
+        <include refid="selectSurveyAreaEnvironmentVo"/>
+        where env_area_id = #{envAreaId}
+    </select>
+
+    <insert id="insertSurveyAreaEnvironment" parameterType="SurveyAreaEnvironment" useGeneratedKeys="true" keyProperty="envAreaId">
+        insert into survey_area_environment
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="surveyId != null">survey_id,</if>
+            <if test="urbanPm25Avg != null">urban_pm25_avg,</if>
+            <if test="urbanPm25Seasonal != null">urban_pm25_seasonal,</if>
+            <if test="urbanPollenTypes != null">urban_pollen_types,</if>
+            <if test="urbanPollenDistribution != null">urban_pollen_distribution,</if>
+            <if test="urbanPollenPeak != null">urban_pollen_peak,</if>
+            <if test="urbanPollutants != null">urban_pollutants,</if>
+            <if test="urbanMonitorLocation != null">urban_monitor_location,</if>
+            <if test="ruralPm25Burning != null">rural_pm25_burning,</if>
+            <if test="ruralPm25Avg != null">rural_pm25_avg,</if>
+            <if test="ruralPollenTypes != null">rural_pollen_types,</if>
+            <if test="ruralBiomassPollution != null">rural_biomass_pollution,</if>
+            <if test="ruralWaterSource != null">rural_water_source,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="surveyId != null">#{surveyId},</if>
+            <if test="urbanPm25Avg != null">#{urbanPm25Avg},</if>
+            <if test="urbanPm25Seasonal != null">#{urbanPm25Seasonal},</if>
+            <if test="urbanPollenTypes != null">#{urbanPollenTypes},</if>
+            <if test="urbanPollenDistribution != null">#{urbanPollenDistribution},</if>
+            <if test="urbanPollenPeak != null">#{urbanPollenPeak},</if>
+            <if test="urbanPollutants != null">#{urbanPollutants},</if>
+            <if test="urbanMonitorLocation != null">#{urbanMonitorLocation},</if>
+            <if test="ruralPm25Burning != null">#{ruralPm25Burning},</if>
+            <if test="ruralPm25Avg != null">#{ruralPm25Avg},</if>
+            <if test="ruralPollenTypes != null">#{ruralPollenTypes},</if>
+            <if test="ruralBiomassPollution != null">#{ruralBiomassPollution},</if>
+            <if test="ruralWaterSource != null">#{ruralWaterSource},</if>
+         </trim>
+    </insert>
+
+    <update id="updateSurveyAreaEnvironment" parameterType="SurveyAreaEnvironment">
+        update survey_area_environment
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="surveyId != null">survey_id = #{surveyId},</if>
+            <if test="urbanPm25Avg != null">urban_pm25_avg = #{urbanPm25Avg},</if>
+            <if test="urbanPm25Seasonal != null">urban_pm25_seasonal = #{urbanPm25Seasonal},</if>
+            <if test="urbanPollenTypes != null">urban_pollen_types = #{urbanPollenTypes},</if>
+            <if test="urbanPollenDistribution != null">urban_pollen_distribution = #{urbanPollenDistribution},</if>
+            <if test="urbanPollenPeak != null">urban_pollen_peak = #{urbanPollenPeak},</if>
+            <if test="urbanPollutants != null">urban_pollutants = #{urbanPollutants},</if>
+            <if test="urbanMonitorLocation != null">urban_monitor_location = #{urbanMonitorLocation},</if>
+            <if test="ruralPm25Burning != null">rural_pm25_burning = #{ruralPm25Burning},</if>
+            <if test="ruralPm25Avg != null">rural_pm25_avg = #{ruralPm25Avg},</if>
+            <if test="ruralPollenTypes != null">rural_pollen_types = #{ruralPollenTypes},</if>
+            <if test="ruralBiomassPollution != null">rural_biomass_pollution = #{ruralBiomassPollution},</if>
+            <if test="ruralWaterSource != null">rural_water_source = #{ruralWaterSource},</if>
+        </trim>
+        where env_area_id = #{envAreaId}
+    </update>
+
+    <delete id="deleteSurveyAreaEnvironmentByEnvAreaId" parameterType="Long">
+        delete from survey_area_environment where env_area_id = #{envAreaId}
+    </delete>
+
+    <delete id="deleteSurveyAreaEnvironmentByEnvAreaIds" parameterType="String">
+        delete from survey_area_environment where env_area_id in 
+        <foreach item="envAreaId" collection="array" open="(" separator="," close=")">
+            #{envAreaId}
+        </foreach>
+    </delete>
+</mapper>

@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.ClinicalSys.mapper.InsuranceInfoMapper">
+    
+    <resultMap type="InsuranceInfo" id="InsuranceInfoResult">
+        <result property="insuranceId"    column="insurance_id"    />
+        <result property="patientId"    column="patient_id"    />
+        <result property="insuranceType"    column="insurance_type"    />
+        <result property="insuranceNumber"    column="insurance_number"    />
+    </resultMap>
+
+    <sql id="selectInsuranceInfoVo">
+        select insurance_id, patient_id, insurance_type, insurance_number from insurance_info
+    </sql>
+
+    <select id="selectInsuranceInfoList" parameterType="InsuranceInfo" resultMap="InsuranceInfoResult">
+        <include refid="selectInsuranceInfoVo"/>
+        <where>  
+            <if test="patientId != null  and patientId != ''"> and patient_id = #{patientId}</if>
+        </where>
+    </select>
+    
+    <select id="selectInsuranceInfoByInsuranceId" parameterType="Long" resultMap="InsuranceInfoResult">
+        <include refid="selectInsuranceInfoVo"/>
+        where insurance_id = #{insuranceId}
+    </select>
+
+    <insert id="insertInsuranceInfo" parameterType="InsuranceInfo" useGeneratedKeys="true" keyProperty="insuranceId">
+        insert into insurance_info
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="patientId != null and patientId != ''">patient_id,</if>
+            <if test="insuranceType != null">insurance_type,</if>
+            <if test="insuranceNumber != null">insurance_number,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="patientId != null and patientId != ''">#{patientId},</if>
+            <if test="insuranceType != null">#{insuranceType},</if>
+            <if test="insuranceNumber != null">#{insuranceNumber},</if>
+         </trim>
+    </insert>
+
+    <update id="updateInsuranceInfo" parameterType="InsuranceInfo">
+        update insurance_info
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="patientId != null and patientId != ''">patient_id = #{patientId},</if>
+            <if test="insuranceType != null">insurance_type = #{insuranceType},</if>
+            <if test="insuranceNumber != null">insurance_number = #{insuranceNumber},</if>
+        </trim>
+        where insurance_id = #{insuranceId}
+    </update>
+
+    <delete id="deleteInsuranceInfoByInsuranceId" parameterType="Long">
+        delete from insurance_info where insurance_id = #{insuranceId}
+    </delete>
+
+    <delete id="deleteInsuranceInfoByInsuranceIds" parameterType="String">
+        delete from insurance_info where insurance_id in 
+        <foreach item="insuranceId" collection="array" open="(" separator="," close=")">
+            #{insuranceId}
+        </foreach>
+    </delete>
+</mapper>

@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.EpidemSys.mapper.SurveyBasicInfoMapper">
+    
+    <resultMap type="SurveyBasicInfo" id="SurveyBasicInfoResult">
+        <result property="surveyId"    column="survey_id"    />
+        <result property="patientId"    column="patient_id"    />
+        <result property="surveyDate"    column="survey_date"    />
+        <result property="childName"    column="child_name"    />
+        <result property="gender"    column="gender"    />
+        <result property="age"    column="age"    />
+        <result property="residenceType"    column="residence_type"    />
+        <result property="residenceYears"    column="residence_years"    />
+        <result property="address"    column="address"    />
+        <result property="height"    column="height"    />
+        <result property="weight"    column="weight"    />
+        <result property="allergyHistory"    column="allergy_history"    />
+        <result property="hasRhinitis"    column="has_rhinitis"    />
+        <result property="hasAsthma"    column="has_asthma"    />
+        <result property="hasDermatitis"    column="has_dermatitis"    />
+        <result property="hasConjunctivitis"    column="has_conjunctivitis"    />
+        <result property="hasUrticaria"    column="has_urticaria"    />
+        <result property="diagnosedRhinitis"    column="diagnosed_rhinitis"    />
+        <result property="diagnosedAsthma"    column="diagnosed_asthma"    />
+        <result property="diagnosedDermatitis"    column="diagnosed_dermatitis"    />
+        <result property="diagnosedConjunctivitis"    column="diagnosed_conjunctivitis"    />
+        <result property="diagnosedUrticaria"    column="diagnosed_urticaria"    />
+    </resultMap>
+
+    <sql id="selectSurveyBasicInfoVo">
+        select survey_id, patient_id, survey_date, child_name, gender, age, residence_type, residence_years, address, height, weight, allergy_history, has_rhinitis, has_asthma, has_dermatitis, has_conjunctivitis, has_urticaria, diagnosed_rhinitis, diagnosed_asthma, diagnosed_dermatitis, diagnosed_conjunctivitis, diagnosed_urticaria from survey_basic_info
+    </sql>
+
+    <select id="selectSurveyBasicInfoList" parameterType="SurveyBasicInfo" resultMap="SurveyBasicInfoResult">
+        <include refid="selectSurveyBasicInfoVo"/>
+        <where>  
+            <if test="patientId != null  and patientId != ''"> and patient_id = #{patientId}</if>
+        </where>
+    </select>
+    
+    <select id="selectSurveyBasicInfoBySurveyId" parameterType="Long" resultMap="SurveyBasicInfoResult">
+        <include refid="selectSurveyBasicInfoVo"/>
+        where survey_id = #{surveyId}
+    </select>
+
+    <insert id="insertSurveyBasicInfo" parameterType="SurveyBasicInfo" useGeneratedKeys="true" keyProperty="surveyId">
+        insert into survey_basic_info
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="patientId != null and patientId != ''">patient_id,</if>
+            <if test="surveyDate != null">survey_date,</if>
+            <if test="childName != null">child_name,</if>
+            <if test="gender != null">gender,</if>
+            <if test="age != null">age,</if>
+            <if test="residenceType != null">residence_type,</if>
+            <if test="residenceYears != null">residence_years,</if>
+            <if test="address != null">address,</if>
+            <if test="height != null">height,</if>
+            <if test="weight != null">weight,</if>
+            <if test="allergyHistory != null">allergy_history,</if>
+            <if test="hasRhinitis != null">has_rhinitis,</if>
+            <if test="hasAsthma != null">has_asthma,</if>
+            <if test="hasDermatitis != null">has_dermatitis,</if>
+            <if test="hasConjunctivitis != null">has_conjunctivitis,</if>
+            <if test="hasUrticaria != null">has_urticaria,</if>
+            <if test="diagnosedRhinitis != null">diagnosed_rhinitis,</if>
+            <if test="diagnosedAsthma != null">diagnosed_asthma,</if>
+            <if test="diagnosedDermatitis != null">diagnosed_dermatitis,</if>
+            <if test="diagnosedConjunctivitis != null">diagnosed_conjunctivitis,</if>
+            <if test="diagnosedUrticaria != null">diagnosed_urticaria,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="patientId != null and patientId != ''">#{patientId},</if>
+            <if test="surveyDate != null">#{surveyDate},</if>
+            <if test="childName != null">#{childName},</if>
+            <if test="gender != null">#{gender},</if>
+            <if test="age != null">#{age},</if>
+            <if test="residenceType != null">#{residenceType},</if>
+            <if test="residenceYears != null">#{residenceYears},</if>
+            <if test="address != null">#{address},</if>
+            <if test="height != null">#{height},</if>
+            <if test="weight != null">#{weight},</if>
+            <if test="allergyHistory != null">#{allergyHistory},</if>
+            <if test="hasRhinitis != null">#{hasRhinitis},</if>
+            <if test="hasAsthma != null">#{hasAsthma},</if>
+            <if test="hasDermatitis != null">#{hasDermatitis},</if>
+            <if test="hasConjunctivitis != null">#{hasConjunctivitis},</if>
+            <if test="hasUrticaria != null">#{hasUrticaria},</if>
+            <if test="diagnosedRhinitis != null">#{diagnosedRhinitis},</if>
+            <if test="diagnosedAsthma != null">#{diagnosedAsthma},</if>
+            <if test="diagnosedDermatitis != null">#{diagnosedDermatitis},</if>
+            <if test="diagnosedConjunctivitis != null">#{diagnosedConjunctivitis},</if>
+            <if test="diagnosedUrticaria != null">#{diagnosedUrticaria},</if>
+         </trim>
+    </insert>
+
+    <update id="updateSurveyBasicInfo" parameterType="SurveyBasicInfo">
+        update survey_basic_info
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="patientId != null and patientId != ''">patient_id = #{patientId},</if>
+            <if test="surveyDate != null">survey_date = #{surveyDate},</if>
+            <if test="childName != null">child_name = #{childName},</if>
+            <if test="gender != null">gender = #{gender},</if>
+            <if test="age != null">age = #{age},</if>
+            <if test="residenceType != null">residence_type = #{residenceType},</if>
+            <if test="residenceYears != null">residence_years = #{residenceYears},</if>
+            <if test="address != null">address = #{address},</if>
+            <if test="height != null">height = #{height},</if>
+            <if test="weight != null">weight = #{weight},</if>
+            <if test="allergyHistory != null">allergy_history = #{allergyHistory},</if>
+            <if test="hasRhinitis != null">has_rhinitis = #{hasRhinitis},</if>
+            <if test="hasAsthma != null">has_asthma = #{hasAsthma},</if>
+            <if test="hasDermatitis != null">has_dermatitis = #{hasDermatitis},</if>
+            <if test="hasConjunctivitis != null">has_conjunctivitis = #{hasConjunctivitis},</if>
+            <if test="hasUrticaria != null">has_urticaria = #{hasUrticaria},</if>
+            <if test="diagnosedRhinitis != null">diagnosed_rhinitis = #{diagnosedRhinitis},</if>
+            <if test="diagnosedAsthma != null">diagnosed_asthma = #{diagnosedAsthma},</if>
+            <if test="diagnosedDermatitis != null">diagnosed_dermatitis = #{diagnosedDermatitis},</if>
+            <if test="diagnosedConjunctivitis != null">diagnosed_conjunctivitis = #{diagnosedConjunctivitis},</if>
+            <if test="diagnosedUrticaria != null">diagnosed_urticaria = #{diagnosedUrticaria},</if>
+        </trim>
+        where survey_id = #{surveyId}
+    </update>
+
+    <delete id="deleteSurveyBasicInfoBySurveyId" parameterType="Long">
+        delete from survey_basic_info where survey_id = #{surveyId}
+    </delete>
+
+    <delete id="deleteSurveyBasicInfoBySurveyIds" parameterType="String">
+        delete from survey_basic_info where survey_id in 
+        <foreach item="surveyId" collection="array" open="(" separator="," close=")">
+            #{surveyId}
+        </foreach>
+    </delete>
+</mapper>

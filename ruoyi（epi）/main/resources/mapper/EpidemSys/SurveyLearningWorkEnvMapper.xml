@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.EpidemSys.mapper.SurveyLearningWorkEnvMapper">
+    
+    <resultMap type="SurveyLearningWorkEnv" id="SurveyLearningWorkEnvResult">
+        <result property="learnEnvId"    column="learn_env_id"    />
+        <result property="surveyId"    column="survey_id"    />
+        <result property="locationType"    column="location_type"    />
+        <result property="ventilationQuality"    column="ventilation_quality"    />
+        <result property="pm25Annual"    column="pm25_annual"    />
+        <result property="pollenPeakConcentration"    column="pollen_peak_concentration"    />
+        <result property="pollenTypes"    column="pollen_types"    />
+        <result property="formaldehydeLevelWorkplace"    column="formaldehyde_level_workplace"    />
+        <result property="hasCarpet"    column="has_carpet"    />
+        <result property="hasFabricFurniture"    column="has_fabric_furniture"    />
+    </resultMap>
+
+    <sql id="selectSurveyLearningWorkEnvVo">
+        select learn_env_id, survey_id, location_type, ventilation_quality, pm25_annual, pollen_peak_concentration, pollen_types, formaldehyde_level_workplace, has_carpet, has_fabric_furniture from survey_learning_work_env
+    </sql>
+
+    <select id="selectSurveyLearningWorkEnvList" parameterType="SurveyLearningWorkEnv" resultMap="SurveyLearningWorkEnvResult">
+        <include refid="selectSurveyLearningWorkEnvVo"/>
+        <where>  
+            <if test="surveyId != null "> and survey_id = #{surveyId}</if>
+        </where>
+    </select>
+    
+    <select id="selectSurveyLearningWorkEnvByLearnEnvId" parameterType="Long" resultMap="SurveyLearningWorkEnvResult">
+        <include refid="selectSurveyLearningWorkEnvVo"/>
+        where learn_env_id = #{learnEnvId}
+    </select>
+
+    <insert id="insertSurveyLearningWorkEnv" parameterType="SurveyLearningWorkEnv" useGeneratedKeys="true" keyProperty="learnEnvId">
+        insert into survey_learning_work_env
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="surveyId != null">survey_id,</if>
+            <if test="locationType != null">location_type,</if>
+            <if test="ventilationQuality != null">ventilation_quality,</if>
+            <if test="pm25Annual != null">pm25_annual,</if>
+            <if test="pollenPeakConcentration != null">pollen_peak_concentration,</if>
+            <if test="pollenTypes != null">pollen_types,</if>
+            <if test="formaldehydeLevelWorkplace != null">formaldehyde_level_workplace,</if>
+            <if test="hasCarpet != null">has_carpet,</if>
+            <if test="hasFabricFurniture != null">has_fabric_furniture,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="surveyId != null">#{surveyId},</if>
+            <if test="locationType != null">#{locationType},</if>
+            <if test="ventilationQuality != null">#{ventilationQuality},</if>
+            <if test="pm25Annual != null">#{pm25Annual},</if>
+            <if test="pollenPeakConcentration != null">#{pollenPeakConcentration},</if>
+            <if test="pollenTypes != null">#{pollenTypes},</if>
+            <if test="formaldehydeLevelWorkplace != null">#{formaldehydeLevelWorkplace},</if>
+            <if test="hasCarpet != null">#{hasCarpet},</if>
+            <if test="hasFabricFurniture != null">#{hasFabricFurniture},</if>
+         </trim>
+    </insert>
+
+    <update id="updateSurveyLearningWorkEnv" parameterType="SurveyLearningWorkEnv">
+        update survey_learning_work_env
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="surveyId != null">survey_id = #{surveyId},</if>
+            <if test="locationType != null">location_type = #{locationType},</if>
+            <if test="ventilationQuality != null">ventilation_quality = #{ventilationQuality},</if>
+            <if test="pm25Annual != null">pm25_annual = #{pm25Annual},</if>
+            <if test="pollenPeakConcentration != null">pollen_peak_concentration = #{pollenPeakConcentration},</if>
+            <if test="pollenTypes != null">pollen_types = #{pollenTypes},</if>
+            <if test="formaldehydeLevelWorkplace != null">formaldehyde_level_workplace = #{formaldehydeLevelWorkplace},</if>
+            <if test="hasCarpet != null">has_carpet = #{hasCarpet},</if>
+            <if test="hasFabricFurniture != null">has_fabric_furniture = #{hasFabricFurniture},</if>
+        </trim>
+        where learn_env_id = #{learnEnvId}
+    </update>
+
+    <delete id="deleteSurveyLearningWorkEnvByLearnEnvId" parameterType="Long">
+        delete from survey_learning_work_env where learn_env_id = #{learnEnvId}
+    </delete>
+
+    <delete id="deleteSurveyLearningWorkEnvByLearnEnvIds" parameterType="String">
+        delete from survey_learning_work_env where learn_env_id in 
+        <foreach item="learnEnvId" collection="array" open="(" separator="," close=")">
+            #{learnEnvId}
+        </foreach>
+    </delete>
+</mapper>

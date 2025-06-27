@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.EpidemSys.mapper.SurveyConfoundingFactorsMapper">
+    
+    <resultMap type="SurveyConfoundingFactors" id="SurveyConfoundingFactorsResult">
+        <result property="confoundId"    column="confound_id"    />
+        <result property="surveyId"    column="survey_id"    />
+        <result property="dietType"    column="diet_type"    />
+        <result property="vitaminD400u"    column="vitamin_d_400u"    />
+        <result property="vitaminDYears"    column="vitamin_d_years"    />
+        <result property="omega3Intake"    column="omega3_intake"    />
+        <result property="stressLevelPss10"    column="stress_level_pss10"    />
+        <result property="mentalStatePhq9Gad7"    column="mental_state_phq9_gad7"    />
+        <result property="vaccineOnSchedule"    column="vaccine_on_schedule"    />
+        <result property="antibioticFreq"    column="antibiotic_freq"    />
+        <result property="breastfeeding"    column="breastfeeding"    />
+        <result property="breastfeedingMonths"    column="breastfeeding_months"    />
+        <result property="deliveryType"    column="delivery_type"    />
+        <result property="petExposureStage"    column="pet_exposure_stage"    />
+        <result property="farmExposure"    column="farm_exposure"    />
+        <result property="farmExposureMonths"    column="farm_exposure_months"    />
+        <result property="absentDaysAllergy"    column="absent_days_allergy"    />
+        <result property="annualMedicalCost"    column="annual_medical_cost"    />
+    </resultMap>
+
+    <sql id="selectSurveyConfoundingFactorsVo">
+        select confound_id, survey_id, diet_type, vitamin_d_400u, vitamin_d_years, omega3_intake, stress_level_pss10, mental_state_phq9_gad7, vaccine_on_schedule, antibiotic_freq, breastfeeding, breastfeeding_months, delivery_type, pet_exposure_stage, farm_exposure, farm_exposure_months, absent_days_allergy, annual_medical_cost from survey_confounding_factors
+    </sql>
+
+    <select id="selectSurveyConfoundingFactorsList" parameterType="SurveyConfoundingFactors" resultMap="SurveyConfoundingFactorsResult">
+        <include refid="selectSurveyConfoundingFactorsVo"/>
+        <where>  
+            <if test="surveyId != null "> and survey_id = #{surveyId}</if>
+        </where>
+    </select>
+    
+    <select id="selectSurveyConfoundingFactorsByConfoundId" parameterType="Long" resultMap="SurveyConfoundingFactorsResult">
+        <include refid="selectSurveyConfoundingFactorsVo"/>
+        where confound_id = #{confoundId}
+    </select>
+
+    <insert id="insertSurveyConfoundingFactors" parameterType="SurveyConfoundingFactors" useGeneratedKeys="true" keyProperty="confoundId">
+        insert into survey_confounding_factors
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="surveyId != null">survey_id,</if>
+            <if test="dietType != null">diet_type,</if>
+            <if test="vitaminD400u != null">vitamin_d_400u,</if>
+            <if test="vitaminDYears != null">vitamin_d_years,</if>
+            <if test="omega3Intake != null">omega3_intake,</if>
+            <if test="stressLevelPss10 != null">stress_level_pss10,</if>
+            <if test="mentalStatePhq9Gad7 != null">mental_state_phq9_gad7,</if>
+            <if test="vaccineOnSchedule != null">vaccine_on_schedule,</if>
+            <if test="antibioticFreq != null">antibiotic_freq,</if>
+            <if test="breastfeeding != null">breastfeeding,</if>
+            <if test="breastfeedingMonths != null">breastfeeding_months,</if>
+            <if test="deliveryType != null">delivery_type,</if>
+            <if test="petExposureStage != null">pet_exposure_stage,</if>
+            <if test="farmExposure != null">farm_exposure,</if>
+            <if test="farmExposureMonths != null">farm_exposure_months,</if>
+            <if test="absentDaysAllergy != null">absent_days_allergy,</if>
+            <if test="annualMedicalCost != null">annual_medical_cost,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="surveyId != null">#{surveyId},</if>
+            <if test="dietType != null">#{dietType},</if>
+            <if test="vitaminD400u != null">#{vitaminD400u},</if>
+            <if test="vitaminDYears != null">#{vitaminDYears},</if>
+            <if test="omega3Intake != null">#{omega3Intake},</if>
+            <if test="stressLevelPss10 != null">#{stressLevelPss10},</if>
+            <if test="mentalStatePhq9Gad7 != null">#{mentalStatePhq9Gad7},</if>
+            <if test="vaccineOnSchedule != null">#{vaccineOnSchedule},</if>
+            <if test="antibioticFreq != null">#{antibioticFreq},</if>
+            <if test="breastfeeding != null">#{breastfeeding},</if>
+            <if test="breastfeedingMonths != null">#{breastfeedingMonths},</if>
+            <if test="deliveryType != null">#{deliveryType},</if>
+            <if test="petExposureStage != null">#{petExposureStage},</if>
+            <if test="farmExposure != null">#{farmExposure},</if>
+            <if test="farmExposureMonths != null">#{farmExposureMonths},</if>
+            <if test="absentDaysAllergy != null">#{absentDaysAllergy},</if>
+            <if test="annualMedicalCost != null">#{annualMedicalCost},</if>
+         </trim>
+    </insert>
+
+    <update id="updateSurveyConfoundingFactors" parameterType="SurveyConfoundingFactors">
+        update survey_confounding_factors
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="surveyId != null">survey_id = #{surveyId},</if>
+            <if test="dietType != null">diet_type = #{dietType},</if>
+            <if test="vitaminD400u != null">vitamin_d_400u = #{vitaminD400u},</if>
+            <if test="vitaminDYears != null">vitamin_d_years = #{vitaminDYears},</if>
+            <if test="omega3Intake != null">omega3_intake = #{omega3Intake},</if>
+            <if test="stressLevelPss10 != null">stress_level_pss10 = #{stressLevelPss10},</if>
+            <if test="mentalStatePhq9Gad7 != null">mental_state_phq9_gad7 = #{mentalStatePhq9Gad7},</if>
+            <if test="vaccineOnSchedule != null">vaccine_on_schedule = #{vaccineOnSchedule},</if>
+            <if test="antibioticFreq != null">antibiotic_freq = #{antibioticFreq},</if>
+            <if test="breastfeeding != null">breastfeeding = #{breastfeeding},</if>
+            <if test="breastfeedingMonths != null">breastfeeding_months = #{breastfeedingMonths},</if>
+            <if test="deliveryType != null">delivery_type = #{deliveryType},</if>
+            <if test="petExposureStage != null">pet_exposure_stage = #{petExposureStage},</if>
+            <if test="farmExposure != null">farm_exposure = #{farmExposure},</if>
+            <if test="farmExposureMonths != null">farm_exposure_months = #{farmExposureMonths},</if>
+            <if test="absentDaysAllergy != null">absent_days_allergy = #{absentDaysAllergy},</if>
+            <if test="annualMedicalCost != null">annual_medical_cost = #{annualMedicalCost},</if>
+        </trim>
+        where confound_id = #{confoundId}
+    </update>
+
+    <delete id="deleteSurveyConfoundingFactorsByConfoundId" parameterType="Long">
+        delete from survey_confounding_factors where confound_id = #{confoundId}
+    </delete>
+
+    <delete id="deleteSurveyConfoundingFactorsByConfoundIds" parameterType="String">
+        delete from survey_confounding_factors where confound_id in 
+        <foreach item="confoundId" collection="array" open="(" separator="," close=")">
+            #{confoundId}
+        </foreach>
+    </delete>
+</mapper>

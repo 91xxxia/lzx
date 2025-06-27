@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.ClinicalSys.mapper.HistoryMapper">
+    
+    <resultMap type="History" id="HistoryResult">
+        <result property="historyId"    column="history_id"    />
+        <result property="patientId"    column="patient_id"    />
+        <result property="foodAllergyHistory"    column="food_allergy_history"    />
+        <result property="allergenExposure"    column="allergen_exposure"    />
+        <result property="pastDiseaseHistory"    column="past_disease_history"    />
+    </resultMap>
+
+    <sql id="selectHistoryVo">
+        select history_id, patient_id, food_allergy_history, allergen_exposure, past_disease_history from history
+    </sql>
+
+    <select id="selectHistoryList" parameterType="History" resultMap="HistoryResult">
+        <include refid="selectHistoryVo"/>
+        <where>  
+            <if test="patientId != null  and patientId != ''"> and patient_id = #{patientId}</if>
+        </where>
+    </select>
+    
+    <select id="selectHistoryByHistoryId" parameterType="Long" resultMap="HistoryResult">
+        <include refid="selectHistoryVo"/>
+        where history_id = #{historyId}
+    </select>
+
+    <insert id="insertHistory" parameterType="History" useGeneratedKeys="true" keyProperty="historyId">
+        insert into history
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="patientId != null and patientId != ''">patient_id,</if>
+            <if test="foodAllergyHistory != null">food_allergy_history,</if>
+            <if test="allergenExposure != null">allergen_exposure,</if>
+            <if test="pastDiseaseHistory != null">past_disease_history,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="patientId != null and patientId != ''">#{patientId},</if>
+            <if test="foodAllergyHistory != null">#{foodAllergyHistory},</if>
+            <if test="allergenExposure != null">#{allergenExposure},</if>
+            <if test="pastDiseaseHistory != null">#{pastDiseaseHistory},</if>
+         </trim>
+    </insert>
+
+    <update id="updateHistory" parameterType="History">
+        update history
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="patientId != null and patientId != ''">patient_id = #{patientId},</if>
+            <if test="foodAllergyHistory != null">food_allergy_history = #{foodAllergyHistory},</if>
+            <if test="allergenExposure != null">allergen_exposure = #{allergenExposure},</if>
+            <if test="pastDiseaseHistory != null">past_disease_history = #{pastDiseaseHistory},</if>
+        </trim>
+        where history_id = #{historyId}
+    </update>
+
+    <delete id="deleteHistoryByHistoryId" parameterType="Long">
+        delete from history where history_id = #{historyId}
+    </delete>
+
+    <delete id="deleteHistoryByHistoryIds" parameterType="String">
+        delete from history where history_id in 
+        <foreach item="historyId" collection="array" open="(" separator="," close=")">
+            #{historyId}
+        </foreach>
+    </delete>
+</mapper>

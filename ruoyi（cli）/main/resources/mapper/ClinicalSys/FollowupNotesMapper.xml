@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.ClinicalSys.mapper.FollowupNotesMapper">
+    
+    <resultMap type="FollowupNotes" id="FollowupNotesResult">
+        <result property="followupId"    column="followup_id"    />
+        <result property="patientId"    column="patient_id"    />
+        <result property="symptomImprovement"    column="symptom_improvement"    />
+        <result property="physicalDevelopment"    column="physical_development"    />
+        <result property="adverseReactions"    column="adverse_reactions"    />
+        <result property="reactionManagement"    column="reaction_management"    />
+    </resultMap>
+
+    <sql id="selectFollowupNotesVo">
+        select followup_id, patient_id, symptom_improvement, physical_development, adverse_reactions, reaction_management from followup_notes
+    </sql>
+
+    <select id="selectFollowupNotesList" parameterType="FollowupNotes" resultMap="FollowupNotesResult">
+        <include refid="selectFollowupNotesVo"/>
+        <where>  
+            <if test="patientId != null  and patientId != ''"> and patient_id = #{patientId}</if>
+        </where>
+    </select>
+    
+    <select id="selectFollowupNotesByFollowupId" parameterType="Long" resultMap="FollowupNotesResult">
+        <include refid="selectFollowupNotesVo"/>
+        where followup_id = #{followupId}
+    </select>
+
+    <insert id="insertFollowupNotes" parameterType="FollowupNotes" useGeneratedKeys="true" keyProperty="followupId">
+        insert into followup_notes
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="patientId != null and patientId != ''">patient_id,</if>
+            <if test="symptomImprovement != null">symptom_improvement,</if>
+            <if test="physicalDevelopment != null">physical_development,</if>
+            <if test="adverseReactions != null">adverse_reactions,</if>
+            <if test="reactionManagement != null">reaction_management,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="patientId != null and patientId != ''">#{patientId},</if>
+            <if test="symptomImprovement != null">#{symptomImprovement},</if>
+            <if test="physicalDevelopment != null">#{physicalDevelopment},</if>
+            <if test="adverseReactions != null">#{adverseReactions},</if>
+            <if test="reactionManagement != null">#{reactionManagement},</if>
+         </trim>
+    </insert>
+
+    <update id="updateFollowupNotes" parameterType="FollowupNotes">
+        update followup_notes
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="patientId != null and patientId != ''">patient_id = #{patientId},</if>
+            <if test="symptomImprovement != null">symptom_improvement = #{symptomImprovement},</if>
+            <if test="physicalDevelopment != null">physical_development = #{physicalDevelopment},</if>
+            <if test="adverseReactions != null">adverse_reactions = #{adverseReactions},</if>
+            <if test="reactionManagement != null">reaction_management = #{reactionManagement},</if>
+        </trim>
+        where followup_id = #{followupId}
+    </update>
+
+    <delete id="deleteFollowupNotesByFollowupId" parameterType="Long">
+        delete from followup_notes where followup_id = #{followupId}
+    </delete>
+
+    <delete id="deleteFollowupNotesByFollowupIds" parameterType="String">
+        delete from followup_notes where followup_id in 
+        <foreach item="followupId" collection="array" open="(" separator="," close=")">
+            #{followupId}
+        </foreach>
+    </delete>
+</mapper>

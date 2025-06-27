@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.ClinicalSys.mapper.ClinicalOtherTreatmentsMapper">
+    
+    <resultMap type="ClinicalOtherTreatments" id="ClinicalOtherTreatmentsResult">
+        <result property="treatmentId"    column="treatment_id"    />
+        <result property="patientId"    column="patient_id"    />
+        <result property="treatmentName"    column="treatment_name"    />
+        <result property="startTime"    column="start_time"    />
+        <result property="endTime"    column="end_time"    />
+        <result property="note"    column="note"    />
+    </resultMap>
+
+    <sql id="selectClinicalOtherTreatmentsVo">
+        select treatment_id, patient_id, treatment_name, start_time, end_time, note from clinical_other_treatments
+    </sql>
+
+    <select id="selectClinicalOtherTreatmentsList" parameterType="ClinicalOtherTreatments" resultMap="ClinicalOtherTreatmentsResult">
+        <include refid="selectClinicalOtherTreatmentsVo"/>
+        <where>  
+            <if test="patientId != null  and patientId != ''"> and patient_id = #{patientId}</if>
+        </where>
+    </select>
+    
+    <select id="selectClinicalOtherTreatmentsByTreatmentId" parameterType="Long" resultMap="ClinicalOtherTreatmentsResult">
+        <include refid="selectClinicalOtherTreatmentsVo"/>
+        where treatment_id = #{treatmentId}
+    </select>
+
+    <insert id="insertClinicalOtherTreatments" parameterType="ClinicalOtherTreatments" useGeneratedKeys="true" keyProperty="treatmentId">
+        insert into clinical_other_treatments
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="patientId != null and patientId != ''">patient_id,</if>
+            <if test="treatmentName != null">treatment_name,</if>
+            <if test="startTime != null">start_time,</if>
+            <if test="endTime != null">end_time,</if>
+            <if test="note != null">note,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="patientId != null and patientId != ''">#{patientId},</if>
+            <if test="treatmentName != null">#{treatmentName},</if>
+            <if test="startTime != null">#{startTime},</if>
+            <if test="endTime != null">#{endTime},</if>
+            <if test="note != null">#{note},</if>
+         </trim>
+    </insert>
+
+    <update id="updateClinicalOtherTreatments" parameterType="ClinicalOtherTreatments">
+        update clinical_other_treatments
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="patientId != null and patientId != ''">patient_id = #{patientId},</if>
+            <if test="treatmentName != null">treatment_name = #{treatmentName},</if>
+            <if test="startTime != null">start_time = #{startTime},</if>
+            <if test="endTime != null">end_time = #{endTime},</if>
+            <if test="note != null">note = #{note},</if>
+        </trim>
+        where treatment_id = #{treatmentId}
+    </update>
+
+    <delete id="deleteClinicalOtherTreatmentsByTreatmentId" parameterType="Long">
+        delete from clinical_other_treatments where treatment_id = #{treatmentId}
+    </delete>
+
+    <delete id="deleteClinicalOtherTreatmentsByTreatmentIds" parameterType="String">
+        delete from clinical_other_treatments where treatment_id in 
+        <foreach item="treatmentId" collection="array" open="(" separator="," close=")">
+            #{treatmentId}
+        </foreach>
+    </delete>
+</mapper>

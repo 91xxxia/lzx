@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.ClinicalSys.mapper.SymptomsMapper">
+    
+    <resultMap type="Symptoms" id="SymptomsResult">
+        <result property="symptomId"    column="symptom_id"    />
+        <result property="patientId"    column="patient_id"    />
+        <result property="symptomDescription"    column="symptom_description"    />
+        <result property="severityLevel"    column="severity_level"    />
+        <result property="frequency"    column="frequency"    />
+        <result property="onsetTime"    column="onset_time"    />
+        <result property="triggerFactor"    column="trigger_factor"    />
+        <result property="physicalSigns"    column="physical_signs"    />
+    </resultMap>
+
+    <sql id="selectSymptomsVo">
+        select symptom_id, patient_id, symptom_description, severity_level, frequency, onset_time, trigger_factor, physical_signs from symptoms
+    </sql>
+
+    <select id="selectSymptomsList" parameterType="Symptoms" resultMap="SymptomsResult">
+        <include refid="selectSymptomsVo"/>
+        <where>  
+            <if test="patientId != null  and patientId != ''"> and patient_id = #{patientId}</if>
+        </where>
+    </select>
+    
+    <select id="selectSymptomsBySymptomId" parameterType="Long" resultMap="SymptomsResult">
+        <include refid="selectSymptomsVo"/>
+        where symptom_id = #{symptomId}
+    </select>
+
+    <insert id="insertSymptoms" parameterType="Symptoms" useGeneratedKeys="true" keyProperty="symptomId">
+        insert into symptoms
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="patientId != null and patientId != ''">patient_id,</if>
+            <if test="symptomDescription != null">symptom_description,</if>
+            <if test="severityLevel != null">severity_level,</if>
+            <if test="frequency != null">frequency,</if>
+            <if test="onsetTime != null">onset_time,</if>
+            <if test="triggerFactor != null">trigger_factor,</if>
+            <if test="physicalSigns != null">physical_signs,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="patientId != null and patientId != ''">#{patientId},</if>
+            <if test="symptomDescription != null">#{symptomDescription},</if>
+            <if test="severityLevel != null">#{severityLevel},</if>
+            <if test="frequency != null">#{frequency},</if>
+            <if test="onsetTime != null">#{onsetTime},</if>
+            <if test="triggerFactor != null">#{triggerFactor},</if>
+            <if test="physicalSigns != null">#{physicalSigns},</if>
+         </trim>
+    </insert>
+
+    <update id="updateSymptoms" parameterType="Symptoms">
+        update symptoms
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="patientId != null and patientId != ''">patient_id = #{patientId},</if>
+            <if test="symptomDescription != null">symptom_description = #{symptomDescription},</if>
+            <if test="severityLevel != null">severity_level = #{severityLevel},</if>
+            <if test="frequency != null">frequency = #{frequency},</if>
+            <if test="onsetTime != null">onset_time = #{onsetTime},</if>
+            <if test="triggerFactor != null">trigger_factor = #{triggerFactor},</if>
+            <if test="physicalSigns != null">physical_signs = #{physicalSigns},</if>
+        </trim>
+        where symptom_id = #{symptomId}
+    </update>
+
+    <delete id="deleteSymptomsBySymptomId" parameterType="Long">
+        delete from symptoms where symptom_id = #{symptomId}
+    </delete>
+
+    <delete id="deleteSymptomsBySymptomIds" parameterType="String">
+        delete from symptoms where symptom_id in 
+        <foreach item="symptomId" collection="array" open="(" separator="," close=")">
+            #{symptomId}
+        </foreach>
+    </delete>
+</mapper>
