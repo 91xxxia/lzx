@@ -2,6 +2,8 @@ package com.ruoyi.ClinicalSys.controller;
 
 import java.util.List;
 import javax.servlet.http.HttpServletResponse;
+
+import com.ruoyi.common.exception.ServiceException;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -75,9 +77,12 @@ public class PatientsController extends BaseController
     @PreAuthorize("@ss.hasPermi('ClinicalSys:patients:add')")
     @Log(title = "患者基本信息", businessType = BusinessType.INSERT)
     @PostMapping
-    public AjaxResult add(@RequestBody Patients patients)
-    {
-        return toAjax(patientsService.insertPatients(patients));
+    public AjaxResult add(@RequestBody Patients patients) {
+        try {
+            return toAjax(patientsService.insertPatients(patients));
+        } catch (ServiceException e) {
+            return AjaxResult.error(e.getMessage());
+        }
     }
 
     /**
@@ -86,9 +91,12 @@ public class PatientsController extends BaseController
     @PreAuthorize("@ss.hasPermi('ClinicalSys:patients:edit')")
     @Log(title = "患者基本信息", businessType = BusinessType.UPDATE)
     @PutMapping
-    public AjaxResult edit(@RequestBody Patients patients)
-    {
-        return toAjax(patientsService.updatePatients(patients));
+    public AjaxResult edit(@RequestBody Patients patients) {
+        try {
+            return toAjax(patientsService.updatePatients(patients));
+        } catch (ServiceException e) {
+            return AjaxResult.error(e.getMessage());
+        }
     }
 
     /**

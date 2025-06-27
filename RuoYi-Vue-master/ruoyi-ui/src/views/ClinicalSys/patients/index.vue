@@ -180,6 +180,8 @@ export default {
   name: "Patients",
   data() {
     return {
+      // 添加这个属性
+      isAddMode: true,
       // 遮罩层
       loading: true,
       // 选中数组
@@ -228,6 +230,15 @@ export default {
         this.loading = false
       })
     },
+    /** 新增按钮操作 */
+    handleAdd() {
+    this.reset()
+    this.open = true
+    this.title = "添加患者基本信息"
+
+    // 设置新增模式
+    this.isAddMode = true
+    },
     // 取消按钮
     cancel() {
       this.open = false
@@ -274,34 +285,42 @@ export default {
     },
     /** 修改按钮操作 */
     handleUpdate(row) {
-      this.reset()
-      const patientId = row.patientId || this.ids
-      getPatients(patientId).then(response => {
-        this.form = response.data
-        this.open = true
-        this.title = "修改患者基本信息"
-      })
+        this.reset()
+        const patientId = row.patientId || this.ids
+        getPatients(patientId).then(response => {
+          this.form = response.data
+          this.open = true
+          this.title = "修改患者基本信息"
+          // 设置更新模式
+          this.isAddMode = false
+        })
     },
     /** 提交按钮 */
-    submitForm() {
-      this.$refs["form"].validate(valid => {
-        if (valid) {
-          if (this.form.patientId != null) {
-            updatePatients(this.form).then(response => {
-              this.$modal.msgSuccess("修改成功")
-              this.open = false
-              this.getList()
-            })
-          } else {
-            addPatients(this.form).then(response => {
-              this.$modal.msgSuccess("新增成功")
-              this.open = false
-              this.getList()
-            })
+      submitForm() {
+        this.$refs["form"].validate(valid => {
+          if (valid) {
+            // 修改判断逻辑
+            if (!this.isAddMode) {  // 更新操作
+              updatePatients(this.form).then(response => {
+                this.$modal.msgSuccess("修改成功")
+                this.open = false
+                this.getList()
+              }).catch(error => {
+                this.$modal.msgError(error.message || "修改失败")
+              })
+            } else {  // 新增操作
+              addPatients(this.form).then(response => {
+                this.$modal.msgSuccess("新增成功")
+                this.open = false
+                this.getList()
+              }).catch(error => {
+                this.$modal.msgError(error.message || "新增失败")
+              })
+            }
           }
-        }
-      })
-    },
+        })
+      },
+
     /** 删除按钮操作 */
     handleDelete(row) {
       const patientIds = row.patientId || this.ids

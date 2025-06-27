@@ -1,6 +1,8 @@
 package com.ruoyi.ClinicalSys.service.impl;
 
 import java.util.List;
+
+import com.ruoyi.common.exception.ServiceException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.ruoyi.ClinicalSys.mapper.PatientsMapper;
@@ -50,8 +52,11 @@ public class PatientsServiceImpl implements IPatientsService
      * @return 结果
      */
     @Override
-    public int insertPatients(Patients patients)
-    {
+    public int insertPatients(Patients patients) {
+        // 检查病人号是否已存在
+        if (patientsMapper.selectPatientsByPatientId(patients.getPatientId()) != null) {
+            throw new ServiceException("病人号 " + patients.getPatientId() + " 已存在");
+        }
         return patientsMapper.insertPatients(patients);
     }
 
@@ -62,8 +67,12 @@ public class PatientsServiceImpl implements IPatientsService
      * @return 结果
      */
     @Override
-    public int updatePatients(Patients patients)
-    {
+    public int updatePatients(Patients patients) {
+        // 确保病人存在
+        Patients existing = patientsMapper.selectPatientsByPatientId(patients.getPatientId());
+        if (existing == null) {
+            throw new ServiceException("病人号 " + patients.getPatientId() + " 不存在");
+        }
         return patientsMapper.updatePatients(patients);
     }
 
