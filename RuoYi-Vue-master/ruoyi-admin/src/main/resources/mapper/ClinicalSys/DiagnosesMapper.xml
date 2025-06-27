@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.ClinicalSys.mapper.DiagnosesMapper">
+    
+    <resultMap type="Diagnoses" id="DiagnosesResult">
+        <result property="diagnosisId"    column="diagnosis_id"    />
+        <result property="patientId"    column="patient_id"    />
+        <result property="diseaseName"    column="disease_name"    />
+        <result property="severity"    column="severity"    />
+        <result property="diagnosisTime"    column="diagnosis_time"    />
+    </resultMap>
+
+    <sql id="selectDiagnosesVo">
+        select diagnosis_id, patient_id, disease_name, severity, diagnosis_time from diagnoses
+    </sql>
+
+    <select id="selectDiagnosesList" parameterType="Diagnoses" resultMap="DiagnosesResult">
+        <include refid="selectDiagnosesVo"/>
+        <where>  
+            <if test="patientId != null  and patientId != ''"> and patient_id = #{patientId}</if>
+        </where>
+    </select>
+    
+    <select id="selectDiagnosesByDiagnosisId" parameterType="Long" resultMap="DiagnosesResult">
+        <include refid="selectDiagnosesVo"/>
+        where diagnosis_id = #{diagnosisId}
+    </select>
+
+    <insert id="insertDiagnoses" parameterType="Diagnoses" useGeneratedKeys="true" keyProperty="diagnosisId">
+        insert into diagnoses
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="patientId != null and patientId != ''">patient_id,</if>
+            <if test="diseaseName != null">disease_name,</if>
+            <if test="severity != null">severity,</if>
+            <if test="diagnosisTime != null">diagnosis_time,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="patientId != null and patientId != ''">#{patientId},</if>
+            <if test="diseaseName != null">#{diseaseName},</if>
+            <if test="severity != null">#{severity},</if>
+            <if test="diagnosisTime != null">#{diagnosisTime},</if>
+         </trim>
+    </insert>
+
+    <update id="updateDiagnoses" parameterType="Diagnoses">
+        update diagnoses
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="patientId != null and patientId != ''">patient_id = #{patientId},</if>
+            <if test="diseaseName != null">disease_name = #{diseaseName},</if>
+            <if test="severity != null">severity = #{severity},</if>
+            <if test="diagnosisTime != null">diagnosis_time = #{diagnosisTime},</if>
+        </trim>
+        where diagnosis_id = #{diagnosisId}
+    </update>
+
+    <delete id="deleteDiagnosesByDiagnosisId" parameterType="Long">
+        delete from diagnoses where diagnosis_id = #{diagnosisId}
+    </delete>
+
+    <delete id="deleteDiagnosesByDiagnosisIds" parameterType="String">
+        delete from diagnoses where diagnosis_id in 
+        <foreach item="diagnosisId" collection="array" open="(" separator="," close=")">
+            #{diagnosisId}
+        </foreach>
+    </delete>
+</mapper>

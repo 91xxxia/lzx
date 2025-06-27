@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.EpidemSys.mapper.SurveyFamilyEnvMapper">
+    
+    <resultMap type="SurveyFamilyEnv" id="SurveyFamilyEnvResult">
+        <result property="familyEnvId"    column="family_env_id"    />
+        <result property="surveyId"    column="survey_id"    />
+        <result property="sharedSmokingExposure"    column="shared_smoking_exposure"    />
+    </resultMap>
+
+    <sql id="selectSurveyFamilyEnvVo">
+        select family_env_id, survey_id, shared_smoking_exposure from survey_family_env
+    </sql>
+
+    <select id="selectSurveyFamilyEnvList" parameterType="SurveyFamilyEnv" resultMap="SurveyFamilyEnvResult">
+        <include refid="selectSurveyFamilyEnvVo"/>
+        <where>  
+            <if test="surveyId != null "> and survey_id = #{surveyId}</if>
+            <if test="sharedSmokingExposure != null "> and shared_smoking_exposure = #{sharedSmokingExposure}</if>
+        </where>
+    </select>
+    
+    <select id="selectSurveyFamilyEnvByFamilyEnvId" parameterType="Long" resultMap="SurveyFamilyEnvResult">
+        <include refid="selectSurveyFamilyEnvVo"/>
+        where family_env_id = #{familyEnvId}
+    </select>
+
+    <insert id="insertSurveyFamilyEnv" parameterType="SurveyFamilyEnv" useGeneratedKeys="true" keyProperty="familyEnvId">
+        insert into survey_family_env
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="surveyId != null">survey_id,</if>
+            <if test="sharedSmokingExposure != null">shared_smoking_exposure,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="surveyId != null">#{surveyId},</if>
+            <if test="sharedSmokingExposure != null">#{sharedSmokingExposure},</if>
+         </trim>
+    </insert>
+
+    <update id="updateSurveyFamilyEnv" parameterType="SurveyFamilyEnv">
+        update survey_family_env
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="surveyId != null">survey_id = #{surveyId},</if>
+            <if test="sharedSmokingExposure != null">shared_smoking_exposure = #{sharedSmokingExposure},</if>
+        </trim>
+        where family_env_id = #{familyEnvId}
+    </update>
+
+    <delete id="deleteSurveyFamilyEnvByFamilyEnvId" parameterType="Long">
+        delete from survey_family_env where family_env_id = #{familyEnvId}
+    </delete>
+
+    <delete id="deleteSurveyFamilyEnvByFamilyEnvIds" parameterType="String">
+        delete from survey_family_env where family_env_id in 
+        <foreach item="familyEnvId" collection="array" open="(" separator="," close=")">
+            #{familyEnvId}
+        </foreach>
+    </delete>
+</mapper>

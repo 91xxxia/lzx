@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.EpidemSys.mapper.FamilyHistorySecondaryMapper">
+    
+    <resultMap type="FamilyHistorySecondary" id="FamilyHistorySecondaryResult">
+        <result property="secId"    column="sec_id"    />
+        <result property="surveyId"    column="survey_id"    />
+        <result property="relation"    column="relation"    />
+        <result property="diseases"    column="diseases"    />
+    </resultMap>
+
+    <sql id="selectFamilyHistorySecondaryVo">
+        select sec_id, survey_id, relation, diseases from family_history_secondary
+    </sql>
+
+    <select id="selectFamilyHistorySecondaryList" parameterType="FamilyHistorySecondary" resultMap="FamilyHistorySecondaryResult">
+        <include refid="selectFamilyHistorySecondaryVo"/>
+        <where>  
+            <if test="surveyId != null "> and survey_id = #{surveyId}</if>
+        </where>
+    </select>
+    
+    <select id="selectFamilyHistorySecondaryBySecId" parameterType="Long" resultMap="FamilyHistorySecondaryResult">
+        <include refid="selectFamilyHistorySecondaryVo"/>
+        where sec_id = #{secId}
+    </select>
+
+    <insert id="insertFamilyHistorySecondary" parameterType="FamilyHistorySecondary" useGeneratedKeys="true" keyProperty="secId">
+        insert into family_history_secondary
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="surveyId != null">survey_id,</if>
+            <if test="relation != null">relation,</if>
+            <if test="diseases != null">diseases,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="surveyId != null">#{surveyId},</if>
+            <if test="relation != null">#{relation},</if>
+            <if test="diseases != null">#{diseases},</if>
+         </trim>
+    </insert>
+
+    <update id="updateFamilyHistorySecondary" parameterType="FamilyHistorySecondary">
+        update family_history_secondary
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="surveyId != null">survey_id = #{surveyId},</if>
+            <if test="relation != null">relation = #{relation},</if>
+            <if test="diseases != null">diseases = #{diseases},</if>
+        </trim>
+        where sec_id = #{secId}
+    </update>
+
+    <delete id="deleteFamilyHistorySecondaryBySecId" parameterType="Long">
+        delete from family_history_secondary where sec_id = #{secId}
+    </delete>
+
+    <delete id="deleteFamilyHistorySecondaryBySecIds" parameterType="String">
+        delete from family_history_secondary where sec_id in 
+        <foreach item="secId" collection="array" open="(" separator="," close=")">
+            #{secId}
+        </foreach>
+    </delete>
+</mapper>

@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.EpidemSys.mapper.SurveyEnvironmentExposureMapper">
+    
+    <resultMap type="SurveyEnvironmentExposure" id="SurveyEnvironmentExposureResult">
+        <result property="envId"    column="env_id"    />
+        <result property="surveyId"    column="survey_id"    />
+        <result property="houseType"    column="house_type"    />
+        <result property="buildingMaterial"    column="building_material"    />
+        <result property="ventilationFreq"    column="ventilation_freq"    />
+        <result property="acUsageSeason"    column="ac_usage_season"    />
+        <result property="acUsageFreq"    column="ac_usage_freq"    />
+        <result property="acTempSetting"    column="ac_temp_setting"    />
+        <result property="acModes"    column="ac_modes"    />
+        <result property="acFilterCleaningFreq"    column="ac_filter_cleaning_freq"    />
+        <result property="heatingType"    column="heating_type"    />
+        <result property="heatingTempRange"    column="heating_temp_range"    />
+        <result property="hasCarpet"    column="has_carpet"    />
+        <result property="hasSoftToys"    column="has_soft_toys"    />
+        <result property="pm25Avg"    column="pm25_avg"    />
+        <result property="pollenInfo"    column="pollen_info"    />
+        <result property="formaldehydeLevel"    column="formaldehyde_level"    />
+        <result property="formaldehydeTestTime"    column="formaldehyde_test_time"    />
+        <result property="dustMiteLevel"    column="dust_mite_level"    />
+        <result property="otherAllergens"    column="other_allergens"    />
+        <result property="exerciseFrequency"    column="exercise_frequency"    />
+        <result property="exerciseDuration"    column="exercise_duration"    />
+        <result property="exerciseIntensity"    column="exercise_intensity"    />
+        <result property="swimming"    column="swimming"    />
+        <result property="sleepHours"    column="sleep_hours"    />
+        <result property="insomnia"    column="insomnia"    />
+        <result property="circadianDisruption"    column="circadian_disruption"    />
+        <result property="smokeExposureType"    column="smoke_exposure_type"    />
+        <result property="cleaningFreq"    column="cleaning_freq"    />
+        <result property="hasPets"    column="has_pets"    />
+        <result property="petTypes"    column="pet_types"    />
+        <result property="petCount"    column="pet_count"    />
+        <result property="livesWithSmoker"    column="lives_with_smoker"    />
+        <result property="cookingFuel"    column="cooking_fuel"    />
+        <result property="usesAirPurifier"    column="uses_air_purifier"    />
+        <result property="usesVacuumCleaner"    column="uses_vacuum_cleaner"    />
+        <result property="avoidanceQuality"    column="avoidance_quality"    />
+    </resultMap>
+
+    <sql id="selectSurveyEnvironmentExposureVo">
+        select env_id, survey_id, house_type, building_material, ventilation_freq, ac_usage_season, ac_usage_freq, ac_temp_setting, ac_modes, ac_filter_cleaning_freq, heating_type, heating_temp_range, has_carpet, has_soft_toys, pm25_avg, pollen_info, formaldehyde_level, formaldehyde_test_time, dust_mite_level, other_allergens, exercise_frequency, exercise_duration, exercise_intensity, swimming, sleep_hours, insomnia, circadian_disruption, smoke_exposure_type, cleaning_freq, has_pets, pet_types, pet_count, lives_with_smoker, cooking_fuel, uses_air_purifier, uses_vacuum_cleaner, avoidance_quality from survey_environment_exposure
+    </sql>
+
+    <select id="selectSurveyEnvironmentExposureList" parameterType="SurveyEnvironmentExposure" resultMap="SurveyEnvironmentExposureResult">
+        <include refid="selectSurveyEnvironmentExposureVo"/>
+        <where>  
+            <if test="surveyId != null "> and survey_id = #{surveyId}</if>
+        </where>
+    </select>
+    
+    <select id="selectSurveyEnvironmentExposureByEnvId" parameterType="Long" resultMap="SurveyEnvironmentExposureResult">
+        <include refid="selectSurveyEnvironmentExposureVo"/>
+        where env_id = #{envId}
+    </select>
+
+    <insert id="insertSurveyEnvironmentExposure" parameterType="SurveyEnvironmentExposure" useGeneratedKeys="true" keyProperty="envId">
+        insert into survey_environment_exposure
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="surveyId != null">survey_id,</if>
+            <if test="houseType != null">house_type,</if>
+            <if test="buildingMaterial != null">building_material,</if>
+            <if test="ventilationFreq != null">ventilation_freq,</if>
+            <if test="acUsageSeason != null">ac_usage_season,</if>
+            <if test="acUsageFreq != null">ac_usage_freq,</if>
+            <if test="acTempSetting != null">ac_temp_setting,</if>
+            <if test="acModes != null">ac_modes,</if>
+            <if test="acFilterCleaningFreq != null">ac_filter_cleaning_freq,</if>
+            <if test="heatingType != null">heating_type,</if>
+            <if test="heatingTempRange != null">heating_temp_range,</if>
+            <if test="hasCarpet != null">has_carpet,</if>
+            <if test="hasSoftToys != null">has_soft_toys,</if>
+            <if test="pm25Avg != null">pm25_avg,</if>
+            <if test="pollenInfo != null">pollen_info,</if>
+            <if test="formaldehydeLevel != null">formaldehyde_level,</if>
+            <if test="formaldehydeTestTime != null">formaldehyde_test_time,</if>
+            <if test="dustMiteLevel != null">dust_mite_level,</if>
+            <if test="otherAllergens != null">other_allergens,</if>
+            <if test="exerciseFrequency != null">exercise_frequency,</if>
+            <if test="exerciseDuration != null">exercise_duration,</if>
+            <if test="exerciseIntensity != null">exercise_intensity,</if>
+            <if test="swimming != null">swimming,</if>
+            <if test="sleepHours != null">sleep_hours,</if>
+            <if test="insomnia != null">insomnia,</if>
+            <if test="circadianDisruption != null">circadian_disruption,</if>
+            <if test="smokeExposureType != null">smoke_exposure_type,</if>
+            <if test="cleaningFreq != null">cleaning_freq,</if>
+            <if test="hasPets != null">has_pets,</if>
+            <if test="petTypes != null">pet_types,</if>
+            <if test="petCount != null">pet_count,</if>
+            <if test="livesWithSmoker != null">lives_with_smoker,</if>
+            <if test="cookingFuel != null">cooking_fuel,</if>
+            <if test="usesAirPurifier != null">uses_air_purifier,</if>
+            <if test="usesVacuumCleaner != null">uses_vacuum_cleaner,</if>
+            <if test="avoidanceQuality != null">avoidance_quality,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="surveyId != null">#{surveyId},</if>
+            <if test="houseType != null">#{houseType},</if>
+            <if test="buildingMaterial != null">#{buildingMaterial},</if>
+            <if test="ventilationFreq != null">#{ventilationFreq},</if>
+            <if test="acUsageSeason != null">#{acUsageSeason},</if>
+            <if test="acUsageFreq != null">#{acUsageFreq},</if>
+            <if test="acTempSetting != null">#{acTempSetting},</if>
+            <if test="acModes != null">#{acModes},</if>
+            <if test="acFilterCleaningFreq != null">#{acFilterCleaningFreq},</if>
+            <if test="heatingType != null">#{heatingType},</if>
+            <if test="heatingTempRange != null">#{heatingTempRange},</if>
+            <if test="hasCarpet != null">#{hasCarpet},</if>
+            <if test="hasSoftToys != null">#{hasSoftToys},</if>
+            <if test="pm25Avg != null">#{pm25Avg},</if>
+            <if test="pollenInfo != null">#{pollenInfo},</if>
+            <if test="formaldehydeLevel != null">#{formaldehydeLevel},</if>
+            <if test="formaldehydeTestTime != null">#{formaldehydeTestTime},</if>
+            <if test="dustMiteLevel != null">#{dustMiteLevel},</if>
+            <if test="otherAllergens != null">#{otherAllergens},</if>
+            <if test="exerciseFrequency != null">#{exerciseFrequency},</if>
+            <if test="exerciseDuration != null">#{exerciseDuration},</if>
+            <if test="exerciseIntensity != null">#{exerciseIntensity},</if>
+            <if test="swimming != null">#{swimming},</if>
+            <if test="sleepHours != null">#{sleepHours},</if>
+            <if test="insomnia != null">#{insomnia},</if>
+            <if test="circadianDisruption != null">#{circadianDisruption},</if>
+            <if test="smokeExposureType != null">#{smokeExposureType},</if>
+            <if test="cleaningFreq != null">#{cleaningFreq},</if>
+            <if test="hasPets != null">#{hasPets},</if>
+            <if test="petTypes != null">#{petTypes},</if>
+            <if test="petCount != null">#{petCount},</if>
+            <if test="livesWithSmoker != null">#{livesWithSmoker},</if>
+            <if test="cookingFuel != null">#{cookingFuel},</if>
+            <if test="usesAirPurifier != null">#{usesAirPurifier},</if>
+            <if test="usesVacuumCleaner != null">#{usesVacuumCleaner},</if>
+            <if test="avoidanceQuality != null">#{avoidanceQuality},</if>
+         </trim>
+    </insert>
+
+    <update id="updateSurveyEnvironmentExposure" parameterType="SurveyEnvironmentExposure">
+        update survey_environment_exposure
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="surveyId != null">survey_id = #{surveyId},</if>
+            <if test="houseType != null">house_type = #{houseType},</if>
+            <if test="buildingMaterial != null">building_material = #{buildingMaterial},</if>
+            <if test="ventilationFreq != null">ventilation_freq = #{ventilationFreq},</if>
+            <if test="acUsageSeason != null">ac_usage_season = #{acUsageSeason},</if>
+            <if test="acUsageFreq != null">ac_usage_freq = #{acUsageFreq},</if>
+            <if test="acTempSetting != null">ac_temp_setting = #{acTempSetting},</if>
+            <if test="acModes != null">ac_modes = #{acModes},</if>
+            <if test="acFilterCleaningFreq != null">ac_filter_cleaning_freq = #{acFilterCleaningFreq},</if>
+            <if test="heatingType != null">heating_type = #{heatingType},</if>
+            <if test="heatingTempRange != null">heating_temp_range = #{heatingTempRange},</if>
+            <if test="hasCarpet != null">has_carpet = #{hasCarpet},</if>
+            <if test="hasSoftToys != null">has_soft_toys = #{hasSoftToys},</if>
+            <if test="pm25Avg != null">pm25_avg = #{pm25Avg},</if>
+            <if test="pollenInfo != null">pollen_info = #{pollenInfo},</if>
+            <if test="formaldehydeLevel != null">formaldehyde_level = #{formaldehydeLevel},</if>
+            <if test="formaldehydeTestTime != null">formaldehyde_test_time = #{formaldehydeTestTime},</if>
+            <if test="dustMiteLevel != null">dust_mite_level = #{dustMiteLevel},</if>
+            <if test="otherAllergens != null">other_allergens = #{otherAllergens},</if>
+            <if test="exerciseFrequency != null">exercise_frequency = #{exerciseFrequency},</if>
+            <if test="exerciseDuration != null">exercise_duration = #{exerciseDuration},</if>
+            <if test="exerciseIntensity != null">exercise_intensity = #{exerciseIntensity},</if>
+            <if test="swimming != null">swimming = #{swimming},</if>
+            <if test="sleepHours != null">sleep_hours = #{sleepHours},</if>
+            <if test="insomnia != null">insomnia = #{insomnia},</if>
+            <if test="circadianDisruption != null">circadian_disruption = #{circadianDisruption},</if>
+            <if test="smokeExposureType != null">smoke_exposure_type = #{smokeExposureType},</if>
+            <if test="cleaningFreq != null">cleaning_freq = #{cleaningFreq},</if>
+            <if test="hasPets != null">has_pets = #{hasPets},</if>
+            <if test="petTypes != null">pet_types = #{petTypes},</if>
+            <if test="petCount != null">pet_count = #{petCount},</if>
+            <if test="livesWithSmoker != null">lives_with_smoker = #{livesWithSmoker},</if>
+            <if test="cookingFuel != null">cooking_fuel = #{cookingFuel},</if>
+            <if test="usesAirPurifier != null">uses_air_purifier = #{usesAirPurifier},</if>
+            <if test="usesVacuumCleaner != null">uses_vacuum_cleaner = #{usesVacuumCleaner},</if>
+            <if test="avoidanceQuality != null">avoidance_quality = #{avoidanceQuality},</if>
+        </trim>
+        where env_id = #{envId}
+    </update>
+
+    <delete id="deleteSurveyEnvironmentExposureByEnvId" parameterType="Long">
+        delete from survey_environment_exposure where env_id = #{envId}
+    </delete>
+
+    <delete id="deleteSurveyEnvironmentExposureByEnvIds" parameterType="String">
+        delete from survey_environment_exposure where env_id in 
+        <foreach item="envId" collection="array" open="(" separator="," close=")">
+            #{envId}
+        </foreach>
+    </delete>
+</mapper>

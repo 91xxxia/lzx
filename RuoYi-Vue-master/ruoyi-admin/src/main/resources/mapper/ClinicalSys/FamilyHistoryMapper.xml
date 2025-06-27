@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.ClinicalSys.mapper.FamilyHistoryMapper">
+    
+    <resultMap type="FamilyHistory" id="FamilyHistoryResult">
+        <result property="famId"    column="fam_id"    />
+        <result property="patientId"    column="patient_id"    />
+        <result property="relativeRelation"    column="relative_relation"    />
+        <result property="allergyDisease"    column="allergy_disease"    />
+    </resultMap>
+
+    <sql id="selectFamilyHistoryVo">
+        select fam_id, patient_id, relative_relation, allergy_disease from family_history
+    </sql>
+
+    <select id="selectFamilyHistoryList" parameterType="FamilyHistory" resultMap="FamilyHistoryResult">
+        <include refid="selectFamilyHistoryVo"/>
+        <where>  
+            <if test="patientId != null  and patientId != ''"> and patient_id = #{patientId}</if>
+        </where>
+    </select>
+    
+    <select id="selectFamilyHistoryByFamId" parameterType="Long" resultMap="FamilyHistoryResult">
+        <include refid="selectFamilyHistoryVo"/>
+        where fam_id = #{famId}
+    </select>
+
+    <insert id="insertFamilyHistory" parameterType="FamilyHistory" useGeneratedKeys="true" keyProperty="famId">
+        insert into family_history
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="patientId != null and patientId != ''">patient_id,</if>
+            <if test="relativeRelation != null">relative_relation,</if>
+            <if test="allergyDisease != null">allergy_disease,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="patientId != null and patientId != ''">#{patientId},</if>
+            <if test="relativeRelation != null">#{relativeRelation},</if>
+            <if test="allergyDisease != null">#{allergyDisease},</if>
+         </trim>
+    </insert>
+
+    <update id="updateFamilyHistory" parameterType="FamilyHistory">
+        update family_history
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="patientId != null and patientId != ''">patient_id = #{patientId},</if>
+            <if test="relativeRelation != null">relative_relation = #{relativeRelation},</if>
+            <if test="allergyDisease != null">allergy_disease = #{allergyDisease},</if>
+        </trim>
+        where fam_id = #{famId}
+    </update>
+
+    <delete id="deleteFamilyHistoryByFamId" parameterType="Long">
+        delete from family_history where fam_id = #{famId}
+    </delete>
+
+    <delete id="deleteFamilyHistoryByFamIds" parameterType="String">
+        delete from family_history where fam_id in 
+        <foreach item="famId" collection="array" open="(" separator="," close=")">
+            #{famId}
+        </foreach>
+    </delete>
+</mapper>

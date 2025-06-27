@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.ClinicalSys.mapper.PatientsMapper">
+    
+    <resultMap type="Patients" id="PatientsResult">
+        <result property="patientId"    column="patient_id"    />
+        <result property="visitTime"    column="visit_time"    />
+        <result property="name"    column="name"    />
+        <result property="gender"    column="gender"    />
+        <result property="birthDate"    column="birth_date"    />
+        <result property="age"    column="age"    />
+        <result property="address"    column="address"    />
+        <result property="height"    column="height"    />
+        <result property="weight"    column="weight"    />
+        <result property="birthWeight"    column="birth_weight"    />
+        <result property="lifestyle"    column="lifestyle"    />
+    </resultMap>
+
+    <sql id="selectPatientsVo">
+        select patient_id, visit_time, name, gender, birth_date, age, address, height, weight, birth_weight, lifestyle from patients
+    </sql>
+
+    <select id="selectPatientsList" parameterType="Patients" resultMap="PatientsResult">
+        <include refid="selectPatientsVo"/>
+        <where>  
+            <if test="patientId != null  and patientId != ''"> and patient_id = #{patientId}</if>
+            <if test="name != null  and name != ''"> and name like concat('%', #{name}, '%')</if>
+        </where>
+    </select>
+    
+    <select id="selectPatientsByPatientId" parameterType="String" resultMap="PatientsResult">
+        <include refid="selectPatientsVo"/>
+        where patient_id = #{patientId}
+    </select>
+
+    <insert id="insertPatients" parameterType="Patients">
+        insert into patients
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="patientId != null and patientId != ''">patient_id,</if>
+            <if test="visitTime != null">visit_time,</if>
+            <if test="name != null">name,</if>
+            <if test="gender != null">gender,</if>
+            <if test="birthDate != null">birth_date,</if>
+            <if test="age != null">age,</if>
+            <if test="address != null">address,</if>
+            <if test="height != null">height,</if>
+            <if test="weight != null">weight,</if>
+            <if test="birthWeight != null">birth_weight,</if>
+            <if test="lifestyle != null">lifestyle,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="patientId != null and patientId != ''">#{patientId},</if>
+            <if test="visitTime != null">#{visitTime},</if>
+            <if test="name != null">#{name},</if>
+            <if test="gender != null">#{gender},</if>
+            <if test="birthDate != null">#{birthDate},</if>
+            <if test="age != null">#{age},</if>
+            <if test="address != null">#{address},</if>
+            <if test="height != null">#{height},</if>
+            <if test="weight != null">#{weight},</if>
+            <if test="birthWeight != null">#{birthWeight},</if>
+            <if test="lifestyle != null">#{lifestyle},</if>
+         </trim>
+    </insert>
+
+    <update id="updatePatients" parameterType="Patients">
+        update patients
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="visitTime != null">visit_time = #{visitTime},</if>
+            <if test="name != null">name = #{name},</if>
+            <if test="gender != null">gender = #{gender},</if>
+            <if test="birthDate != null">birth_date = #{birthDate},</if>
+            <if test="age != null">age = #{age},</if>
+            <if test="address != null">address = #{address},</if>
+            <if test="height != null">height = #{height},</if>
+            <if test="weight != null">weight = #{weight},</if>
+            <if test="birthWeight != null">birth_weight = #{birthWeight},</if>
+            <if test="lifestyle != null">lifestyle = #{lifestyle},</if>
+        </trim>
+        where patient_id = #{patientId}
+    </update>
+
+    <delete id="deletePatientsByPatientId" parameterType="String">
+        delete from patients where patient_id = #{patientId}
+    </delete>
+
+    <delete id="deletePatientsByPatientIds" parameterType="String">
+        delete from patients where patient_id in 
+        <foreach item="patientId" collection="array" open="(" separator="," close=")">
+            #{patientId}
+        </foreach>
+    </delete>
+</mapper>

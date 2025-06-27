@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.ClinicalSys.mapper.ContactsMapper">
+    
+    <resultMap type="Contacts" id="ContactsResult">
+        <result property="contactId"    column="contact_id"    />
+        <result property="patientId"    column="patient_id"    />
+        <result property="phone"    column="phone"    />
+        <result property="emergencyContact"    column="emergency_contact"    />
+        <result property="relationship"    column="relationship"    />
+    </resultMap>
+
+    <sql id="selectContactsVo">
+        select contact_id, patient_id, phone, emergency_contact, relationship from contacts
+    </sql>
+
+    <select id="selectContactsList" parameterType="Contacts" resultMap="ContactsResult">
+        <include refid="selectContactsVo"/>
+        <where>  
+            <if test="patientId != null  and patientId != ''"> and patient_id = #{patientId}</if>
+        </where>
+    </select>
+    
+    <select id="selectContactsByContactId" parameterType="Long" resultMap="ContactsResult">
+        <include refid="selectContactsVo"/>
+        where contact_id = #{contactId}
+    </select>
+
+    <insert id="insertContacts" parameterType="Contacts" useGeneratedKeys="true" keyProperty="contactId">
+        insert into contacts
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="patientId != null and patientId != ''">patient_id,</if>
+            <if test="phone != null">phone,</if>
+            <if test="emergencyContact != null">emergency_contact,</if>
+            <if test="relationship != null">relationship,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="patientId != null and patientId != ''">#{patientId},</if>
+            <if test="phone != null">#{phone},</if>
+            <if test="emergencyContact != null">#{emergencyContact},</if>
+            <if test="relationship != null">#{relationship},</if>
+         </trim>
+    </insert>
+
+    <update id="updateContacts" parameterType="Contacts">
+        update contacts
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="patientId != null and patientId != ''">patient_id = #{patientId},</if>
+            <if test="phone != null">phone = #{phone},</if>
+            <if test="emergencyContact != null">emergency_contact = #{emergencyContact},</if>
+            <if test="relationship != null">relationship = #{relationship},</if>
+        </trim>
+        where contact_id = #{contactId}
+    </update>
+
+    <delete id="deleteContactsByContactId" parameterType="Long">
+        delete from contacts where contact_id = #{contactId}
+    </delete>
+
+    <delete id="deleteContactsByContactIds" parameterType="String">
+        delete from contacts where contact_id in 
+        <foreach item="contactId" collection="array" open="(" separator="," close=")">
+            #{contactId}
+        </foreach>
+    </delete>
+</mapper>

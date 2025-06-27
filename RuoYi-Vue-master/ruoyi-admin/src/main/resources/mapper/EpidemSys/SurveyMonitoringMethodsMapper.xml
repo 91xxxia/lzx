@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.EpidemSys.mapper.SurveyMonitoringMethodsMapper">
+    
+    <resultMap type="SurveyMonitoringMethods" id="SurveyMonitoringMethodsResult">
+        <result property="methodId"    column="method_id"    />
+        <result property="surveyId"    column="survey_id"    />
+        <result property="pm25DetectorModel"    column="pm25_detector_model"    />
+        <result property="pollenGravitySettle"    column="pollen_gravity_settle"    />
+        <result property="pollenVolumeSampling"    column="pollen_volume_sampling"    />
+        <result property="pollenMolecularDetection"    column="pollen_molecular_detection"    />
+        <result property="miteProteinDetection"    column="mite_protein_detection"    />
+        <result property="miteMicroscopeCount"    column="mite_microscope_count"    />
+        <result property="mitePcr"    column="mite_pcr"    />
+        <result property="miteMetabolite"    column="mite_metabolite"    />
+        <result property="miteAirSampling"    column="mite_air_sampling"    />
+        <result property="miteSensorTech"    column="mite_sensor_tech"    />
+    </resultMap>
+
+    <sql id="selectSurveyMonitoringMethodsVo">
+        select method_id, survey_id, pm25_detector_model, pollen_gravity_settle, pollen_volume_sampling, pollen_molecular_detection, mite_protein_detection, mite_microscope_count, mite_pcr, mite_metabolite, mite_air_sampling, mite_sensor_tech from survey_monitoring_methods
+    </sql>
+
+    <select id="selectSurveyMonitoringMethodsList" parameterType="SurveyMonitoringMethods" resultMap="SurveyMonitoringMethodsResult">
+        <include refid="selectSurveyMonitoringMethodsVo"/>
+        <where>  
+            <if test="surveyId != null "> and survey_id = #{surveyId}</if>
+        </where>
+    </select>
+    
+    <select id="selectSurveyMonitoringMethodsByMethodId" parameterType="Long" resultMap="SurveyMonitoringMethodsResult">
+        <include refid="selectSurveyMonitoringMethodsVo"/>
+        where method_id = #{methodId}
+    </select>
+
+    <insert id="insertSurveyMonitoringMethods" parameterType="SurveyMonitoringMethods" useGeneratedKeys="true" keyProperty="methodId">
+        insert into survey_monitoring_methods
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="surveyId != null">survey_id,</if>
+            <if test="pm25DetectorModel != null">pm25_detector_model,</if>
+            <if test="pollenGravitySettle != null">pollen_gravity_settle,</if>
+            <if test="pollenVolumeSampling != null">pollen_volume_sampling,</if>
+            <if test="pollenMolecularDetection != null">pollen_molecular_detection,</if>
+            <if test="miteProteinDetection != null">mite_protein_detection,</if>
+            <if test="miteMicroscopeCount != null">mite_microscope_count,</if>
+            <if test="mitePcr != null">mite_pcr,</if>
+            <if test="miteMetabolite != null">mite_metabolite,</if>
+            <if test="miteAirSampling != null">mite_air_sampling,</if>
+            <if test="miteSensorTech != null">mite_sensor_tech,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="surveyId != null">#{surveyId},</if>
+            <if test="pm25DetectorModel != null">#{pm25DetectorModel},</if>
+            <if test="pollenGravitySettle != null">#{pollenGravitySettle},</if>
+            <if test="pollenVolumeSampling != null">#{pollenVolumeSampling},</if>
+            <if test="pollenMolecularDetection != null">#{pollenMolecularDetection},</if>
+            <if test="miteProteinDetection != null">#{miteProteinDetection},</if>
+            <if test="miteMicroscopeCount != null">#{miteMicroscopeCount},</if>
+            <if test="mitePcr != null">#{mitePcr},</if>
+            <if test="miteMetabolite != null">#{miteMetabolite},</if>
+            <if test="miteAirSampling != null">#{miteAirSampling},</if>
+            <if test="miteSensorTech != null">#{miteSensorTech},</if>
+         </trim>
+    </insert>
+
+    <update id="updateSurveyMonitoringMethods" parameterType="SurveyMonitoringMethods">
+        update survey_monitoring_methods
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="surveyId != null">survey_id = #{surveyId},</if>
+            <if test="pm25DetectorModel != null">pm25_detector_model = #{pm25DetectorModel},</if>
+            <if test="pollenGravitySettle != null">pollen_gravity_settle = #{pollenGravitySettle},</if>
+            <if test="pollenVolumeSampling != null">pollen_volume_sampling = #{pollenVolumeSampling},</if>
+            <if test="pollenMolecularDetection != null">pollen_molecular_detection = #{pollenMolecularDetection},</if>
+            <if test="miteProteinDetection != null">mite_protein_detection = #{miteProteinDetection},</if>
+            <if test="miteMicroscopeCount != null">mite_microscope_count = #{miteMicroscopeCount},</if>
+            <if test="mitePcr != null">mite_pcr = #{mitePcr},</if>
+            <if test="miteMetabolite != null">mite_metabolite = #{miteMetabolite},</if>
+            <if test="miteAirSampling != null">mite_air_sampling = #{miteAirSampling},</if>
+            <if test="miteSensorTech != null">mite_sensor_tech = #{miteSensorTech},</if>
+        </trim>
+        where method_id = #{methodId}
+    </update>
+
+    <delete id="deleteSurveyMonitoringMethodsByMethodId" parameterType="Long">
+        delete from survey_monitoring_methods where method_id = #{methodId}
+    </delete>
+
+    <delete id="deleteSurveyMonitoringMethodsByMethodIds" parameterType="String">
+        delete from survey_monitoring_methods where method_id in 
+        <foreach item="methodId" collection="array" open="(" separator="," close=")">
+            #{methodId}
+        </foreach>
+    </delete>
+</mapper>

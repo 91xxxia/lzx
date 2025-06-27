@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.EpidemSys.mapper.FamilyHistoryPrimaryMapper">
+    
+    <resultMap type="FamilyHistoryPrimary" id="FamilyHistoryPrimaryResult">
+        <result property="primId"    column="prim_id"    />
+        <result property="surveyId"    column="survey_id"    />
+        <result property="relation"    column="relation"    />
+        <result property="diseases"    column="diseases"    />
+    </resultMap>
+
+    <sql id="selectFamilyHistoryPrimaryVo">
+        select prim_id, survey_id, relation, diseases from family_history_primary
+    </sql>
+
+    <select id="selectFamilyHistoryPrimaryList" parameterType="FamilyHistoryPrimary" resultMap="FamilyHistoryPrimaryResult">
+        <include refid="selectFamilyHistoryPrimaryVo"/>
+        <where>  
+            <if test="surveyId != null "> and survey_id = #{surveyId}</if>
+        </where>
+    </select>
+    
+    <select id="selectFamilyHistoryPrimaryByPrimId" parameterType="Long" resultMap="FamilyHistoryPrimaryResult">
+        <include refid="selectFamilyHistoryPrimaryVo"/>
+        where prim_id = #{primId}
+    </select>
+
+    <insert id="insertFamilyHistoryPrimary" parameterType="FamilyHistoryPrimary" useGeneratedKeys="true" keyProperty="primId">
+        insert into family_history_primary
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="surveyId != null">survey_id,</if>
+            <if test="relation != null">relation,</if>
+            <if test="diseases != null">diseases,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="surveyId != null">#{surveyId},</if>
+            <if test="relation != null">#{relation},</if>
+            <if test="diseases != null">#{diseases},</if>
+         </trim>
+    </insert>
+
+    <update id="updateFamilyHistoryPrimary" parameterType="FamilyHistoryPrimary">
+        update family_history_primary
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="surveyId != null">survey_id = #{surveyId},</if>
+            <if test="relation != null">relation = #{relation},</if>
+            <if test="diseases != null">diseases = #{diseases},</if>
+        </trim>
+        where prim_id = #{primId}
+    </update>
+
+    <delete id="deleteFamilyHistoryPrimaryByPrimId" parameterType="Long">
+        delete from family_history_primary where prim_id = #{primId}
+    </delete>
+
+    <delete id="deleteFamilyHistoryPrimaryByPrimIds" parameterType="String">
+        delete from family_history_primary where prim_id in 
+        <foreach item="primId" collection="array" open="(" separator="," close=")">
+            #{primId}
+        </foreach>
+    </delete>
+</mapper>

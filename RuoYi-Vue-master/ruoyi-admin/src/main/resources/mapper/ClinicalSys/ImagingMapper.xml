@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.ClinicalSys.mapper.ImagingMapper">
+    
+    <resultMap type="Imaging" id="ImagingResult">
+        <result property="imagingId"    column="imaging_id"    />
+        <result property="patientId"    column="patient_id"    />
+        <result property="imagingType"    column="imaging_type"    />
+        <result property="imagingDate"    column="imaging_date"    />
+        <result property="report"    column="report"    />
+    </resultMap>
+
+    <sql id="selectImagingVo">
+        select imaging_id, patient_id, imaging_type, imaging_date, report from imaging
+    </sql>
+
+    <select id="selectImagingList" parameterType="Imaging" resultMap="ImagingResult">
+        <include refid="selectImagingVo"/>
+        <where>  
+            <if test="patientId != null  and patientId != ''"> and patient_id = #{patientId}</if>
+        </where>
+    </select>
+    
+    <select id="selectImagingByImagingId" parameterType="Long" resultMap="ImagingResult">
+        <include refid="selectImagingVo"/>
+        where imaging_id = #{imagingId}
+    </select>
+
+    <insert id="insertImaging" parameterType="Imaging" useGeneratedKeys="true" keyProperty="imagingId">
+        insert into imaging
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="patientId != null">patient_id,</if>
+            <if test="imagingType != null">imaging_type,</if>
+            <if test="imagingDate != null">imaging_date,</if>
+            <if test="report != null">report,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="patientId != null">#{patientId},</if>
+            <if test="imagingType != null">#{imagingType},</if>
+            <if test="imagingDate != null">#{imagingDate},</if>
+            <if test="report != null">#{report},</if>
+         </trim>
+    </insert>
+
+    <update id="updateImaging" parameterType="Imaging">
+        update imaging
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="patientId != null">patient_id = #{patientId},</if>
+            <if test="imagingType != null">imaging_type = #{imagingType},</if>
+            <if test="imagingDate != null">imaging_date = #{imagingDate},</if>
+            <if test="report != null">report = #{report},</if>
+        </trim>
+        where imaging_id = #{imagingId}
+    </update>
+
+    <delete id="deleteImagingByImagingId" parameterType="Long">
+        delete from imaging where imaging_id = #{imagingId}
+    </delete>
+
+    <delete id="deleteImagingByImagingIds" parameterType="String">
+        delete from imaging where imaging_id in 
+        <foreach item="imagingId" collection="array" open="(" separator="," close=")">
+            #{imagingId}
+        </foreach>
+    </delete>
+</mapper>

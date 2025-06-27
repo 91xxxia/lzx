@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.ClinicalSys.mapper.MedicationsHistoryMapper">
+    
+    <resultMap type="MedicationsHistory" id="MedicationsHistoryResult">
+        <result property="medHisId"    column="med_his_id"    />
+        <result property="patientId"    column="patient_id"    />
+        <result property="medicationName"    column="medication_name"    />
+        <result property="durationDays"    column="duration_days"    />
+    </resultMap>
+
+    <sql id="selectMedicationsHistoryVo">
+        select med_his_id, patient_id, medication_name, duration_days from medications_history
+    </sql>
+
+    <select id="selectMedicationsHistoryList" parameterType="MedicationsHistory" resultMap="MedicationsHistoryResult">
+        <include refid="selectMedicationsHistoryVo"/>
+        <where>  
+            <if test="patientId != null  and patientId != ''"> and patient_id = #{patientId}</if>
+        </where>
+    </select>
+    
+    <select id="selectMedicationsHistoryByMedHisId" parameterType="Long" resultMap="MedicationsHistoryResult">
+        <include refid="selectMedicationsHistoryVo"/>
+        where med_his_id = #{medHisId}
+    </select>
+
+    <insert id="insertMedicationsHistory" parameterType="MedicationsHistory" useGeneratedKeys="true" keyProperty="medHisId">
+        insert into medications_history
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="patientId != null and patientId != ''">patient_id,</if>
+            <if test="medicationName != null">medication_name,</if>
+            <if test="durationDays != null">duration_days,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="patientId != null and patientId != ''">#{patientId},</if>
+            <if test="medicationName != null">#{medicationName},</if>
+            <if test="durationDays != null">#{durationDays},</if>
+         </trim>
+    </insert>
+
+    <update id="updateMedicationsHistory" parameterType="MedicationsHistory">
+        update medications_history
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="patientId != null and patientId != ''">patient_id = #{patientId},</if>
+            <if test="medicationName != null">medication_name = #{medicationName},</if>
+            <if test="durationDays != null">duration_days = #{durationDays},</if>
+        </trim>
+        where med_his_id = #{medHisId}
+    </update>
+
+    <delete id="deleteMedicationsHistoryByMedHisId" parameterType="Long">
+        delete from medications_history where med_his_id = #{medHisId}
+    </delete>
+
+    <delete id="deleteMedicationsHistoryByMedHisIds" parameterType="String">
+        delete from medications_history where med_his_id in 
+        <foreach item="medHisId" collection="array" open="(" separator="," close=")">
+            #{medHisId}
+        </foreach>
+    </delete>
+</mapper>

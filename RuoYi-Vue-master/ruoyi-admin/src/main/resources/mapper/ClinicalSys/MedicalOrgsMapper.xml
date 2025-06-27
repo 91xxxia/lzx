@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.ClinicalSys.mapper.MedicalOrgsMapper">
+    
+    <resultMap type="MedicalOrgs" id="MedicalOrgsResult">
+        <result property="orgId"    column="org_id"    />
+        <result property="patientId"    column="patient_id"    />
+        <result property="hospitalName"    column="hospital_name"    />
+        <result property="departmentName"    column="department_name"    />
+    </resultMap>
+
+    <sql id="selectMedicalOrgsVo">
+        select org_id, patient_id, hospital_name, department_name from medical_orgs
+    </sql>
+
+    <select id="selectMedicalOrgsList" parameterType="MedicalOrgs" resultMap="MedicalOrgsResult">
+        <include refid="selectMedicalOrgsVo"/>
+        <where>  
+            <if test="patientId != null  and patientId != ''"> and patient_id = #{patientId}</if>
+        </where>
+    </select>
+    
+    <select id="selectMedicalOrgsByOrgId" parameterType="Long" resultMap="MedicalOrgsResult">
+        <include refid="selectMedicalOrgsVo"/>
+        where org_id = #{orgId}
+    </select>
+
+    <insert id="insertMedicalOrgs" parameterType="MedicalOrgs" useGeneratedKeys="true" keyProperty="orgId">
+        insert into medical_orgs
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="patientId != null and patientId != ''">patient_id,</if>
+            <if test="hospitalName != null">hospital_name,</if>
+            <if test="departmentName != null">department_name,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="patientId != null and patientId != ''">#{patientId},</if>
+            <if test="hospitalName != null">#{hospitalName},</if>
+            <if test="departmentName != null">#{departmentName},</if>
+         </trim>
+    </insert>
+
+    <update id="updateMedicalOrgs" parameterType="MedicalOrgs">
+        update medical_orgs
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="patientId != null and patientId != ''">patient_id = #{patientId},</if>
+            <if test="hospitalName != null">hospital_name = #{hospitalName},</if>
+            <if test="departmentName != null">department_name = #{departmentName},</if>
+        </trim>
+        where org_id = #{orgId}
+    </update>
+
+    <delete id="deleteMedicalOrgsByOrgId" parameterType="Long">
+        delete from medical_orgs where org_id = #{orgId}
+    </delete>
+
+    <delete id="deleteMedicalOrgsByOrgIds" parameterType="String">
+        delete from medical_orgs where org_id in 
+        <foreach item="orgId" collection="array" open="(" separator="," close=")">
+            #{orgId}
+        </foreach>
+    </delete>
+</mapper>

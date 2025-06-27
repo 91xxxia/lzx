@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.ClinicalSys.mapper.LungTestsMapper">
+    
+    <resultMap type="LungTests" id="LungTestsResult">
+        <result property="lungId"    column="lung_id"    />
+        <result property="patientId"    column="patient_id"    />
+        <result property="testName"    column="test_name"    />
+        <result property="testDate"    column="test_date"    />
+        <result property="testResult"    column="test_result"    />
+    </resultMap>
+
+    <sql id="selectLungTestsVo">
+        select lung_id, patient_id, test_name, test_date, test_result from lung_tests
+    </sql>
+
+    <select id="selectLungTestsList" parameterType="LungTests" resultMap="LungTestsResult">
+        <include refid="selectLungTestsVo"/>
+        <where>  
+            <if test="patientId != null  and patientId != ''"> and patient_id = #{patientId}</if>
+        </where>
+    </select>
+    
+    <select id="selectLungTestsByLungId" parameterType="Long" resultMap="LungTestsResult">
+        <include refid="selectLungTestsVo"/>
+        where lung_id = #{lungId}
+    </select>
+
+    <insert id="insertLungTests" parameterType="LungTests" useGeneratedKeys="true" keyProperty="lungId">
+        insert into lung_tests
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="patientId != null and patientId != ''">patient_id,</if>
+            <if test="testName != null">test_name,</if>
+            <if test="testDate != null">test_date,</if>
+            <if test="testResult != null">test_result,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="patientId != null and patientId != ''">#{patientId},</if>
+            <if test="testName != null">#{testName},</if>
+            <if test="testDate != null">#{testDate},</if>
+            <if test="testResult != null">#{testResult},</if>
+         </trim>
+    </insert>
+
+    <update id="updateLungTests" parameterType="LungTests">
+        update lung_tests
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="patientId != null and patientId != ''">patient_id = #{patientId},</if>
+            <if test="testName != null">test_name = #{testName},</if>
+            <if test="testDate != null">test_date = #{testDate},</if>
+            <if test="testResult != null">test_result = #{testResult},</if>
+        </trim>
+        where lung_id = #{lungId}
+    </update>
+
+    <delete id="deleteLungTestsByLungId" parameterType="Long">
+        delete from lung_tests where lung_id = #{lungId}
+    </delete>
+
+    <delete id="deleteLungTestsByLungIds" parameterType="String">
+        delete from lung_tests where lung_id in 
+        <foreach item="lungId" collection="array" open="(" separator="," close=")">
+            #{lungId}
+        </foreach>
+    </delete>
+</mapper>
