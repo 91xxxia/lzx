@@ -6,10 +6,10 @@ import com.ruoyi.common.annotation.Excel;
 import com.ruoyi.common.core.domain.BaseEntity;
 
 /**
- * 学习/工作环境号对象 survey_learning_work_env
+ * 学习/工作环境信息对象 survey_learning_work_env
  * 
  * @author ruoyi
- * @date 2025-06-27
+ * @date 2025-06-28
  */
 public class SurveyLearningWorkEnv extends BaseEntity
 {
@@ -22,24 +22,24 @@ public class SurveyLearningWorkEnv extends BaseEntity
     @Excel(name = "患者号")
     private Long surveyId;
 
-    /** 位置类型 */
-    @Excel(name = "位置类型")
+    /** 单位位置 */
+    @Excel(name = "单位位置")
     private String locationType;
 
     /** 通风情况 */
     @Excel(name = "通风情况")
     private String ventilationQuality;
 
-    /** pm2.5年均值 */
-    @Excel(name = "pm2.5年均值")
+    /** PM2.5年均值 */
+    @Excel(name = "PM2.5年均值")
     private Long pm25Annual;
 
     /** 花粉季节性峰值浓度 */
     @Excel(name = "花粉季节性峰值浓度")
     private Long pollenPeakConcentration;
 
-    /** 花粉种类 */
-    @Excel(name = "花粉种类")
+    /** 花粉类型 */
+    @Excel(name = "花粉类型")
     private String pollenTypes;
 
     /** 甲醛检测值 */
@@ -50,8 +50,8 @@ public class SurveyLearningWorkEnv extends BaseEntity
     @Excel(name = "有无地毯")
     private Integer hasCarpet;
 
-    /** 布艺家具使用 */
-    @Excel(name = "布艺家具使用")
+    /** 有无布艺家具 */
+    @Excel(name = "有无布艺家具")
     private Integer hasFabricFurniture;
 
     public void setLearnEnvId(Long learnEnvId) 

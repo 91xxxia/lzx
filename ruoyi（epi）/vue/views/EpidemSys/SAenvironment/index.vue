@@ -23,7 +23,7 @@
           icon="el-icon-plus"
           size="mini"
           @click="handleAdd"
-          v-hasPermi="['EpidemSys:SLenv:add']"
+          v-hasPermi="['EpidemSys:SAenvironment:add']"
         >新增</el-button>
       </el-col>
       <el-col :span="1.5">
@@ -34,7 +34,7 @@
           size="mini"
           :disabled="single"
           @click="handleUpdate"
-          v-hasPermi="['EpidemSys:SLenv:edit']"
+          v-hasPermi="['EpidemSys:SAenvironment:edit']"
         >修改</el-button>
       </el-col>
       <el-col :span="1.5">
@@ -45,7 +45,7 @@
           size="mini"
           :disabled="multiple"
           @click="handleDelete"
-          v-hasPermi="['EpidemSys:SLenv:remove']"
+          v-hasPermi="['EpidemSys:SAenvironment:remove']"
         >删除</el-button>
       </el-col>
       <el-col :span="1.5">
@@ -55,24 +55,28 @@
           icon="el-icon-download"
           size="mini"
           @click="handleExport"
-          v-hasPermi="['EpidemSys:SLenv:export']"
+          v-hasPermi="['EpidemSys:SAenvironment:export']"
         >导出</el-button>
       </el-col>
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
     </el-row>
 
-    <el-table v-loading="loading" :data="SLenvList" @selection-change="handleSelectionChange">
+    <el-table v-loading="loading" :data="SAenvironmentList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center" />
-      <el-table-column label="学习/工作环境号" align="center" prop="learnEnvId" />
+      <el-table-column label="城乡环境号" align="center" prop="envAreaId" />
       <el-table-column label="患者号" align="center" prop="surveyId" />
-      <el-table-column label="位置类型" align="center" prop="locationType" />
-      <el-table-column label="通风情况" align="center" prop="ventilationQuality" />
-      <el-table-column label="pm2.5年均值" align="center" prop="pm25Annual" />
-      <el-table-column label="花粉季节性峰值浓度" align="center" prop="pollenPeakConcentration" />
-      <el-table-column label="花粉种类" align="center" prop="pollenTypes" />
-      <el-table-column label="甲醛检测值" align="center" prop="formaldehydeLevelWorkplace" />
-      <el-table-column label="有无地毯" align="center" prop="hasCarpet" />
-      <el-table-column label="布艺家具使用" align="center" prop="hasFabricFurniture" />
+      <el-table-column label="城市PM2.5年均浓度" align="center" prop="urbanPm25Avg" />
+      <el-table-column label="城市PM2.5季节性变化" align="center" prop="urbanPm25Seasonal" />
+      <el-table-column label="城市花粉类型" align="center" prop="urbanPollenTypes" />
+      <el-table-column label="城市花粉月度分布" align="center" prop="urbanPollenDistribution" />
+      <el-table-column label="城市花粉峰值浓度" align="center" prop="urbanPollenPeak" />
+      <el-table-column label="城市其他污染物" align="center" prop="urbanPollutants" />
+      <el-table-column label="城市监测点" align="center" prop="urbanMonitorLocation" />
+      <el-table-column label="农村PM2.5燃烧期浓度" align="center" prop="ruralPm25Burning" />
+      <el-table-column label="农村Pm2.5年均值" align="center" prop="ruralPm25Avg" />
+      <el-table-column label="农村花粉类型" align="center" prop="ruralPollenTypes" />
+      <el-table-column label="农村生物质燃料导致室内污染" align="center" prop="ruralBiomassPollution" />
+      <el-table-column label="农村饮用水类型" align="center" prop="ruralWaterSource" />
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button
@@ -80,14 +84,14 @@
             type="text"
             icon="el-icon-edit"
             @click="handleUpdate(scope.row)"
-            v-hasPermi="['EpidemSys:SLenv:edit']"
+            v-hasPermi="['EpidemSys:SAenvironment:edit']"
           >修改</el-button>
           <el-button
             size="mini"
             type="text"
             icon="el-icon-delete"
             @click="handleDelete(scope.row)"
-            v-hasPermi="['EpidemSys:SLenv:remove']"
+            v-hasPermi="['EpidemSys:SAenvironment:remove']"
           >删除</el-button>
         </template>
       </el-table-column>
@@ -101,29 +105,47 @@
       @pagination="getList"
     />
 
-    <!-- 添加或修改学习/工作环境号对话框 -->
+    <!-- 添加或修改城乡环境监测数据对话框 -->
     <el-dialog :title="title" :visible.sync="open" width="500px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
         <el-form-item label="患者号" prop="surveyId">
           <el-input v-model="form.surveyId" placeholder="请输入患者号" />
         </el-form-item>
-        <el-form-item label="pm2.5年均值" prop="pm25Annual">
-          <el-input v-model="form.pm25Annual" placeholder="请输入pm2.5年均值" />
+        <el-form-item label="城市PM2.5年均浓度" prop="urbanPm25Avg">
+          <el-input v-model="form.urbanPm25Avg" placeholder="请输入城市PM2.5年均浓度" />
         </el-form-item>
-        <el-form-item label="花粉季节性峰值浓度" prop="pollenPeakConcentration">
-          <el-input v-model="form.pollenPeakConcentration" placeholder="请输入花粉季节性峰值浓度" />
+        <el-form-item label="城市PM2.5季节性变化" prop="urbanPm25Seasonal">
+          <el-input v-model="form.urbanPm25Seasonal" type="textarea" placeholder="请输入内容" />
         </el-form-item>
-        <el-form-item label="花粉种类" prop="pollenTypes">
-          <el-input v-model="form.pollenTypes" type="textarea" placeholder="请输入内容" />
+        <el-form-item label="城市花粉类型" prop="urbanPollenTypes">
+          <el-input v-model="form.urbanPollenTypes" type="textarea" placeholder="请输入内容" />
         </el-form-item>
-        <el-form-item label="甲醛检测值" prop="formaldehydeLevelWorkplace">
-          <el-input v-model="form.formaldehydeLevelWorkplace" placeholder="请输入甲醛检测值" />
+        <el-form-item label="城市花粉月度分布" prop="urbanPollenDistribution">
+          <el-input v-model="form.urbanPollenDistribution" type="textarea" placeholder="请输入内容" />
         </el-form-item>
-        <el-form-item label="有无地毯" prop="hasCarpet">
-          <el-input v-model="form.hasCarpet" placeholder="请输入有无地毯" />
+        <el-form-item label="城市花粉峰值浓度" prop="urbanPollenPeak">
+          <el-input v-model="form.urbanPollenPeak" placeholder="请输入城市花粉峰值浓度" />
         </el-form-item>
-        <el-form-item label="布艺家具使用" prop="hasFabricFurniture">
-          <el-input v-model="form.hasFabricFurniture" placeholder="请输入布艺家具使用" />
+        <el-form-item label="城市其他污染物" prop="urbanPollutants">
+          <el-input v-model="form.urbanPollutants" type="textarea" placeholder="请输入内容" />
+        </el-form-item>
+        <el-form-item label="城市监测点" prop="urbanMonitorLocation">
+          <el-input v-model="form.urbanMonitorLocation" placeholder="请输入城市监测点" />
+        </el-form-item>
+        <el-form-item label="农村PM2.5燃烧期浓度" prop="ruralPm25Burning">
+          <el-input v-model="form.ruralPm25Burning" placeholder="请输入农村PM2.5燃烧期浓度" />
+        </el-form-item>
+        <el-form-item label="农村Pm2.5年均值" prop="ruralPm25Avg">
+          <el-input v-model="form.ruralPm25Avg" placeholder="请输入农村Pm2.5年均值" />
+        </el-form-item>
+        <el-form-item label="农村花粉类型" prop="ruralPollenTypes">
+          <el-input v-model="form.ruralPollenTypes" type="textarea" placeholder="请输入内容" />
+        </el-form-item>
+        <el-form-item label="农村生物质燃料导致室内污染" prop="ruralBiomassPollution">
+          <el-input v-model="form.ruralBiomassPollution" placeholder="请输入农村生物质燃料导致室内污染" />
+        </el-form-item>
+        <el-form-item label="农村饮用水类型" prop="ruralWaterSource">
+          <el-input v-model="form.ruralWaterSource" placeholder="请输入农村饮用水类型" />
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -135,10 +157,10 @@
 </template>
 
 <script>
-import { listSLenv, getSLenv, delSLenv, addSLenv, updateSLenv } from "@/api/EpidemSys/SLenv"
+import { listSAenvironment, getSAenvironment, delSAenvironment, addSAenvironment, updateSAenvironment } from "@/api/EpidemSys/SAenvironment"
 
 export default {
-  name: "SLenv",
+  name: "SAenvironment",
   data() {
     return {
       // 遮罩层
@@ -153,8 +175,8 @@ export default {
       showSearch: true,
       // 总条数
       total: 0,
-      // 学习/工作环境号表格数据
-      SLenvList: [],
+      // 城乡环境监测数据表格数据
+      SAenvironmentList: [],
       // 弹出层标题
       title: "",
       // 是否显示弹出层
@@ -179,11 +201,11 @@ export default {
     this.getList()
   },
   methods: {
-    /** 查询学习/工作环境号列表 */
+    /** 查询城乡环境监测数据列表 */
     getList() {
       this.loading = true
-      listSLenv(this.queryParams).then(response => {
-        this.SLenvList = response.rows
+      listSAenvironment(this.queryParams).then(response => {
+        this.SAenvironmentList = response.rows
         this.total = response.total
         this.loading = false
       })
@@ -196,16 +218,20 @@ export default {
     // 表单重置
     reset() {
       this.form = {
-        learnEnvId: null,
+        envAreaId: null,
         surveyId: null,
-        locationType: null,
-        ventilationQuality: null,
-        pm25Annual: null,
-        pollenPeakConcentration: null,
-        pollenTypes: null,
-        formaldehydeLevelWorkplace: null,
-        hasCarpet: null,
-        hasFabricFurniture: null
+        urbanPm25Avg: null,
+        urbanPm25Seasonal: null,
+        urbanPollenTypes: null,
+        urbanPollenDistribution: null,
+        urbanPollenPeak: null,
+        urbanPollutants: null,
+        urbanMonitorLocation: null,
+        ruralPm25Burning: null,
+        ruralPm25Avg: null,
+        ruralPollenTypes: null,
+        ruralBiomassPollution: null,
+        ruralWaterSource: null
       }
       this.resetForm("form")
     },
@@ -221,7 +247,7 @@ export default {
     },
     // 多选框选中数据
     handleSelectionChange(selection) {
-      this.ids = selection.map(item => item.learnEnvId)
+      this.ids = selection.map(item => item.envAreaId)
       this.single = selection.length!==1
       this.multiple = !selection.length
     },
@@ -229,30 +255,30 @@ export default {
     handleAdd() {
       this.reset()
       this.open = true
-      this.title = "添加学习/工作环境号"
+      this.title = "添加城乡环境监测数据"
     },
     /** 修改按钮操作 */
     handleUpdate(row) {
       this.reset()
-      const learnEnvId = row.learnEnvId || this.ids
-      getSLenv(learnEnvId).then(response => {
+      const envAreaId = row.envAreaId || this.ids
+      getSAenvironment(envAreaId).then(response => {
         this.form = response.data
         this.open = true
-        this.title = "修改学习/工作环境号"
+        this.title = "修改城乡环境监测数据"
       })
     },
     /** 提交按钮 */
     submitForm() {
       this.$refs["form"].validate(valid => {
         if (valid) {
-          if (this.form.learnEnvId != null) {
-            updateSLenv(this.form).then(response => {
+          if (this.form.envAreaId != null) {
+            updateSAenvironment(this.form).then(response => {
               this.$modal.msgSuccess("修改成功")
               this.open = false
               this.getList()
             })
           } else {
-            addSLenv(this.form).then(response => {
+            addSAenvironment(this.form).then(response => {
               this.$modal.msgSuccess("新增成功")
               this.open = false
               this.getList()
@@ -263,9 +289,9 @@ export default {
     },
     /** 删除按钮操作 */
     handleDelete(row) {
-      const learnEnvIds = row.learnEnvId || this.ids
-      this.$modal.confirm('是否确认删除学习/工作环境号编号为"' + learnEnvIds + '"的数据项？').then(function() {
-        return delSLenv(learnEnvIds)
+      const envAreaIds = row.envAreaId || this.ids
+      this.$modal.confirm('是否确认删除城乡环境监测数据编号为"' + envAreaIds + '"的数据项？').then(function() {
+        return delSAenvironment(envAreaIds)
       }).then(() => {
         this.getList()
         this.$modal.msgSuccess("删除成功")
@@ -273,9 +299,9 @@ export default {
     },
     /** 导出按钮操作 */
     handleExport() {
-      this.download('EpidemSys/SLenv/export', {
+      this.download('EpidemSys/SAenvironment/export', {
         ...this.queryParams
-      }, `SLenv_${new Date().getTime()}.xlsx`)
+      }, `SAenvironment_${new Date().getTime()}.xlsx`)
     }
   }
 }

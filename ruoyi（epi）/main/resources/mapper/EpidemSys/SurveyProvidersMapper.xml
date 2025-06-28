@@ -19,7 +19,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <include refid="selectSurveyProvidersVo"/>
         <where>  
             <if test="surveyId != null "> and survey_id = #{surveyId}</if>
-            <if test="name != null  and name != ''"> and name like concat('%', #{name}, '%')</if>
         </where>
     </select>
     

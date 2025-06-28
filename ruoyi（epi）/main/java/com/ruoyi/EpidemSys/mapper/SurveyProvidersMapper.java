@@ -7,7 +7,7 @@ import com.ruoyi.EpidemSys.domain.SurveyProviders;
  * 医疗调查服务者标识信息Mapper接口
  * 
  * @author ruoyi
- * @date 2025-06-27
+ * @date 2025-06-28
  */
 public interface SurveyProvidersMapper 
 {

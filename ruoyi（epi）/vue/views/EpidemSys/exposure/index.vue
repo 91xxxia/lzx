@@ -73,11 +73,11 @@
       <el-table-column label="空调温度设定" align="center" prop="acTempSetting" />
       <el-table-column label="空调模式" align="center" prop="acModes" />
       <el-table-column label="空调滤网清洁频率" align="center" prop="acFilterCleaningFreq" />
-      <el-table-column label="暖气类型" align="center" prop="heatingType" />
+      <el-table-column label="暖气使用频率" align="center" prop="heatingType" />
       <el-table-column label="室温范围" align="center" prop="heatingTempRange" />
       <el-table-column label="有无地毯" align="center" prop="hasCarpet" />
       <el-table-column label="有无毛绒玩具" align="center" prop="hasSoftToys" />
-      <el-table-column label="pm2.5家庭年均浓度" align="center" prop="pm25Avg" />
+      <el-table-column label="PM2.5家庭年均浓度" align="center" prop="pm25Avg" />
       <el-table-column label="花粉信息" align="center" prop="pollenInfo" />
       <el-table-column label="甲醛浓度" align="center" prop="formaldehydeLevel" />
       <el-table-column label="甲醛检测时间" align="center" prop="formaldehydeTestTime" width="180">
@@ -94,7 +94,7 @@
       <el-table-column label="睡眠时长" align="center" prop="sleepHours" />
       <el-table-column label="有无失眠" align="center" prop="insomnia" />
       <el-table-column label="昼夜节律紊乱" align="center" prop="circadianDisruption" />
-      <el-table-column label="吸烟暴露类型" align="center" prop="smokeExposureType" />
+      <el-table-column label="烟酒暴露情况" align="center" prop="smokeExposureType" />
       <el-table-column label="清洁频率" align="center" prop="cleaningFreq" />
       <el-table-column label="有无宠物" align="center" prop="hasPets" />
       <el-table-column label="宠物类型" align="center" prop="petTypes" />
@@ -138,8 +138,35 @@
         <el-form-item label="患者号" prop="surveyId">
           <el-input v-model="form.surveyId" placeholder="请输入患者号" />
         </el-form-item>
+        <el-form-item label="房屋类型" prop="houseType">
+          <el-input v-model="form.houseType" placeholder="请输入房屋类型" />
+        </el-form-item>
+        <el-form-item label="建筑材料" prop="buildingMaterial">
+          <el-input v-model="form.buildingMaterial" placeholder="请输入建筑材料" />
+        </el-form-item>
+        <el-form-item label="通风频率" prop="ventilationFreq">
+          <el-input v-model="form.ventilationFreq" placeholder="请输入通风频率" />
+        </el-form-item>
+        <el-form-item label="空调使用季节" prop="acUsageSeason">
+          <el-input v-model="form.acUsageSeason" placeholder="请输入空调使用季节" />
+        </el-form-item>
+        <el-form-item label="空调使用频率" prop="acUsageFreq">
+          <el-input v-model="form.acUsageFreq" placeholder="请输入空调使用频率" />
+        </el-form-item>
+        <el-form-item label="空调温度设定" prop="acTempSetting">
+          <el-input v-model="form.acTempSetting" placeholder="请输入空调温度设定" />
+        </el-form-item>
         <el-form-item label="空调模式" prop="acModes">
           <el-input v-model="form.acModes" type="textarea" placeholder="请输入内容" />
+        </el-form-item>
+        <el-form-item label="空调滤网清洁频率" prop="acFilterCleaningFreq">
+          <el-input v-model="form.acFilterCleaningFreq" placeholder="请输入空调滤网清洁频率" />
+        </el-form-item>
+        <el-form-item label="暖气使用频率" prop="heatingType">
+          <el-input v-model="form.heatingType" placeholder="请输入暖气使用频率" />
+        </el-form-item>
+        <el-form-item label="室温范围" prop="heatingTempRange">
+          <el-input v-model="form.heatingTempRange" placeholder="请输入室温范围" />
         </el-form-item>
         <el-form-item label="有无地毯" prop="hasCarpet">
           <el-input v-model="form.hasCarpet" placeholder="请输入有无地毯" />
@@ -147,8 +174,8 @@
         <el-form-item label="有无毛绒玩具" prop="hasSoftToys">
           <el-input v-model="form.hasSoftToys" placeholder="请输入有无毛绒玩具" />
         </el-form-item>
-        <el-form-item label="pm2.5家庭年均浓度" prop="pm25Avg">
-          <el-input v-model="form.pm25Avg" placeholder="请输入pm2.5家庭年均浓度" />
+        <el-form-item label="PM2.5家庭年均浓度" prop="pm25Avg">
+          <el-input v-model="form.pm25Avg" placeholder="请输入PM2.5家庭年均浓度" />
         </el-form-item>
         <el-form-item label="花粉信息" prop="pollenInfo">
           <el-input v-model="form.pollenInfo" type="textarea" placeholder="请输入内容" />
@@ -176,6 +203,9 @@
         <el-form-item label="运动时间" prop="exerciseDuration">
           <el-input v-model="form.exerciseDuration" placeholder="请输入运动时间" />
         </el-form-item>
+        <el-form-item label="运动强度" prop="exerciseIntensity">
+          <el-input v-model="form.exerciseIntensity" placeholder="请输入运动强度" />
+        </el-form-item>
         <el-form-item label="有无游泳" prop="swimming">
           <el-input v-model="form.swimming" placeholder="请输入有无游泳" />
         </el-form-item>
@@ -187,6 +217,12 @@
         </el-form-item>
         <el-form-item label="昼夜节律紊乱" prop="circadianDisruption">
           <el-input v-model="form.circadianDisruption" placeholder="请输入昼夜节律紊乱" />
+        </el-form-item>
+        <el-form-item label="烟酒暴露情况" prop="smokeExposureType">
+          <el-input v-model="form.smokeExposureType" placeholder="请输入烟酒暴露情况" />
+        </el-form-item>
+        <el-form-item label="清洁频率" prop="cleaningFreq">
+          <el-input v-model="form.cleaningFreq" placeholder="请输入清洁频率" />
         </el-form-item>
         <el-form-item label="有无宠物" prop="hasPets">
           <el-input v-model="form.hasPets" placeholder="请输入有无宠物" />
@@ -200,11 +236,17 @@
         <el-form-item label="吸烟者同居情况" prop="livesWithSmoker">
           <el-input v-model="form.livesWithSmoker" placeholder="请输入吸烟者同居情况" />
         </el-form-item>
+        <el-form-item label="烹饪燃料" prop="cookingFuel">
+          <el-input v-model="form.cookingFuel" placeholder="请输入烹饪燃料" />
+        </el-form-item>
         <el-form-item label="空气净化器使用" prop="usesAirPurifier">
           <el-input v-model="form.usesAirPurifier" placeholder="请输入空气净化器使用" />
         </el-form-item>
         <el-form-item label="吸尘器使用" prop="usesVacuumCleaner">
           <el-input v-model="form.usesVacuumCleaner" placeholder="请输入吸尘器使用" />
+        </el-form-item>
+        <el-form-item label="过敏源回避措施执行情况" prop="avoidanceQuality">
+          <el-input v-model="form.avoidanceQuality" placeholder="请输入过敏源回避措施执行情况" />
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">

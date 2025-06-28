@@ -22,22 +22,22 @@ import com.ruoyi.common.utils.poi.ExcelUtil;
 import com.ruoyi.common.core.page.TableDataInfo;
 
 /**
- * 家族环境Controller
+ * 家族环境居住相似性Controller
  * 
  * @author ruoyi
- * @date 2025-06-27
+ * @date 2025-06-28
  */
 @RestController
-@RequestMapping("/EpidemSys/env")
+@RequestMapping("/EpidemSys/SFenv")
 public class SurveyFamilyEnvController extends BaseController
 {
     @Autowired
     private ISurveyFamilyEnvService surveyFamilyEnvService;
 
     /**
-     * 查询家族环境列表
+     * 查询家族环境居住相似性列表
      */
-    @PreAuthorize("@ss.hasPermi('EpidemSys:env:list')")
+    @PreAuthorize("@ss.hasPermi('EpidemSys:SFenv:list')")
     @GetMapping("/list")
     public TableDataInfo list(SurveyFamilyEnv surveyFamilyEnv)
     {
@@ -47,22 +47,22 @@ public class SurveyFamilyEnvController extends BaseController
     }
 
     /**
-     * 导出家族环境列表
+     * 导出家族环境居住相似性列表
      */
-    @PreAuthorize("@ss.hasPermi('EpidemSys:env:export')")
-    @Log(title = "家族环境", businessType = BusinessType.EXPORT)
+    @PreAuthorize("@ss.hasPermi('EpidemSys:SFenv:export')")
+    @Log(title = "家族环境居住相似性", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
     public void export(HttpServletResponse response, SurveyFamilyEnv surveyFamilyEnv)
     {
         List<SurveyFamilyEnv> list = surveyFamilyEnvService.selectSurveyFamilyEnvList(surveyFamilyEnv);
         ExcelUtil<SurveyFamilyEnv> util = new ExcelUtil<SurveyFamilyEnv>(SurveyFamilyEnv.class);
-        util.exportExcel(response, list, "家族环境数据");
+        util.exportExcel(response, list, "家族环境居住相似性数据");
     }
 
     /**
-     * 获取家族环境详细信息
+     * 获取家族环境居住相似性详细信息
      */
-    @PreAuthorize("@ss.hasPermi('EpidemSys:env:query')")
+    @PreAuthorize("@ss.hasPermi('EpidemSys:SFenv:query')")
     @GetMapping(value = "/{familyEnvId}")
     public AjaxResult getInfo(@PathVariable("familyEnvId") Long familyEnvId)
     {
@@ -70,10 +70,10 @@ public class SurveyFamilyEnvController extends BaseController
     }
 
     /**
-     * 新增家族环境
+     * 新增家族环境居住相似性
      */
-    @PreAuthorize("@ss.hasPermi('EpidemSys:env:add')")
-    @Log(title = "家族环境", businessType = BusinessType.INSERT)
+    @PreAuthorize("@ss.hasPermi('EpidemSys:SFenv:add')")
+    @Log(title = "家族环境居住相似性", businessType = BusinessType.INSERT)
     @PostMapping
     public AjaxResult add(@RequestBody SurveyFamilyEnv surveyFamilyEnv)
     {
@@ -81,10 +81,10 @@ public class SurveyFamilyEnvController extends BaseController
     }
 
     /**
-     * 修改家族环境
+     * 修改家族环境居住相似性
      */
-    @PreAuthorize("@ss.hasPermi('EpidemSys:env:edit')")
-    @Log(title = "家族环境", businessType = BusinessType.UPDATE)
+    @PreAuthorize("@ss.hasPermi('EpidemSys:SFenv:edit')")
+    @Log(title = "家族环境居住相似性", businessType = BusinessType.UPDATE)
     @PutMapping
     public AjaxResult edit(@RequestBody SurveyFamilyEnv surveyFamilyEnv)
     {
@@ -92,10 +92,10 @@ public class SurveyFamilyEnvController extends BaseController
     }
 
     /**
-     * 删除家族环境
+     * 删除家族环境居住相似性
      */
-    @PreAuthorize("@ss.hasPermi('EpidemSys:env:remove')")
-    @Log(title = "家族环境", businessType = BusinessType.DELETE)
+    @PreAuthorize("@ss.hasPermi('EpidemSys:SFenv:remove')")
+    @Log(title = "家族环境居住相似性", businessType = BusinessType.DELETE)
 	@DeleteMapping("/{familyEnvIds}")
     public AjaxResult remove(@PathVariable Long[] familyEnvIds)
     {

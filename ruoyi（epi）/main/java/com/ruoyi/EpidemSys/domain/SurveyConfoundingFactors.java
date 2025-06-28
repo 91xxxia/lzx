@@ -10,7 +10,7 @@ import com.ruoyi.common.core.domain.BaseEntity;
  * 其他潜在混杂因素对象 survey_confounding_factors
  * 
  * @author ruoyi
- * @date 2025-06-27
+ * @date 2025-06-28
  */
 public class SurveyConfoundingFactors extends BaseEntity
 {
@@ -27,8 +27,8 @@ public class SurveyConfoundingFactors extends BaseEntity
     @Excel(name = "饮食习惯")
     private String dietType;
 
-    /** 是否每日摄入维生素 */
-    @Excel(name = "是否每日摄入维生素")
+    /** 每日摄入维生素D400u */
+    @Excel(name = "每日摄入维生素D400u")
     private Integer vitaminD400u;
 
     /** 口服周期 */
@@ -47,20 +47,20 @@ public class SurveyConfoundingFactors extends BaseEntity
     @Excel(name = "焦虑或抑郁状态")
     private String mentalStatePhq9Gad7;
 
-    /** 是否按计划接种 */
-    @Excel(name = "是否按计划接种")
+    /** 按计划接种 */
+    @Excel(name = "按计划接种")
     private Integer vaccineOnSchedule;
 
     /** 抗生素使用频率 */
     @Excel(name = "抗生素使用频率")
     private String antibioticFreq;
 
-    /** 是否母乳喂养 */
-    @Excel(name = "是否母乳喂养")
+    /** 母乳喂养 */
+    @Excel(name = "母乳喂养")
     private Integer breastfeeding;
 
-    /** 喂养月数 */
-    @Excel(name = "喂养月数")
+    /** 具体月数 */
+    @Excel(name = "具体月数")
     private Long breastfeedingMonths;
 
     /** 分娩情况 */
@@ -83,8 +83,8 @@ public class SurveyConfoundingFactors extends BaseEntity
     @Excel(name = "缺课天数")
     private Long absentDaysAllergy;
 
-    /** 每年人均医疗支出 */
-    @Excel(name = "每年人均医疗支出")
+    /** 每年人均医疗费用支出 */
+    @Excel(name = "每年人均医疗费用支出")
     private BigDecimal annualMedicalCost;
 
     public void setConfoundId(Long confoundId) 

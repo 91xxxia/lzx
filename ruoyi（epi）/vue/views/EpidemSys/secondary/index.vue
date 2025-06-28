@@ -66,7 +66,7 @@
       <el-table-column label="二级亲属号" align="center" prop="secId" />
       <el-table-column label="患者号" align="center" prop="surveyId" />
       <el-table-column label="关系" align="center" prop="relation" />
-      <el-table-column label="疾病" align="center" prop="diseases" />
+      <el-table-column label="疾病名称" align="center" prop="diseases" />
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button
@@ -104,7 +104,7 @@
         <el-form-item label="关系" prop="relation">
           <el-input v-model="form.relation" placeholder="请输入关系" />
         </el-form-item>
-        <el-form-item label="疾病" prop="diseases">
+        <el-form-item label="疾病名称" prop="diseases">
           <el-input v-model="form.diseases" type="textarea" placeholder="请输入内容" />
         </el-form-item>
       </el-form>

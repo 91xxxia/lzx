@@ -66,21 +66,21 @@
       <el-table-column label="其他因素号" align="center" prop="confoundId" />
       <el-table-column label="患者号" align="center" prop="surveyId" />
       <el-table-column label="饮食习惯" align="center" prop="dietType" />
-      <el-table-column label="是否每日摄入维生素" align="center" prop="vitaminD400u" />
+      <el-table-column label="每日摄入维生素D400u" align="center" prop="vitaminD400u" />
       <el-table-column label="口服周期" align="center" prop="vitaminDYears" />
       <el-table-column label="Omega-3摄入量" align="center" prop="omega3Intake" />
       <el-table-column label="长期压力水平" align="center" prop="stressLevelPss10" />
       <el-table-column label="焦虑或抑郁状态" align="center" prop="mentalStatePhq9Gad7" />
-      <el-table-column label="是否按计划接种" align="center" prop="vaccineOnSchedule" />
+      <el-table-column label="按计划接种" align="center" prop="vaccineOnSchedule" />
       <el-table-column label="抗生素使用频率" align="center" prop="antibioticFreq" />
-      <el-table-column label="是否母乳喂养" align="center" prop="breastfeeding" />
-      <el-table-column label="喂养月数" align="center" prop="breastfeedingMonths" />
+      <el-table-column label="母乳喂养" align="center" prop="breastfeeding" />
+      <el-table-column label="具体月数" align="center" prop="breastfeedingMonths" />
       <el-table-column label="分娩情况" align="center" prop="deliveryType" />
       <el-table-column label="宠物接触年龄" align="center" prop="petExposureStage" />
       <el-table-column label="农场环境暴露" align="center" prop="farmExposure" />
       <el-table-column label="具体月数" align="center" prop="farmExposureMonths" />
       <el-table-column label="缺课天数" align="center" prop="absentDaysAllergy" />
-      <el-table-column label="每年人均医疗支出" align="center" prop="annualMedicalCost" />
+      <el-table-column label="每年人均医疗费用支出" align="center" prop="annualMedicalCost" />
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button
@@ -115,8 +115,11 @@
         <el-form-item label="患者号" prop="surveyId">
           <el-input v-model="form.surveyId" placeholder="请输入患者号" />
         </el-form-item>
-        <el-form-item label="是否每日摄入维生素" prop="vitaminD400u">
-          <el-input v-model="form.vitaminD400u" placeholder="请输入是否每日摄入维生素" />
+        <el-form-item label="饮食习惯" prop="dietType">
+          <el-input v-model="form.dietType" placeholder="请输入饮食习惯" />
+        </el-form-item>
+        <el-form-item label="每日摄入维生素D400u" prop="vitaminD400u">
+          <el-input v-model="form.vitaminD400u" placeholder="请输入每日摄入维生素D400u" />
         </el-form-item>
         <el-form-item label="口服周期" prop="vitaminDYears">
           <el-input v-model="form.vitaminDYears" placeholder="请输入口服周期" />
@@ -130,14 +133,23 @@
         <el-form-item label="焦虑或抑郁状态" prop="mentalStatePhq9Gad7">
           <el-input v-model="form.mentalStatePhq9Gad7" type="textarea" placeholder="请输入内容" />
         </el-form-item>
-        <el-form-item label="是否按计划接种" prop="vaccineOnSchedule">
-          <el-input v-model="form.vaccineOnSchedule" placeholder="请输入是否按计划接种" />
+        <el-form-item label="按计划接种" prop="vaccineOnSchedule">
+          <el-input v-model="form.vaccineOnSchedule" placeholder="请输入按计划接种" />
         </el-form-item>
-        <el-form-item label="是否母乳喂养" prop="breastfeeding">
-          <el-input v-model="form.breastfeeding" placeholder="请输入是否母乳喂养" />
+        <el-form-item label="抗生素使用频率" prop="antibioticFreq">
+          <el-input v-model="form.antibioticFreq" placeholder="请输入抗生素使用频率" />
         </el-form-item>
-        <el-form-item label="喂养月数" prop="breastfeedingMonths">
-          <el-input v-model="form.breastfeedingMonths" placeholder="请输入喂养月数" />
+        <el-form-item label="母乳喂养" prop="breastfeeding">
+          <el-input v-model="form.breastfeeding" placeholder="请输入母乳喂养" />
+        </el-form-item>
+        <el-form-item label="具体月数" prop="breastfeedingMonths">
+          <el-input v-model="form.breastfeedingMonths" placeholder="请输入具体月数" />
+        </el-form-item>
+        <el-form-item label="分娩情况" prop="deliveryType">
+          <el-input v-model="form.deliveryType" placeholder="请输入分娩情况" />
+        </el-form-item>
+        <el-form-item label="宠物接触年龄" prop="petExposureStage">
+          <el-input v-model="form.petExposureStage" placeholder="请输入宠物接触年龄" />
         </el-form-item>
         <el-form-item label="农场环境暴露" prop="farmExposure">
           <el-input v-model="form.farmExposure" placeholder="请输入农场环境暴露" />
@@ -148,8 +160,8 @@
         <el-form-item label="缺课天数" prop="absentDaysAllergy">
           <el-input v-model="form.absentDaysAllergy" placeholder="请输入缺课天数" />
         </el-form-item>
-        <el-form-item label="每年人均医疗支出" prop="annualMedicalCost">
-          <el-input v-model="form.annualMedicalCost" placeholder="请输入每年人均医疗支出" />
+        <el-form-item label="每年人均医疗费用支出" prop="annualMedicalCost">
+          <el-input v-model="form.annualMedicalCost" placeholder="请输入每年人均医疗费用支出" />
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">

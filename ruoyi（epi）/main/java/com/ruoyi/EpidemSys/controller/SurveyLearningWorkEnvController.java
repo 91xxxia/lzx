@@ -22,22 +22,22 @@ import com.ruoyi.common.utils.poi.ExcelUtil;
 import com.ruoyi.common.core.page.TableDataInfo;
 
 /**
- * 学习/工作环境号Controller
+ * 学习/工作环境信息Controller
  * 
  * @author ruoyi
- * @date 2025-06-27
+ * @date 2025-06-28
  */
 @RestController
-@RequestMapping("/EpidemSys/SLenv")
+@RequestMapping("/EpidemSys/StudyLearnenv")
 public class SurveyLearningWorkEnvController extends BaseController
 {
     @Autowired
     private ISurveyLearningWorkEnvService surveyLearningWorkEnvService;
 
     /**
-     * 查询学习/工作环境号列表
+     * 查询学习/工作环境信息列表
      */
-    @PreAuthorize("@ss.hasPermi('EpidemSys:SLenv:list')")
+    @PreAuthorize("@ss.hasPermi('EpidemSys:StudyLearnenv:list')")
     @GetMapping("/list")
     public TableDataInfo list(SurveyLearningWorkEnv surveyLearningWorkEnv)
     {
@@ -47,22 +47,22 @@ public class SurveyLearningWorkEnvController extends BaseController
     }
 
     /**
-     * 导出学习/工作环境号列表
+     * 导出学习/工作环境信息列表
      */
-    @PreAuthorize("@ss.hasPermi('EpidemSys:SLenv:export')")
-    @Log(title = "学习/工作环境号", businessType = BusinessType.EXPORT)
+    @PreAuthorize("@ss.hasPermi('EpidemSys:StudyLearnenv:export')")
+    @Log(title = "学习/工作环境信息", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
     public void export(HttpServletResponse response, SurveyLearningWorkEnv surveyLearningWorkEnv)
     {
         List<SurveyLearningWorkEnv> list = surveyLearningWorkEnvService.selectSurveyLearningWorkEnvList(surveyLearningWorkEnv);
         ExcelUtil<SurveyLearningWorkEnv> util = new ExcelUtil<SurveyLearningWorkEnv>(SurveyLearningWorkEnv.class);
-        util.exportExcel(response, list, "学习/工作环境号数据");
+        util.exportExcel(response, list, "学习/工作环境信息数据");
     }
 
     /**
-     * 获取学习/工作环境号详细信息
+     * 获取学习/工作环境信息详细信息
      */
-    @PreAuthorize("@ss.hasPermi('EpidemSys:SLenv:query')")
+    @PreAuthorize("@ss.hasPermi('EpidemSys:StudyLearnenv:query')")
     @GetMapping(value = "/{learnEnvId}")
     public AjaxResult getInfo(@PathVariable("learnEnvId") Long learnEnvId)
     {
@@ -70,10 +70,10 @@ public class SurveyLearningWorkEnvController extends BaseController
     }
 
     /**
-     * 新增学习/工作环境号
+     * 新增学习/工作环境信息
      */
-    @PreAuthorize("@ss.hasPermi('EpidemSys:SLenv:add')")
-    @Log(title = "学习/工作环境号", businessType = BusinessType.INSERT)
+    @PreAuthorize("@ss.hasPermi('EpidemSys:StudyLearnenv:add')")
+    @Log(title = "学习/工作环境信息", businessType = BusinessType.INSERT)
     @PostMapping
     public AjaxResult add(@RequestBody SurveyLearningWorkEnv surveyLearningWorkEnv)
     {
@@ -81,10 +81,10 @@ public class SurveyLearningWorkEnvController extends BaseController
     }
 
     /**
-     * 修改学习/工作环境号
+     * 修改学习/工作环境信息
      */
-    @PreAuthorize("@ss.hasPermi('EpidemSys:SLenv:edit')")
-    @Log(title = "学习/工作环境号", businessType = BusinessType.UPDATE)
+    @PreAuthorize("@ss.hasPermi('EpidemSys:StudyLearnenv:edit')")
+    @Log(title = "学习/工作环境信息", businessType = BusinessType.UPDATE)
     @PutMapping
     public AjaxResult edit(@RequestBody SurveyLearningWorkEnv surveyLearningWorkEnv)
     {
@@ -92,10 +92,10 @@ public class SurveyLearningWorkEnvController extends BaseController
     }
 
     /**
-     * 删除学习/工作环境号
+     * 删除学习/工作环境信息
      */
-    @PreAuthorize("@ss.hasPermi('EpidemSys:SLenv:remove')")
-    @Log(title = "学习/工作环境号", businessType = BusinessType.DELETE)
+    @PreAuthorize("@ss.hasPermi('EpidemSys:StudyLearnenv:remove')")
+    @Log(title = "学习/工作环境信息", businessType = BusinessType.DELETE)
 	@DeleteMapping("/{learnEnvIds}")
     public AjaxResult remove(@PathVariable Long[] learnEnvIds)
     {

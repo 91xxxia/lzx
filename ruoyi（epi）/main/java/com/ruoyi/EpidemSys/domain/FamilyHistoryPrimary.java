@@ -9,7 +9,7 @@ import com.ruoyi.common.core.domain.BaseEntity;
  * 一级亲属过敏史对象 family_history_primary
  * 
  * @author ruoyi
- * @date 2025-06-27
+ * @date 2025-06-28
  */
 public class FamilyHistoryPrimary extends BaseEntity
 {
@@ -26,8 +26,8 @@ public class FamilyHistoryPrimary extends BaseEntity
     @Excel(name = "关系")
     private String relation;
 
-    /** 疾病 */
-    @Excel(name = "疾病")
+    /** 疾病名称 */
+    @Excel(name = "疾病名称")
     private String diseases;
 
     public void setPrimId(Long primId) 
