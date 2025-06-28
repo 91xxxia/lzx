@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.FollowSys.mapper.FollowupSummaryMapper">
+    
+    <resultMap type="FollowupSummary" id="FollowupSummaryResult">
+        <result property="summaryId"    column="summary_id"    />
+        <result property="patientId"    column="patient_id"    />
+        <result property="symptomImprovement"    column="symptom_improvement"    />
+        <result property="physicalDevelopment"    column="physical_development"    />
+        <result property="adverseReaction"    column="adverse_reaction"    />
+        <result property="reactionManagement"    column="reaction_management"    />
+    </resultMap>
+
+    <sql id="selectFollowupSummaryVo">
+        select summary_id, patient_id, symptom_improvement, physical_development, adverse_reaction, reaction_management from followup_summary
+    </sql>
+
+    <select id="selectFollowupSummaryList" parameterType="FollowupSummary" resultMap="FollowupSummaryResult">
+        <include refid="selectFollowupSummaryVo"/>
+        <where>  
+            <if test="patientId != null  and patientId != ''"> and patient_id = #{patientId}</if>
+        </where>
+    </select>
+    
+    <select id="selectFollowupSummaryBySummaryId" parameterType="Long" resultMap="FollowupSummaryResult">
+        <include refid="selectFollowupSummaryVo"/>
+        where summary_id = #{summaryId}
+    </select>
+
+    <insert id="insertFollowupSummary" parameterType="FollowupSummary" useGeneratedKeys="true" keyProperty="summaryId">
+        insert into followup_summary
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="patientId != null and patientId != ''">patient_id,</if>
+            <if test="symptomImprovement != null">symptom_improvement,</if>
+            <if test="physicalDevelopment != null">physical_development,</if>
+            <if test="adverseReaction != null">adverse_reaction,</if>
+            <if test="reactionManagement != null">reaction_management,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="patientId != null and patientId != ''">#{patientId},</if>
+            <if test="symptomImprovement != null">#{symptomImprovement},</if>
+            <if test="physicalDevelopment != null">#{physicalDevelopment},</if>
+            <if test="adverseReaction != null">#{adverseReaction},</if>
+            <if test="reactionManagement != null">#{reactionManagement},</if>
+         </trim>
+    </insert>
+
+    <update id="updateFollowupSummary" parameterType="FollowupSummary">
+        update followup_summary
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="patientId != null and patientId != ''">patient_id = #{patientId},</if>
+            <if test="symptomImprovement != null">symptom_improvement = #{symptomImprovement},</if>
+            <if test="physicalDevelopment != null">physical_development = #{physicalDevelopment},</if>
+            <if test="adverseReaction != null">adverse_reaction = #{adverseReaction},</if>
+            <if test="reactionManagement != null">reaction_management = #{reactionManagement},</if>
+        </trim>
+        where summary_id = #{summaryId}
+    </update>
+
+    <delete id="deleteFollowupSummaryBySummaryId" parameterType="Long">
+        delete from followup_summary where summary_id = #{summaryId}
+    </delete>
+
+    <delete id="deleteFollowupSummaryBySummaryIds" parameterType="String">
+        delete from followup_summary where summary_id in 
+        <foreach item="summaryId" collection="array" open="(" separator="," close=")">
+            #{summaryId}
+        </foreach>
+    </delete>
+</mapper>

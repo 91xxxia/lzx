@@ -1,0 +1,324 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.FollowSys.mapper.FollowupPhysicalExamMapper">
+    
+    <resultMap type="FollowupPhysicalExam" id="FollowupPhysicalExamResult">
+        <result property="examId"    column="exam_id"    />
+        <result property="followupId"    column="followup_id"    />
+        <result property="temperatureC"    column="temperature_c"    />
+        <result property="pulseBpm"    column="pulse_bpm"    />
+        <result property="spo2Percent"    column="spo2_percent"    />
+        <result property="oxygenUsed"    column="oxygen_used"    />
+        <result property="consciousness"    column="consciousness"    />
+        <result property="mentalState"    column="mental_state"    />
+        <result property="breathingPattern"    column="breathing_pattern"    />
+        <result property="appearance"    column="appearance"    />
+        <result property="nasalMucosaPale"    column="nasal_mucosa_pale"    />
+        <result property="nasalMucosaEdema"    column="nasal_mucosa_edema"    />
+        <result property="nasalMucosaSwelling"    column="nasal_mucosa_swelling"    />
+        <result property="nasalMucosaClearDischarge"    column="nasal_mucosa_clear_discharge"    />
+        <result property="nasalScore"    column="nasal_score"    />
+        <result property="threeDepressionSign"    column="three_depression_sign"    />
+        <result property="leftLungSound"    column="left_lung_sound"    />
+        <result property="leftDryRalesPresent"    column="left_dry_rales_present"    />
+        <result property="leftDryRalesDistribution"    column="left_dry_rales_distribution"    />
+        <result property="leftWetRalesPresent"    column="left_wet_rales_present"    />
+        <result property="leftWetRalesDistribution"    column="left_wet_rales_distribution"    />
+        <result property="rightLungSound"    column="right_lung_sound"    />
+        <result property="rightDryRalesPresent"    column="right_dry_rales_present"    />
+        <result property="rightDryRalesDistribution"    column="right_dry_rales_distribution"    />
+        <result property="rightWetRalesPresent"    column="right_wet_rales_present"    />
+        <result property="rightWetRalesDistribution"    column="right_wet_rales_distribution"    />
+        <result property="heartRate"    column="heart_rate"    />
+        <result property="heartRhythm"    column="heart_rhythm"    />
+        <result property="heartMurmurPresent"    column="heart_murmur_present"    />
+        <result property="heartMurmurType"    column="heart_murmur_type"    />
+        <result property="abdomenShape"    column="abdomen_shape"    />
+        <result property="abdomenTenderness"    column="abdomen_tenderness"    />
+        <result property="reboundTenderness"    column="rebound_tenderness"    />
+        <result property="headNeckErythema"    column="head_neck_erythema"    />
+        <result property="headNeckPapule"    column="head_neck_papule"    />
+        <result property="headNeckExudation"    column="head_neck_exudation"    />
+        <result property="headNeckDesquamation"    column="head_neck_desquamation"    />
+        <result property="headNeckLichenification"    column="head_neck_lichenification"    />
+        <result property="headNeckDryness"    column="head_neck_dryness"    />
+        <result property="headNeckOther"    column="head_neck_other"    />
+        <result property="upperLimbErythema"    column="upper_limb_erythema"    />
+        <result property="upperLimbPapule"    column="upper_limb_papule"    />
+        <result property="upperLimbExudation"    column="upper_limb_exudation"    />
+        <result property="upperLimbDesquamation"    column="upper_limb_desquamation"    />
+        <result property="upperLimbLichenification"    column="upper_limb_lichenification"    />
+        <result property="upperLimbDryness"    column="upper_limb_dryness"    />
+        <result property="upperLimbOther"    column="upper_limb_other"    />
+        <result property="trunkErythema"    column="trunk_erythema"    />
+        <result property="trunkPapule"    column="trunk_papule"    />
+        <result property="trunkExudation"    column="trunk_exudation"    />
+        <result property="trunkDesquamation"    column="trunk_desquamation"    />
+        <result property="trunkLichenification"    column="trunk_lichenification"    />
+        <result property="trunkDryness"    column="trunk_dryness"    />
+        <result property="trunkOther"    column="trunk_other"    />
+        <result property="lowerLimbErythema"    column="lower_limb_erythema"    />
+        <result property="lowerLimbPapule"    column="lower_limb_papule"    />
+        <result property="lowerLimbExudation"    column="lower_limb_exudation"    />
+        <result property="lowerLimbDesquamation"    column="lower_limb_desquamation"    />
+        <result property="lowerLimbLichenification"    column="lower_limb_lichenification"    />
+        <result property="lowerLimbDryness"    column="lower_limb_dryness"    />
+        <result property="lowerLimbOther"    column="lower_limb_other"    />
+        <result property="genitalErythema"    column="genital_erythema"    />
+        <result property="genitalPapule"    column="genital_papule"    />
+        <result property="genitalExudation"    column="genital_exudation"    />
+        <result property="genitalDesquamation"    column="genital_desquamation"    />
+        <result property="genitalLichenification"    column="genital_lichenification"    />
+        <result property="genitalDryness"    column="genital_dryness"    />
+        <result property="genitalOther"    column="genital_other"    />
+        <result property="electronicBreathSoundPath"    column="electronic_breath_sound_path"    />
+    </resultMap>
+
+    <sql id="selectFollowupPhysicalExamVo">
+        select exam_id, followup_id, temperature_c, pulse_bpm, spo2_percent, oxygen_used, consciousness, mental_state, breathing_pattern, appearance, nasal_mucosa_pale, nasal_mucosa_edema, nasal_mucosa_swelling, nasal_mucosa_clear_discharge, nasal_score, three_depression_sign, left_lung_sound, left_dry_rales_present, left_dry_rales_distribution, left_wet_rales_present, left_wet_rales_distribution, right_lung_sound, right_dry_rales_present, right_dry_rales_distribution, right_wet_rales_present, right_wet_rales_distribution, heart_rate, heart_rhythm, heart_murmur_present, heart_murmur_type, abdomen_shape, abdomen_tenderness, rebound_tenderness, head_neck_erythema, head_neck_papule, head_neck_exudation, head_neck_desquamation, head_neck_lichenification, head_neck_dryness, head_neck_other, upper_limb_erythema, upper_limb_papule, upper_limb_exudation, upper_limb_desquamation, upper_limb_lichenification, upper_limb_dryness, upper_limb_other, trunk_erythema, trunk_papule, trunk_exudation, trunk_desquamation, trunk_lichenification, trunk_dryness, trunk_other, lower_limb_erythema, lower_limb_papule, lower_limb_exudation, lower_limb_desquamation, lower_limb_lichenification, lower_limb_dryness, lower_limb_other, genital_erythema, genital_papule, genital_exudation, genital_desquamation, genital_lichenification, genital_dryness, genital_other, electronic_breath_sound_path from followup_physical_exam
+    </sql>
+
+    <select id="selectFollowupPhysicalExamList" parameterType="FollowupPhysicalExam" resultMap="FollowupPhysicalExamResult">
+        <include refid="selectFollowupPhysicalExamVo"/>
+        <where>  
+            <if test="followupId != null "> and followup_id = #{followupId}</if>
+        </where>
+    </select>
+    
+    <select id="selectFollowupPhysicalExamByExamId" parameterType="Long" resultMap="FollowupPhysicalExamResult">
+        <include refid="selectFollowupPhysicalExamVo"/>
+        where exam_id = #{examId}
+    </select>
+
+    <insert id="insertFollowupPhysicalExam" parameterType="FollowupPhysicalExam" useGeneratedKeys="true" keyProperty="examId">
+        insert into followup_physical_exam
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="followupId != null">followup_id,</if>
+            <if test="temperatureC != null">temperature_c,</if>
+            <if test="pulseBpm != null">pulse_bpm,</if>
+            <if test="spo2Percent != null">spo2_percent,</if>
+            <if test="oxygenUsed != null">oxygen_used,</if>
+            <if test="consciousness != null">consciousness,</if>
+            <if test="mentalState != null">mental_state,</if>
+            <if test="breathingPattern != null">breathing_pattern,</if>
+            <if test="appearance != null">appearance,</if>
+            <if test="nasalMucosaPale != null">nasal_mucosa_pale,</if>
+            <if test="nasalMucosaEdema != null">nasal_mucosa_edema,</if>
+            <if test="nasalMucosaSwelling != null">nasal_mucosa_swelling,</if>
+            <if test="nasalMucosaClearDischarge != null">nasal_mucosa_clear_discharge,</if>
+            <if test="nasalScore != null">nasal_score,</if>
+            <if test="threeDepressionSign != null">three_depression_sign,</if>
+            <if test="leftLungSound != null">left_lung_sound,</if>
+            <if test="leftDryRalesPresent != null">left_dry_rales_present,</if>
+            <if test="leftDryRalesDistribution != null">left_dry_rales_distribution,</if>
+            <if test="leftWetRalesPresent != null">left_wet_rales_present,</if>
+            <if test="leftWetRalesDistribution != null">left_wet_rales_distribution,</if>
+            <if test="rightLungSound != null">right_lung_sound,</if>
+            <if test="rightDryRalesPresent != null">right_dry_rales_present,</if>
+            <if test="rightDryRalesDistribution != null">right_dry_rales_distribution,</if>
+            <if test="rightWetRalesPresent != null">right_wet_rales_present,</if>
+            <if test="rightWetRalesDistribution != null">right_wet_rales_distribution,</if>
+            <if test="heartRate != null">heart_rate,</if>
+            <if test="heartRhythm != null">heart_rhythm,</if>
+            <if test="heartMurmurPresent != null">heart_murmur_present,</if>
+            <if test="heartMurmurType != null">heart_murmur_type,</if>
+            <if test="abdomenShape != null">abdomen_shape,</if>
+            <if test="abdomenTenderness != null">abdomen_tenderness,</if>
+            <if test="reboundTenderness != null">rebound_tenderness,</if>
+            <if test="headNeckErythema != null">head_neck_erythema,</if>
+            <if test="headNeckPapule != null">head_neck_papule,</if>
+            <if test="headNeckExudation != null">head_neck_exudation,</if>
+            <if test="headNeckDesquamation != null">head_neck_desquamation,</if>
+            <if test="headNeckLichenification != null">head_neck_lichenification,</if>
+            <if test="headNeckDryness != null">head_neck_dryness,</if>
+            <if test="headNeckOther != null">head_neck_other,</if>
+            <if test="upperLimbErythema != null">upper_limb_erythema,</if>
+            <if test="upperLimbPapule != null">upper_limb_papule,</if>
+            <if test="upperLimbExudation != null">upper_limb_exudation,</if>
+            <if test="upperLimbDesquamation != null">upper_limb_desquamation,</if>
+            <if test="upperLimbLichenification != null">upper_limb_lichenification,</if>
+            <if test="upperLimbDryness != null">upper_limb_dryness,</if>
+            <if test="upperLimbOther != null">upper_limb_other,</if>
+            <if test="trunkErythema != null">trunk_erythema,</if>
+            <if test="trunkPapule != null">trunk_papule,</if>
+            <if test="trunkExudation != null">trunk_exudation,</if>
+            <if test="trunkDesquamation != null">trunk_desquamation,</if>
+            <if test="trunkLichenification != null">trunk_lichenification,</if>
+            <if test="trunkDryness != null">trunk_dryness,</if>
+            <if test="trunkOther != null">trunk_other,</if>
+            <if test="lowerLimbErythema != null">lower_limb_erythema,</if>
+            <if test="lowerLimbPapule != null">lower_limb_papule,</if>
+            <if test="lowerLimbExudation != null">lower_limb_exudation,</if>
+            <if test="lowerLimbDesquamation != null">lower_limb_desquamation,</if>
+            <if test="lowerLimbLichenification != null">lower_limb_lichenification,</if>
+            <if test="lowerLimbDryness != null">lower_limb_dryness,</if>
+            <if test="lowerLimbOther != null">lower_limb_other,</if>
+            <if test="genitalErythema != null">genital_erythema,</if>
+            <if test="genitalPapule != null">genital_papule,</if>
+            <if test="genitalExudation != null">genital_exudation,</if>
+            <if test="genitalDesquamation != null">genital_desquamation,</if>
+            <if test="genitalLichenification != null">genital_lichenification,</if>
+            <if test="genitalDryness != null">genital_dryness,</if>
+            <if test="genitalOther != null">genital_other,</if>
+            <if test="electronicBreathSoundPath != null">electronic_breath_sound_path,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="followupId != null">#{followupId},</if>
+            <if test="temperatureC != null">#{temperatureC},</if>
+            <if test="pulseBpm != null">#{pulseBpm},</if>
+            <if test="spo2Percent != null">#{spo2Percent},</if>
+            <if test="oxygenUsed != null">#{oxygenUsed},</if>
+            <if test="consciousness != null">#{consciousness},</if>
+            <if test="mentalState != null">#{mentalState},</if>
+            <if test="breathingPattern != null">#{breathingPattern},</if>
+            <if test="appearance != null">#{appearance},</if>
+            <if test="nasalMucosaPale != null">#{nasalMucosaPale},</if>
+            <if test="nasalMucosaEdema != null">#{nasalMucosaEdema},</if>
+            <if test="nasalMucosaSwelling != null">#{nasalMucosaSwelling},</if>
+            <if test="nasalMucosaClearDischarge != null">#{nasalMucosaClearDischarge},</if>
+            <if test="nasalScore != null">#{nasalScore},</if>
+            <if test="threeDepressionSign != null">#{threeDepressionSign},</if>
+            <if test="leftLungSound != null">#{leftLungSound},</if>
+            <if test="leftDryRalesPresent != null">#{leftDryRalesPresent},</if>
+            <if test="leftDryRalesDistribution != null">#{leftDryRalesDistribution},</if>
+            <if test="leftWetRalesPresent != null">#{leftWetRalesPresent},</if>
+            <if test="leftWetRalesDistribution != null">#{leftWetRalesDistribution},</if>
+            <if test="rightLungSound != null">#{rightLungSound},</if>
+            <if test="rightDryRalesPresent != null">#{rightDryRalesPresent},</if>
+            <if test="rightDryRalesDistribution != null">#{rightDryRalesDistribution},</if>
+            <if test="rightWetRalesPresent != null">#{rightWetRalesPresent},</if>
+            <if test="rightWetRalesDistribution != null">#{rightWetRalesDistribution},</if>
+            <if test="heartRate != null">#{heartRate},</if>
+            <if test="heartRhythm != null">#{heartRhythm},</if>
+            <if test="heartMurmurPresent != null">#{heartMurmurPresent},</if>
+            <if test="heartMurmurType != null">#{heartMurmurType},</if>
+            <if test="abdomenShape != null">#{abdomenShape},</if>
+            <if test="abdomenTenderness != null">#{abdomenTenderness},</if>
+            <if test="reboundTenderness != null">#{reboundTenderness},</if>
+            <if test="headNeckErythema != null">#{headNeckErythema},</if>
+            <if test="headNeckPapule != null">#{headNeckPapule},</if>
+            <if test="headNeckExudation != null">#{headNeckExudation},</if>
+            <if test="headNeckDesquamation != null">#{headNeckDesquamation},</if>
+            <if test="headNeckLichenification != null">#{headNeckLichenification},</if>
+            <if test="headNeckDryness != null">#{headNeckDryness},</if>
+            <if test="headNeckOther != null">#{headNeckOther},</if>
+            <if test="upperLimbErythema != null">#{upperLimbErythema},</if>
+            <if test="upperLimbPapule != null">#{upperLimbPapule},</if>
+            <if test="upperLimbExudation != null">#{upperLimbExudation},</if>
+            <if test="upperLimbDesquamation != null">#{upperLimbDesquamation},</if>
+            <if test="upperLimbLichenification != null">#{upperLimbLichenification},</if>
+            <if test="upperLimbDryness != null">#{upperLimbDryness},</if>
+            <if test="upperLimbOther != null">#{upperLimbOther},</if>
+            <if test="trunkErythema != null">#{trunkErythema},</if>
+            <if test="trunkPapule != null">#{trunkPapule},</if>
+            <if test="trunkExudation != null">#{trunkExudation},</if>
+            <if test="trunkDesquamation != null">#{trunkDesquamation},</if>
+            <if test="trunkLichenification != null">#{trunkLichenification},</if>
+            <if test="trunkDryness != null">#{trunkDryness},</if>
+            <if test="trunkOther != null">#{trunkOther},</if>
+            <if test="lowerLimbErythema != null">#{lowerLimbErythema},</if>
+            <if test="lowerLimbPapule != null">#{lowerLimbPapule},</if>
+            <if test="lowerLimbExudation != null">#{lowerLimbExudation},</if>
+            <if test="lowerLimbDesquamation != null">#{lowerLimbDesquamation},</if>
+            <if test="lowerLimbLichenification != null">#{lowerLimbLichenification},</if>
+            <if test="lowerLimbDryness != null">#{lowerLimbDryness},</if>
+            <if test="lowerLimbOther != null">#{lowerLimbOther},</if>
+            <if test="genitalErythema != null">#{genitalErythema},</if>
+            <if test="genitalPapule != null">#{genitalPapule},</if>
+            <if test="genitalExudation != null">#{genitalExudation},</if>
+            <if test="genitalDesquamation != null">#{genitalDesquamation},</if>
+            <if test="genitalLichenification != null">#{genitalLichenification},</if>
+            <if test="genitalDryness != null">#{genitalDryness},</if>
+            <if test="genitalOther != null">#{genitalOther},</if>
+            <if test="electronicBreathSoundPath != null">#{electronicBreathSoundPath},</if>
+         </trim>
+    </insert>
+
+    <update id="updateFollowupPhysicalExam" parameterType="FollowupPhysicalExam">
+        update followup_physical_exam
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="followupId != null">followup_id = #{followupId},</if>
+            <if test="temperatureC != null">temperature_c = #{temperatureC},</if>
+            <if test="pulseBpm != null">pulse_bpm = #{pulseBpm},</if>
+            <if test="spo2Percent != null">spo2_percent = #{spo2Percent},</if>
+            <if test="oxygenUsed != null">oxygen_used = #{oxygenUsed},</if>
+            <if test="consciousness != null">consciousness = #{consciousness},</if>
+            <if test="mentalState != null">mental_state = #{mentalState},</if>
+            <if test="breathingPattern != null">breathing_pattern = #{breathingPattern},</if>
+            <if test="appearance != null">appearance = #{appearance},</if>
+            <if test="nasalMucosaPale != null">nasal_mucosa_pale = #{nasalMucosaPale},</if>
+            <if test="nasalMucosaEdema != null">nasal_mucosa_edema = #{nasalMucosaEdema},</if>
+            <if test="nasalMucosaSwelling != null">nasal_mucosa_swelling = #{nasalMucosaSwelling},</if>
+            <if test="nasalMucosaClearDischarge != null">nasal_mucosa_clear_discharge = #{nasalMucosaClearDischarge},</if>
+            <if test="nasalScore != null">nasal_score = #{nasalScore},</if>
+            <if test="threeDepressionSign != null">three_depression_sign = #{threeDepressionSign},</if>
+            <if test="leftLungSound != null">left_lung_sound = #{leftLungSound},</if>
+            <if test="leftDryRalesPresent != null">left_dry_rales_present = #{leftDryRalesPresent},</if>
+            <if test="leftDryRalesDistribution != null">left_dry_rales_distribution = #{leftDryRalesDistribution},</if>
+            <if test="leftWetRalesPresent != null">left_wet_rales_present = #{leftWetRalesPresent},</if>
+            <if test="leftWetRalesDistribution != null">left_wet_rales_distribution = #{leftWetRalesDistribution},</if>
+            <if test="rightLungSound != null">right_lung_sound = #{rightLungSound},</if>
+            <if test="rightDryRalesPresent != null">right_dry_rales_present = #{rightDryRalesPresent},</if>
+            <if test="rightDryRalesDistribution != null">right_dry_rales_distribution = #{rightDryRalesDistribution},</if>
+            <if test="rightWetRalesPresent != null">right_wet_rales_present = #{rightWetRalesPresent},</if>
+            <if test="rightWetRalesDistribution != null">right_wet_rales_distribution = #{rightWetRalesDistribution},</if>
+            <if test="heartRate != null">heart_rate = #{heartRate},</if>
+            <if test="heartRhythm != null">heart_rhythm = #{heartRhythm},</if>
+            <if test="heartMurmurPresent != null">heart_murmur_present = #{heartMurmurPresent},</if>
+            <if test="heartMurmurType != null">heart_murmur_type = #{heartMurmurType},</if>
+            <if test="abdomenShape != null">abdomen_shape = #{abdomenShape},</if>
+            <if test="abdomenTenderness != null">abdomen_tenderness = #{abdomenTenderness},</if>
+            <if test="reboundTenderness != null">rebound_tenderness = #{reboundTenderness},</if>
+            <if test="headNeckErythema != null">head_neck_erythema = #{headNeckErythema},</if>
+            <if test="headNeckPapule != null">head_neck_papule = #{headNeckPapule},</if>
+            <if test="headNeckExudation != null">head_neck_exudation = #{headNeckExudation},</if>
+            <if test="headNeckDesquamation != null">head_neck_desquamation = #{headNeckDesquamation},</if>
+            <if test="headNeckLichenification != null">head_neck_lichenification = #{headNeckLichenification},</if>
+            <if test="headNeckDryness != null">head_neck_dryness = #{headNeckDryness},</if>
+            <if test="headNeckOther != null">head_neck_other = #{headNeckOther},</if>
+            <if test="upperLimbErythema != null">upper_limb_erythema = #{upperLimbErythema},</if>
+            <if test="upperLimbPapule != null">upper_limb_papule = #{upperLimbPapule},</if>
+            <if test="upperLimbExudation != null">upper_limb_exudation = #{upperLimbExudation},</if>
+            <if test="upperLimbDesquamation != null">upper_limb_desquamation = #{upperLimbDesquamation},</if>
+            <if test="upperLimbLichenification != null">upper_limb_lichenification = #{upperLimbLichenification},</if>
+            <if test="upperLimbDryness != null">upper_limb_dryness = #{upperLimbDryness},</if>
+            <if test="upperLimbOther != null">upper_limb_other = #{upperLimbOther},</if>
+            <if test="trunkErythema != null">trunk_erythema = #{trunkErythema},</if>
+            <if test="trunkPapule != null">trunk_papule = #{trunkPapule},</if>
+            <if test="trunkExudation != null">trunk_exudation = #{trunkExudation},</if>
+            <if test="trunkDesquamation != null">trunk_desquamation = #{trunkDesquamation},</if>
+            <if test="trunkLichenification != null">trunk_lichenification = #{trunkLichenification},</if>
+            <if test="trunkDryness != null">trunk_dryness = #{trunkDryness},</if>
+            <if test="trunkOther != null">trunk_other = #{trunkOther},</if>
+            <if test="lowerLimbErythema != null">lower_limb_erythema = #{lowerLimbErythema},</if>
+            <if test="lowerLimbPapule != null">lower_limb_papule = #{lowerLimbPapule},</if>
+            <if test="lowerLimbExudation != null">lower_limb_exudation = #{lowerLimbExudation},</if>
+            <if test="lowerLimbDesquamation != null">lower_limb_desquamation = #{lowerLimbDesquamation},</if>
+            <if test="lowerLimbLichenification != null">lower_limb_lichenification = #{lowerLimbLichenification},</if>
+            <if test="lowerLimbDryness != null">lower_limb_dryness = #{lowerLimbDryness},</if>
+            <if test="lowerLimbOther != null">lower_limb_other = #{lowerLimbOther},</if>
+            <if test="genitalErythema != null">genital_erythema = #{genitalErythema},</if>
+            <if test="genitalPapule != null">genital_papule = #{genitalPapule},</if>
+            <if test="genitalExudation != null">genital_exudation = #{genitalExudation},</if>
+            <if test="genitalDesquamation != null">genital_desquamation = #{genitalDesquamation},</if>
+            <if test="genitalLichenification != null">genital_lichenification = #{genitalLichenification},</if>
+            <if test="genitalDryness != null">genital_dryness = #{genitalDryness},</if>
+            <if test="genitalOther != null">genital_other = #{genitalOther},</if>
+            <if test="electronicBreathSoundPath != null">electronic_breath_sound_path = #{electronicBreathSoundPath},</if>
+        </trim>
+        where exam_id = #{examId}
+    </update>
+
+    <delete id="deleteFollowupPhysicalExamByExamId" parameterType="Long">
+        delete from followup_physical_exam where exam_id = #{examId}
+    </delete>
+
+    <delete id="deleteFollowupPhysicalExamByExamIds" parameterType="String">
+        delete from followup_physical_exam where exam_id in 
+        <foreach item="examId" collection="array" open="(" separator="," close=")">
+            #{examId}
+        </foreach>
+    </delete>
+</mapper>

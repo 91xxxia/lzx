@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.FollowSys.mapper.FollowupQuestionnaireScoresMapper">
+    
+    <resultMap type="FollowupQuestionnaireScores" id="FollowupQuestionnaireScoresResult">
+        <result property="questionnaireId"    column="questionnaire_id"    />
+        <result property="patientId"    column="patient_id"    />
+        <result property="scoreDate"    column="score_date"    />
+        <result property="actScore"    column="act_score"    />
+        <result property="cActScore"    column="c_act_score"    />
+        <result property="trackScore"    column="track_score"    />
+        <result property="symptomMedicationScore"    column="symptom_medication_score"    />
+        <result property="cdlqiScore"    column="cdlqi_score"    />
+        <result property="scoardScore"    column="scoard_score"    />
+        <result property="idqolScore"    column="idqol_score"    />
+        <result property="rhinitisVasScore"    column="rhinitis_vas_score"    />
+    </resultMap>
+
+    <sql id="selectFollowupQuestionnaireScoresVo">
+        select questionnaire_id, patient_id, score_date, act_score, c_act_score, track_score, symptom_medication_score, cdlqi_score, scoard_score, idqol_score, rhinitis_vas_score from followup_questionnaire_scores
+    </sql>
+
+    <select id="selectFollowupQuestionnaireScoresList" parameterType="FollowupQuestionnaireScores" resultMap="FollowupQuestionnaireScoresResult">
+        <include refid="selectFollowupQuestionnaireScoresVo"/>
+        <where>  
+            <if test="patientId != null  and patientId != ''"> and patient_id = #{patientId}</if>
+        </where>
+    </select>
+    
+    <select id="selectFollowupQuestionnaireScoresByQuestionnaireId" parameterType="Long" resultMap="FollowupQuestionnaireScoresResult">
+        <include refid="selectFollowupQuestionnaireScoresVo"/>
+        where questionnaire_id = #{questionnaireId}
+    </select>
+
+    <insert id="insertFollowupQuestionnaireScores" parameterType="FollowupQuestionnaireScores" useGeneratedKeys="true" keyProperty="questionnaireId">
+        insert into followup_questionnaire_scores
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="patientId != null and patientId != ''">patient_id,</if>
+            <if test="scoreDate != null">score_date,</if>
+            <if test="actScore != null">act_score,</if>
+            <if test="cActScore != null">c_act_score,</if>
+            <if test="trackScore != null">track_score,</if>
+            <if test="symptomMedicationScore != null">symptom_medication_score,</if>
+            <if test="cdlqiScore != null">cdlqi_score,</if>
+            <if test="scoardScore != null">scoard_score,</if>
+            <if test="idqolScore != null">idqol_score,</if>
+            <if test="rhinitisVasScore != null">rhinitis_vas_score,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="patientId != null and patientId != ''">#{patientId},</if>
+            <if test="scoreDate != null">#{scoreDate},</if>
+            <if test="actScore != null">#{actScore},</if>
+            <if test="cActScore != null">#{cActScore},</if>
+            <if test="trackScore != null">#{trackScore},</if>
+            <if test="symptomMedicationScore != null">#{symptomMedicationScore},</if>
+            <if test="cdlqiScore != null">#{cdlqiScore},</if>
+            <if test="scoardScore != null">#{scoardScore},</if>
+            <if test="idqolScore != null">#{idqolScore},</if>
+            <if test="rhinitisVasScore != null">#{rhinitisVasScore},</if>
+         </trim>
+    </insert>
+
+    <update id="updateFollowupQuestionnaireScores" parameterType="FollowupQuestionnaireScores">
+        update followup_questionnaire_scores
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="patientId != null and patientId != ''">patient_id = #{patientId},</if>
+            <if test="scoreDate != null">score_date = #{scoreDate},</if>
+            <if test="actScore != null">act_score = #{actScore},</if>
+            <if test="cActScore != null">c_act_score = #{cActScore},</if>
+            <if test="trackScore != null">track_score = #{trackScore},</if>
+            <if test="symptomMedicationScore != null">symptom_medication_score = #{symptomMedicationScore},</if>
+            <if test="cdlqiScore != null">cdlqi_score = #{cdlqiScore},</if>
+            <if test="scoardScore != null">scoard_score = #{scoardScore},</if>
+            <if test="idqolScore != null">idqol_score = #{idqolScore},</if>
+            <if test="rhinitisVasScore != null">rhinitis_vas_score = #{rhinitisVasScore},</if>
+        </trim>
+        where questionnaire_id = #{questionnaireId}
+    </update>
+
+    <delete id="deleteFollowupQuestionnaireScoresByQuestionnaireId" parameterType="Long">
+        delete from followup_questionnaire_scores where questionnaire_id = #{questionnaireId}
+    </delete>
+
+    <delete id="deleteFollowupQuestionnaireScoresByQuestionnaireIds" parameterType="String">
+        delete from followup_questionnaire_scores where questionnaire_id in 
+        <foreach item="questionnaireId" collection="array" open="(" separator="," close=")">
+            #{questionnaireId}
+        </foreach>
+    </delete>
+</mapper>

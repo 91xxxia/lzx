@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.FollowSys.mapper.FollowupAudiologyTestsMapper">
+    
+    <resultMap type="FollowupAudiologyTests" id="FollowupAudiologyTestsResult">
+        <result property="audioId"    column="audio_id"    />
+        <result property="followupId"    column="followup_id"    />
+        <result property="testName"    column="test_name"    />
+        <result property="testDate"    column="test_date"    />
+        <result property="tympanometry"    column="tympanometry"    />
+        <result property="pureToneAudiometry"    column="pure_tone_audiometry"    />
+        <result property="result"    column="result"    />
+    </resultMap>
+
+    <sql id="selectFollowupAudiologyTestsVo">
+        select audio_id, followup_id, test_name, test_date, tympanometry, pure_tone_audiometry, result from followup_audiology_tests
+    </sql>
+
+    <select id="selectFollowupAudiologyTestsList" parameterType="FollowupAudiologyTests" resultMap="FollowupAudiologyTestsResult">
+        <include refid="selectFollowupAudiologyTestsVo"/>
+        <where>  
+            <if test="followupId != null "> and followup_id = #{followupId}</if>
+        </where>
+    </select>
+    
+    <select id="selectFollowupAudiologyTestsByAudioId" parameterType="Long" resultMap="FollowupAudiologyTestsResult">
+        <include refid="selectFollowupAudiologyTestsVo"/>
+        where audio_id = #{audioId}
+    </select>
+
+    <insert id="insertFollowupAudiologyTests" parameterType="FollowupAudiologyTests" useGeneratedKeys="true" keyProperty="audioId">
+        insert into followup_audiology_tests
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="followupId != null">followup_id,</if>
+            <if test="testName != null">test_name,</if>
+            <if test="testDate != null">test_date,</if>
+            <if test="tympanometry != null">tympanometry,</if>
+            <if test="pureToneAudiometry != null">pure_tone_audiometry,</if>
+            <if test="result != null">result,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="followupId != null">#{followupId},</if>
+            <if test="testName != null">#{testName},</if>
+            <if test="testDate != null">#{testDate},</if>
+            <if test="tympanometry != null">#{tympanometry},</if>
+            <if test="pureToneAudiometry != null">#{pureToneAudiometry},</if>
+            <if test="result != null">#{result},</if>
+         </trim>
+    </insert>
+
+    <update id="updateFollowupAudiologyTests" parameterType="FollowupAudiologyTests">
+        update followup_audiology_tests
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="followupId != null">followup_id = #{followupId},</if>
+            <if test="testName != null">test_name = #{testName},</if>
+            <if test="testDate != null">test_date = #{testDate},</if>
+            <if test="tympanometry != null">tympanometry = #{tympanometry},</if>
+            <if test="pureToneAudiometry != null">pure_tone_audiometry = #{pureToneAudiometry},</if>
+            <if test="result != null">result = #{result},</if>
+        </trim>
+        where audio_id = #{audioId}
+    </update>
+
+    <delete id="deleteFollowupAudiologyTestsByAudioId" parameterType="Long">
+        delete from followup_audiology_tests where audio_id = #{audioId}
+    </delete>
+
+    <delete id="deleteFollowupAudiologyTestsByAudioIds" parameterType="String">
+        delete from followup_audiology_tests where audio_id in 
+        <foreach item="audioId" collection="array" open="(" separator="," close=")">
+            #{audioId}
+        </foreach>
+    </delete>
+</mapper>

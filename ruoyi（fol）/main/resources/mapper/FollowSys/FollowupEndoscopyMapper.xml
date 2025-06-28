@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.FollowSys.mapper.FollowupEndoscopyMapper">
+    
+    <resultMap type="FollowupEndoscopy" id="FollowupEndoscopyResult">
+        <result property="endoscopyId"    column="endoscopy_id"    />
+        <result property="followupId"    column="followup_id"    />
+        <result property="testName"    column="test_name"    />
+        <result property="testDate"    column="test_date"    />
+        <result property="result"    column="result"    />
+        <result property="conclusion"    column="conclusion"    />
+    </resultMap>
+
+    <sql id="selectFollowupEndoscopyVo">
+        select endoscopy_id, followup_id, test_name, test_date, result, conclusion from followup_endoscopy
+    </sql>
+
+    <select id="selectFollowupEndoscopyList" parameterType="FollowupEndoscopy" resultMap="FollowupEndoscopyResult">
+        <include refid="selectFollowupEndoscopyVo"/>
+        <where>  
+            <if test="followupId != null "> and followup_id = #{followupId}</if>
+        </where>
+    </select>
+    
+    <select id="selectFollowupEndoscopyByEndoscopyId" parameterType="Long" resultMap="FollowupEndoscopyResult">
+        <include refid="selectFollowupEndoscopyVo"/>
+        where endoscopy_id = #{endoscopyId}
+    </select>
+
+    <insert id="insertFollowupEndoscopy" parameterType="FollowupEndoscopy" useGeneratedKeys="true" keyProperty="endoscopyId">
+        insert into followup_endoscopy
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="followupId != null">followup_id,</if>
+            <if test="testName != null">test_name,</if>
+            <if test="testDate != null">test_date,</if>
+            <if test="result != null">result,</if>
+            <if test="conclusion != null">conclusion,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="followupId != null">#{followupId},</if>
+            <if test="testName != null">#{testName},</if>
+            <if test="testDate != null">#{testDate},</if>
+            <if test="result != null">#{result},</if>
+            <if test="conclusion != null">#{conclusion},</if>
+         </trim>
+    </insert>
+
+    <update id="updateFollowupEndoscopy" parameterType="FollowupEndoscopy">
+        update followup_endoscopy
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="followupId != null">followup_id = #{followupId},</if>
+            <if test="testName != null">test_name = #{testName},</if>
+            <if test="testDate != null">test_date = #{testDate},</if>
+            <if test="result != null">result = #{result},</if>
+            <if test="conclusion != null">conclusion = #{conclusion},</if>
+        </trim>
+        where endoscopy_id = #{endoscopyId}
+    </update>
+
+    <delete id="deleteFollowupEndoscopyByEndoscopyId" parameterType="Long">
+        delete from followup_endoscopy where endoscopy_id = #{endoscopyId}
+    </delete>
+
+    <delete id="deleteFollowupEndoscopyByEndoscopyIds" parameterType="String">
+        delete from followup_endoscopy where endoscopy_id in 
+        <foreach item="endoscopyId" collection="array" open="(" separator="," close=")">
+            #{endoscopyId}
+        </foreach>
+    </delete>
+</mapper>

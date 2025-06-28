@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.FollowSys.mapper.FollowupPulmonaryTestsMapper">
+    
+    <resultMap type="FollowupPulmonaryTests" id="FollowupPulmonaryTestsResult">
+        <result property="testId"    column="test_id"    />
+        <result property="followupId"    column="followup_id"    />
+        <result property="lungTestDate"    column="lung_test_date"    />
+        <result property="ic"    column="ic"    />
+        <result property="mef50"    column="mef50"    />
+        <result property="fev1"    column="fev1"    />
+        <result property="fvc"    column="fvc"    />
+        <result property="mmef7525"    column="mmef75_25"    />
+        <result property="fev1FvcRatio"    column="fev1_fvc_ratio"    />
+        <result property="mef25"    column="mef25"    />
+        <result property="mef75"    column="mef75"    />
+        <result property="mvv"    column="mvv"    />
+        <result property="fev1VcmaxRatio"    column="fev1_vcmax_ratio"    />
+        <result property="vcmax"    column="vcmax"    />
+        <result property="lungFunctionConclusion"    column="lung_function_conclusion"    />
+        <result property="bronchodilationTestDate"    column="bronchodilation_test_date"    />
+        <result property="bronchodilationResult"    column="bronchodilation_result"    />
+        <result property="bronchialChallengeTestDate"    column="bronchial_challenge_test_date"    />
+        <result property="bronchialChallengeResult"    column="bronchial_challenge_result"    />
+        <result property="tidalTestDate"    column="tidal_test_date"    />
+        <result property="wtPerKg"    column="wt_per_kg"    />
+        <result property="rr"    column="rr"    />
+        <result property="ti"    column="ti"    />
+        <result property="te"    column="te"    />
+        <result property="tiTeRatio"    column="ti_te_ratio"    />
+        <result property="tptef"    column="tptef"    />
+        <result property="vptef"    column="vptef"    />
+        <result property="tptefTeRatio"    column="tptef_te_ratio"    />
+        <result property="vpefVeRatio"    column="vpef_ve_ratio"    />
+        <result property="ptef"    column="ptef"    />
+        <result property="tef50Tif50Ratio"    column="tef50_tif50_ratio"    />
+        <result property="tef50"    column="tef50"    />
+        <result property="tef25"    column="tef25"    />
+        <result property="tef2575"    column="tef25_75"    />
+    </resultMap>
+
+    <sql id="selectFollowupPulmonaryTestsVo">
+        select test_id, followup_id, lung_test_date, ic, mef50, fev1, fvc, mmef75_25, fev1_fvc_ratio, mef25, mef75, mvv, fev1_vcmax_ratio, vcmax, lung_function_conclusion, bronchodilation_test_date, bronchodilation_result, bronchial_challenge_test_date, bronchial_challenge_result, tidal_test_date, wt_per_kg, rr, ti, te, ti_te_ratio, tptef, vptef, tptef_te_ratio, vpef_ve_ratio, ptef, tef50_tif50_ratio, tef50, tef25, tef25_75 from followup_pulmonary_tests
+    </sql>
+
+    <select id="selectFollowupPulmonaryTestsList" parameterType="FollowupPulmonaryTests" resultMap="FollowupPulmonaryTestsResult">
+        <include refid="selectFollowupPulmonaryTestsVo"/>
+        <where>  
+            <if test="followupId != null "> and followup_id = #{followupId}</if>
+        </where>
+    </select>
+    
+    <select id="selectFollowupPulmonaryTestsByTestId" parameterType="Long" resultMap="FollowupPulmonaryTestsResult">
+        <include refid="selectFollowupPulmonaryTestsVo"/>
+        where test_id = #{testId}
+    </select>
+
+    <insert id="insertFollowupPulmonaryTests" parameterType="FollowupPulmonaryTests" useGeneratedKeys="true" keyProperty="testId">
+        insert into followup_pulmonary_tests
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="followupId != null">followup_id,</if>
+            <if test="lungTestDate != null">lung_test_date,</if>
+            <if test="ic != null">ic,</if>
+            <if test="mef50 != null">mef50,</if>
+            <if test="fev1 != null">fev1,</if>
+            <if test="fvc != null">fvc,</if>
+            <if test="mmef7525 != null">mmef75_25,</if>
+            <if test="fev1FvcRatio != null">fev1_fvc_ratio,</if>
+            <if test="mef25 != null">mef25,</if>
+            <if test="mef75 != null">mef75,</if>
+            <if test="mvv != null">mvv,</if>
+            <if test="fev1VcmaxRatio != null">fev1_vcmax_ratio,</if>
+            <if test="vcmax != null">vcmax,</if>
+            <if test="lungFunctionConclusion != null">lung_function_conclusion,</if>
+            <if test="bronchodilationTestDate != null">bronchodilation_test_date,</if>
+            <if test="bronchodilationResult != null">bronchodilation_result,</if>
+            <if test="bronchialChallengeTestDate != null">bronchial_challenge_test_date,</if>
+            <if test="bronchialChallengeResult != null">bronchial_challenge_result,</if>
+            <if test="tidalTestDate != null">tidal_test_date,</if>
+            <if test="wtPerKg != null">wt_per_kg,</if>
+            <if test="rr != null">rr,</if>
+            <if test="ti != null">ti,</if>
+            <if test="te != null">te,</if>
+            <if test="tiTeRatio != null">ti_te_ratio,</if>
+            <if test="tptef != null">tptef,</if>
+            <if test="vptef != null">vptef,</if>
+            <if test="tptefTeRatio != null">tptef_te_ratio,</if>
+            <if test="vpefVeRatio != null">vpef_ve_ratio,</if>
+            <if test="ptef != null">ptef,</if>
+            <if test="tef50Tif50Ratio != null">tef50_tif50_ratio,</if>
+            <if test="tef50 != null">tef50,</if>
+            <if test="tef25 != null">tef25,</if>
+            <if test="tef2575 != null">tef25_75,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="followupId != null">#{followupId},</if>
+            <if test="lungTestDate != null">#{lungTestDate},</if>
+            <if test="ic != null">#{ic},</if>
+            <if test="mef50 != null">#{mef50},</if>
+            <if test="fev1 != null">#{fev1},</if>
+            <if test="fvc != null">#{fvc},</if>
+            <if test="mmef7525 != null">#{mmef7525},</if>
+            <if test="fev1FvcRatio != null">#{fev1FvcRatio},</if>
+            <if test="mef25 != null">#{mef25},</if>
+            <if test="mef75 != null">#{mef75},</if>
+            <if test="mvv != null">#{mvv},</if>
+            <if test="fev1VcmaxRatio != null">#{fev1VcmaxRatio},</if>
+            <if test="vcmax != null">#{vcmax},</if>
+            <if test="lungFunctionConclusion != null">#{lungFunctionConclusion},</if>
+            <if test="bronchodilationTestDate != null">#{bronchodilationTestDate},</if>
+            <if test="bronchodilationResult != null">#{bronchodilationResult},</if>
+            <if test="bronchialChallengeTestDate != null">#{bronchialChallengeTestDate},</if>
+            <if test="bronchialChallengeResult != null">#{bronchialChallengeResult},</if>
+            <if test="tidalTestDate != null">#{tidalTestDate},</if>
+            <if test="wtPerKg != null">#{wtPerKg},</if>
+            <if test="rr != null">#{rr},</if>
+            <if test="ti != null">#{ti},</if>
+            <if test="te != null">#{te},</if>
+            <if test="tiTeRatio != null">#{tiTeRatio},</if>
+            <if test="tptef != null">#{tptef},</if>
+            <if test="vptef != null">#{vptef},</if>
+            <if test="tptefTeRatio != null">#{tptefTeRatio},</if>
+            <if test="vpefVeRatio != null">#{vpefVeRatio},</if>
+            <if test="ptef != null">#{ptef},</if>
+            <if test="tef50Tif50Ratio != null">#{tef50Tif50Ratio},</if>
+            <if test="tef50 != null">#{tef50},</if>
+            <if test="tef25 != null">#{tef25},</if>
+            <if test="tef2575 != null">#{tef2575},</if>
+         </trim>
+    </insert>
+
+    <update id="updateFollowupPulmonaryTests" parameterType="FollowupPulmonaryTests">
+        update followup_pulmonary_tests
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="followupId != null">followup_id = #{followupId},</if>
+            <if test="lungTestDate != null">lung_test_date = #{lungTestDate},</if>
+            <if test="ic != null">ic = #{ic},</if>
+            <if test="mef50 != null">mef50 = #{mef50},</if>
+            <if test="fev1 != null">fev1 = #{fev1},</if>
+            <if test="fvc != null">fvc = #{fvc},</if>
+            <if test="mmef7525 != null">mmef75_25 = #{mmef7525},</if>
+            <if test="fev1FvcRatio != null">fev1_fvc_ratio = #{fev1FvcRatio},</if>
+            <if test="mef25 != null">mef25 = #{mef25},</if>
+            <if test="mef75 != null">mef75 = #{mef75},</if>
+            <if test="mvv != null">mvv = #{mvv},</if>
+            <if test="fev1VcmaxRatio != null">fev1_vcmax_ratio = #{fev1VcmaxRatio},</if>
+            <if test="vcmax != null">vcmax = #{vcmax},</if>
+            <if test="lungFunctionConclusion != null">lung_function_conclusion = #{lungFunctionConclusion},</if>
+            <if test="bronchodilationTestDate != null">bronchodilation_test_date = #{bronchodilationTestDate},</if>
+            <if test="bronchodilationResult != null">bronchodilation_result = #{bronchodilationResult},</if>
+            <if test="bronchialChallengeTestDate != null">bronchial_challenge_test_date = #{bronchialChallengeTestDate},</if>
+            <if test="bronchialChallengeResult != null">bronchial_challenge_result = #{bronchialChallengeResult},</if>
+            <if test="tidalTestDate != null">tidal_test_date = #{tidalTestDate},</if>
+            <if test="wtPerKg != null">wt_per_kg = #{wtPerKg},</if>
+            <if test="rr != null">rr = #{rr},</if>
+            <if test="ti != null">ti = #{ti},</if>
+            <if test="te != null">te = #{te},</if>
+            <if test="tiTeRatio != null">ti_te_ratio = #{tiTeRatio},</if>
+            <if test="tptef != null">tptef = #{tptef},</if>
+            <if test="vptef != null">vptef = #{vptef},</if>
+            <if test="tptefTeRatio != null">tptef_te_ratio = #{tptefTeRatio},</if>
+            <if test="vpefVeRatio != null">vpef_ve_ratio = #{vpefVeRatio},</if>
+            <if test="ptef != null">ptef = #{ptef},</if>
+            <if test="tef50Tif50Ratio != null">tef50_tif50_ratio = #{tef50Tif50Ratio},</if>
+            <if test="tef50 != null">tef50 = #{tef50},</if>
+            <if test="tef25 != null">tef25 = #{tef25},</if>
+            <if test="tef2575 != null">tef25_75 = #{tef2575},</if>
+        </trim>
+        where test_id = #{testId}
+    </update>
+
+    <delete id="deleteFollowupPulmonaryTestsByTestId" parameterType="Long">
+        delete from followup_pulmonary_tests where test_id = #{testId}
+    </delete>
+
+    <delete id="deleteFollowupPulmonaryTestsByTestIds" parameterType="String">
+        delete from followup_pulmonary_tests where test_id in 
+        <foreach item="testId" collection="array" open="(" separator="," close=")">
+            #{testId}
+        </foreach>
+    </delete>
+</mapper>

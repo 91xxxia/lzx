@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.FollowSys.mapper.FollowupNasalResistanceTestsMapper">
+    
+    <resultMap type="FollowupNasalResistanceTests" id="FollowupNasalResistanceTestsResult">
+        <result property="nasalId"    column="nasal_id"    />
+        <result property="followupId"    column="followup_id"    />
+        <result property="testName"    column="test_name"    />
+        <result property="testDate"    column="test_date"    />
+        <result property="result"    column="result"    />
+        <result property="conclusion"    column="conclusion"    />
+    </resultMap>
+
+    <sql id="selectFollowupNasalResistanceTestsVo">
+        select nasal_id, followup_id, test_name, test_date, result, conclusion from followup_nasal_resistance_tests
+    </sql>
+
+    <select id="selectFollowupNasalResistanceTestsList" parameterType="FollowupNasalResistanceTests" resultMap="FollowupNasalResistanceTestsResult">
+        <include refid="selectFollowupNasalResistanceTestsVo"/>
+        <where>  
+            <if test="followupId != null "> and followup_id = #{followupId}</if>
+        </where>
+    </select>
+    
+    <select id="selectFollowupNasalResistanceTestsByNasalId" parameterType="Long" resultMap="FollowupNasalResistanceTestsResult">
+        <include refid="selectFollowupNasalResistanceTestsVo"/>
+        where nasal_id = #{nasalId}
+    </select>
+
+    <insert id="insertFollowupNasalResistanceTests" parameterType="FollowupNasalResistanceTests" useGeneratedKeys="true" keyProperty="nasalId">
+        insert into followup_nasal_resistance_tests
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="followupId != null">followup_id,</if>
+            <if test="testName != null">test_name,</if>
+            <if test="testDate != null">test_date,</if>
+            <if test="result != null">result,</if>
+            <if test="conclusion != null">conclusion,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="followupId != null">#{followupId},</if>
+            <if test="testName != null">#{testName},</if>
+            <if test="testDate != null">#{testDate},</if>
+            <if test="result != null">#{result},</if>
+            <if test="conclusion != null">#{conclusion},</if>
+         </trim>
+    </insert>
+
+    <update id="updateFollowupNasalResistanceTests" parameterType="FollowupNasalResistanceTests">
+        update followup_nasal_resistance_tests
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="followupId != null">followup_id = #{followupId},</if>
+            <if test="testName != null">test_name = #{testName},</if>
+            <if test="testDate != null">test_date = #{testDate},</if>
+            <if test="result != null">result = #{result},</if>
+            <if test="conclusion != null">conclusion = #{conclusion},</if>
+        </trim>
+        where nasal_id = #{nasalId}
+    </update>
+
+    <delete id="deleteFollowupNasalResistanceTestsByNasalId" parameterType="Long">
+        delete from followup_nasal_resistance_tests where nasal_id = #{nasalId}
+    </delete>
+
+    <delete id="deleteFollowupNasalResistanceTestsByNasalIds" parameterType="String">
+        delete from followup_nasal_resistance_tests where nasal_id in 
+        <foreach item="nasalId" collection="array" open="(" separator="," close=")">
+            #{nasalId}
+        </foreach>
+    </delete>
+</mapper>

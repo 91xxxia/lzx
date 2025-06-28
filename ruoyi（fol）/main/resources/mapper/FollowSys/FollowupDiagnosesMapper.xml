@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.FollowSys.mapper.FollowupDiagnosesMapper">
+    
+    <resultMap type="FollowupDiagnoses" id="FollowupDiagnosesResult">
+        <result property="diagnosisId"    column="diagnosis_id"    />
+        <result property="followupId"    column="followup_id"    />
+        <result property="diagnosisDate"    column="diagnosis_date"    />
+        <result property="asthmaPhase"    column="asthma_phase"    />
+        <result property="asthmaSeverity"    column="asthma_severity"    />
+        <result property="rhinitisSeverity"    column="rhinitis_severity"    />
+        <result property="rhinitisType"    column="rhinitis_type"    />
+        <result property="rhinitisDuration"    column="rhinitis_duration"    />
+        <result property="dermatitisPresent"    column="dermatitis_present"    />
+        <result property="dermatitisSeverity"    column="dermatitis_severity"    />
+        <result property="sinusitisPhase"    column="sinusitis_phase"    />
+        <result property="adenoidHypertrophy"    column="adenoid_hypertrophy"    />
+        <result property="tonsilHypertrophy"    column="tonsil_hypertrophy"    />
+        <result property="snoring"    column="snoring"    />
+        <result property="osaHypopneaSyndrome"    column="osa_hypopnea_syndrome"    />
+        <result property="allergicConjunctivitis"    column="allergic_conjunctivitis"    />
+        <result property="otherDiagnoses"    column="other_diagnoses"    />
+    </resultMap>
+
+    <sql id="selectFollowupDiagnosesVo">
+        select diagnosis_id, followup_id, diagnosis_date, asthma_phase, asthma_severity, rhinitis_severity, rhinitis_type, rhinitis_duration, dermatitis_present, dermatitis_severity, sinusitis_phase, adenoid_hypertrophy, tonsil_hypertrophy, snoring, osa_hypopnea_syndrome, allergic_conjunctivitis, other_diagnoses from followup_diagnoses
+    </sql>
+
+    <select id="selectFollowupDiagnosesList" parameterType="FollowupDiagnoses" resultMap="FollowupDiagnosesResult">
+        <include refid="selectFollowupDiagnosesVo"/>
+        <where>  
+            <if test="followupId != null "> and followup_id = #{followupId}</if>
+        </where>
+    </select>
+    
+    <select id="selectFollowupDiagnosesByDiagnosisId" parameterType="Long" resultMap="FollowupDiagnosesResult">
+        <include refid="selectFollowupDiagnosesVo"/>
+        where diagnosis_id = #{diagnosisId}
+    </select>
+
+    <insert id="insertFollowupDiagnoses" parameterType="FollowupDiagnoses" useGeneratedKeys="true" keyProperty="diagnosisId">
+        insert into followup_diagnoses
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="followupId != null">followup_id,</if>
+            <if test="diagnosisDate != null">diagnosis_date,</if>
+            <if test="asthmaPhase != null">asthma_phase,</if>
+            <if test="asthmaSeverity != null">asthma_severity,</if>
+            <if test="rhinitisSeverity != null">rhinitis_severity,</if>
+            <if test="rhinitisType != null">rhinitis_type,</if>
+            <if test="rhinitisDuration != null">rhinitis_duration,</if>
+            <if test="dermatitisPresent != null">dermatitis_present,</if>
+            <if test="dermatitisSeverity != null">dermatitis_severity,</if>
+            <if test="sinusitisPhase != null">sinusitis_phase,</if>
+            <if test="adenoidHypertrophy != null">adenoid_hypertrophy,</if>
+            <if test="tonsilHypertrophy != null">tonsil_hypertrophy,</if>
+            <if test="snoring != null">snoring,</if>
+            <if test="osaHypopneaSyndrome != null">osa_hypopnea_syndrome,</if>
+            <if test="allergicConjunctivitis != null">allergic_conjunctivitis,</if>
+            <if test="otherDiagnoses != null">other_diagnoses,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="followupId != null">#{followupId},</if>
+            <if test="diagnosisDate != null">#{diagnosisDate},</if>
+            <if test="asthmaPhase != null">#{asthmaPhase},</if>
+            <if test="asthmaSeverity != null">#{asthmaSeverity},</if>
+            <if test="rhinitisSeverity != null">#{rhinitisSeverity},</if>
+            <if test="rhinitisType != null">#{rhinitisType},</if>
+            <if test="rhinitisDuration != null">#{rhinitisDuration},</if>
+            <if test="dermatitisPresent != null">#{dermatitisPresent},</if>
+            <if test="dermatitisSeverity != null">#{dermatitisSeverity},</if>
+            <if test="sinusitisPhase != null">#{sinusitisPhase},</if>
+            <if test="adenoidHypertrophy != null">#{adenoidHypertrophy},</if>
+            <if test="tonsilHypertrophy != null">#{tonsilHypertrophy},</if>
+            <if test="snoring != null">#{snoring},</if>
+            <if test="osaHypopneaSyndrome != null">#{osaHypopneaSyndrome},</if>
+            <if test="allergicConjunctivitis != null">#{allergicConjunctivitis},</if>
+            <if test="otherDiagnoses != null">#{otherDiagnoses},</if>
+         </trim>
+    </insert>
+
+    <update id="updateFollowupDiagnoses" parameterType="FollowupDiagnoses">
+        update followup_diagnoses
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="followupId != null">followup_id = #{followupId},</if>
+            <if test="diagnosisDate != null">diagnosis_date = #{diagnosisDate},</if>
+            <if test="asthmaPhase != null">asthma_phase = #{asthmaPhase},</if>
+            <if test="asthmaSeverity != null">asthma_severity = #{asthmaSeverity},</if>
+            <if test="rhinitisSeverity != null">rhinitis_severity = #{rhinitisSeverity},</if>
+            <if test="rhinitisType != null">rhinitis_type = #{rhinitisType},</if>
+            <if test="rhinitisDuration != null">rhinitis_duration = #{rhinitisDuration},</if>
+            <if test="dermatitisPresent != null">dermatitis_present = #{dermatitisPresent},</if>
+            <if test="dermatitisSeverity != null">dermatitis_severity = #{dermatitisSeverity},</if>
+            <if test="sinusitisPhase != null">sinusitis_phase = #{sinusitisPhase},</if>
+            <if test="adenoidHypertrophy != null">adenoid_hypertrophy = #{adenoidHypertrophy},</if>
+            <if test="tonsilHypertrophy != null">tonsil_hypertrophy = #{tonsilHypertrophy},</if>
+            <if test="snoring != null">snoring = #{snoring},</if>
+            <if test="osaHypopneaSyndrome != null">osa_hypopnea_syndrome = #{osaHypopneaSyndrome},</if>
+            <if test="allergicConjunctivitis != null">allergic_conjunctivitis = #{allergicConjunctivitis},</if>
+            <if test="otherDiagnoses != null">other_diagnoses = #{otherDiagnoses},</if>
+        </trim>
+        where diagnosis_id = #{diagnosisId}
+    </update>
+
+    <delete id="deleteFollowupDiagnosesByDiagnosisId" parameterType="Long">
+        delete from followup_diagnoses where diagnosis_id = #{diagnosisId}
+    </delete>
+
+    <delete id="deleteFollowupDiagnosesByDiagnosisIds" parameterType="String">
+        delete from followup_diagnoses where diagnosis_id in 
+        <foreach item="diagnosisId" collection="array" open="(" separator="," close=")">
+            #{diagnosisId}
+        </foreach>
+    </delete>
+</mapper>

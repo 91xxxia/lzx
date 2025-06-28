@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.FollowSys.mapper.FollowupProvidersMapper">
+    
+    <resultMap type="FollowupProviders" id="FollowupProvidersResult">
+        <result property="providerId"    column="provider_id"    />
+        <result property="followupId"    column="followup_id"    />
+        <result property="providerName"    column="provider_name"    />
+        <result property="title"    column="title"    />
+    </resultMap>
+
+    <sql id="selectFollowupProvidersVo">
+        select provider_id, followup_id, provider_name, title from followup_providers
+    </sql>
+
+    <select id="selectFollowupProvidersList" parameterType="FollowupProviders" resultMap="FollowupProvidersResult">
+        <include refid="selectFollowupProvidersVo"/>
+        <where>  
+            <if test="followupId != null "> and followup_id = #{followupId}</if>
+        </where>
+    </select>
+    
+    <select id="selectFollowupProvidersByProviderId" parameterType="Long" resultMap="FollowupProvidersResult">
+        <include refid="selectFollowupProvidersVo"/>
+        where provider_id = #{providerId}
+    </select>
+
+    <insert id="insertFollowupProviders" parameterType="FollowupProviders" useGeneratedKeys="true" keyProperty="providerId">
+        insert into followup_providers
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="followupId != null">followup_id,</if>
+            <if test="providerName != null">provider_name,</if>
+            <if test="title != null">title,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="followupId != null">#{followupId},</if>
+            <if test="providerName != null">#{providerName},</if>
+            <if test="title != null">#{title},</if>
+         </trim>
+    </insert>
+
+    <update id="updateFollowupProviders" parameterType="FollowupProviders">
+        update followup_providers
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="followupId != null">followup_id = #{followupId},</if>
+            <if test="providerName != null">provider_name = #{providerName},</if>
+            <if test="title != null">title = #{title},</if>
+        </trim>
+        where provider_id = #{providerId}
+    </update>
+
+    <delete id="deleteFollowupProvidersByProviderId" parameterType="Long">
+        delete from followup_providers where provider_id = #{providerId}
+    </delete>
+
+    <delete id="deleteFollowupProvidersByProviderIds" parameterType="String">
+        delete from followup_providers where provider_id in 
+        <foreach item="providerId" collection="array" open="(" separator="," close=")">
+            #{providerId}
+        </foreach>
+    </delete>
+</mapper>

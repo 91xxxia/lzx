@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.FollowSys.mapper.FollowupVisitsMapper">
+    
+    <resultMap type="FollowupVisits" id="FollowupVisitsResult">
+        <result property="followupId"    column="followup_id"    />
+        <result property="patientId"    column="patient_id"    />
+        <result property="visitDate"    column="visit_date"    />
+        <result property="visitType"    column="visit_type"    />
+    </resultMap>
+
+    <sql id="selectFollowupVisitsVo">
+        select followup_id, patient_id, visit_date, visit_type from followup_visits
+    </sql>
+
+    <select id="selectFollowupVisitsList" parameterType="FollowupVisits" resultMap="FollowupVisitsResult">
+        <include refid="selectFollowupVisitsVo"/>
+        <where>  
+            <if test="patientId != null  and patientId != ''"> and patient_id = #{patientId}</if>
+        </where>
+    </select>
+    
+    <select id="selectFollowupVisitsByFollowupId" parameterType="Long" resultMap="FollowupVisitsResult">
+        <include refid="selectFollowupVisitsVo"/>
+        where followup_id = #{followupId}
+    </select>
+
+    <insert id="insertFollowupVisits" parameterType="FollowupVisits" useGeneratedKeys="true" keyProperty="followupId">
+        insert into followup_visits
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="patientId != null and patientId != ''">patient_id,</if>
+            <if test="visitDate != null">visit_date,</if>
+            <if test="visitType != null">visit_type,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="patientId != null and patientId != ''">#{patientId},</if>
+            <if test="visitDate != null">#{visitDate},</if>
+            <if test="visitType != null">#{visitType},</if>
+         </trim>
+    </insert>
+
+    <update id="updateFollowupVisits" parameterType="FollowupVisits">
+        update followup_visits
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="patientId != null and patientId != ''">patient_id = #{patientId},</if>
+            <if test="visitDate != null">visit_date = #{visitDate},</if>
+            <if test="visitType != null">visit_type = #{visitType},</if>
+        </trim>
+        where followup_id = #{followupId}
+    </update>
+
+    <delete id="deleteFollowupVisitsByFollowupId" parameterType="Long">
+        delete from followup_visits where followup_id = #{followupId}
+    </delete>
+
+    <delete id="deleteFollowupVisitsByFollowupIds" parameterType="String">
+        delete from followup_visits where followup_id in 
+        <foreach item="followupId" collection="array" open="(" separator="," close=")">
+            #{followupId}
+        </foreach>
+    </delete>
+</mapper>

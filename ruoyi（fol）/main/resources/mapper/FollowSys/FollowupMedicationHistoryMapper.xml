@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.FollowSys.mapper.FollowupMedicationHistoryMapper">
+    
+    <resultMap type="FollowupMedicationHistory" id="FollowupMedicationHistoryResult">
+        <result property="medHistId"    column="med_hist_id"    />
+        <result property="patientId"    column="patient_id"    />
+        <result property="cephalosporinsDays"    column="cephalosporins_days"    />
+        <result property="macrolidesDays"    column="macrolides_days"    />
+        <result property="corticosteroidsDays"    column="corticosteroids_days"    />
+        <result property="antihistaminesDays"    column="antihistamines_days"    />
+        <result property="ltraDays"    column="ltra_days"    />
+        <result property="expectorantsDays"    column="expectorants_days"    />
+        <result property="cyclosporineDays"    column="cyclosporine_days"    />
+        <result property="abrocitinibDays"    column="abrocitinib_days"    />
+        <result property="upadacitinibDays"    column="upadacitinib_days"    />
+    </resultMap>
+
+    <sql id="selectFollowupMedicationHistoryVo">
+        select med_hist_id, patient_id, cephalosporins_days, macrolides_days, corticosteroids_days, antihistamines_days, ltra_days, expectorants_days, cyclosporine_days, abrocitinib_days, upadacitinib_days from followup_medication_history
+    </sql>
+
+    <select id="selectFollowupMedicationHistoryList" parameterType="FollowupMedicationHistory" resultMap="FollowupMedicationHistoryResult">
+        <include refid="selectFollowupMedicationHistoryVo"/>
+        <where>  
+            <if test="patientId != null  and patientId != ''"> and patient_id = #{patientId}</if>
+        </where>
+    </select>
+    
+    <select id="selectFollowupMedicationHistoryByMedHistId" parameterType="Long" resultMap="FollowupMedicationHistoryResult">
+        <include refid="selectFollowupMedicationHistoryVo"/>
+        where med_hist_id = #{medHistId}
+    </select>
+
+    <insert id="insertFollowupMedicationHistory" parameterType="FollowupMedicationHistory" useGeneratedKeys="true" keyProperty="medHistId">
+        insert into followup_medication_history
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="patientId != null and patientId != ''">patient_id,</if>
+            <if test="cephalosporinsDays != null">cephalosporins_days,</if>
+            <if test="macrolidesDays != null">macrolides_days,</if>
+            <if test="corticosteroidsDays != null">corticosteroids_days,</if>
+            <if test="antihistaminesDays != null">antihistamines_days,</if>
+            <if test="ltraDays != null">ltra_days,</if>
+            <if test="expectorantsDays != null">expectorants_days,</if>
+            <if test="cyclosporineDays != null">cyclosporine_days,</if>
+            <if test="abrocitinibDays != null">abrocitinib_days,</if>
+            <if test="upadacitinibDays != null">upadacitinib_days,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="patientId != null and patientId != ''">#{patientId},</if>
+            <if test="cephalosporinsDays != null">#{cephalosporinsDays},</if>
+            <if test="macrolidesDays != null">#{macrolidesDays},</if>
+            <if test="corticosteroidsDays != null">#{corticosteroidsDays},</if>
+            <if test="antihistaminesDays != null">#{antihistaminesDays},</if>
+            <if test="ltraDays != null">#{ltraDays},</if>
+            <if test="expectorantsDays != null">#{expectorantsDays},</if>
+            <if test="cyclosporineDays != null">#{cyclosporineDays},</if>
+            <if test="abrocitinibDays != null">#{abrocitinibDays},</if>
+            <if test="upadacitinibDays != null">#{upadacitinibDays},</if>
+         </trim>
+    </insert>
+
+    <update id="updateFollowupMedicationHistory" parameterType="FollowupMedicationHistory">
+        update followup_medication_history
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="patientId != null and patientId != ''">patient_id = #{patientId},</if>
+            <if test="cephalosporinsDays != null">cephalosporins_days = #{cephalosporinsDays},</if>
+            <if test="macrolidesDays != null">macrolides_days = #{macrolidesDays},</if>
+            <if test="corticosteroidsDays != null">corticosteroids_days = #{corticosteroidsDays},</if>
+            <if test="antihistaminesDays != null">antihistamines_days = #{antihistaminesDays},</if>
+            <if test="ltraDays != null">ltra_days = #{ltraDays},</if>
+            <if test="expectorantsDays != null">expectorants_days = #{expectorantsDays},</if>
+            <if test="cyclosporineDays != null">cyclosporine_days = #{cyclosporineDays},</if>
+            <if test="abrocitinibDays != null">abrocitinib_days = #{abrocitinibDays},</if>
+            <if test="upadacitinibDays != null">upadacitinib_days = #{upadacitinibDays},</if>
+        </trim>
+        where med_hist_id = #{medHistId}
+    </update>
+
+    <delete id="deleteFollowupMedicationHistoryByMedHistId" parameterType="Long">
+        delete from followup_medication_history where med_hist_id = #{medHistId}
+    </delete>
+
+    <delete id="deleteFollowupMedicationHistoryByMedHistIds" parameterType="String">
+        delete from followup_medication_history where med_hist_id in 
+        <foreach item="medHistId" collection="array" open="(" separator="," close=")">
+            #{medHistId}
+        </foreach>
+    </delete>
+</mapper>
