@@ -948,6 +948,16 @@ CREATE TABLE followup_medications (
     FOREIGN KEY (drug_id) REFERENCES drug_catalog(drug_id) ON DELETE CASCADE
 )ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
+-- 13.5 随访记录表（原脚本中定义但未删除）
+DROP TABLE IF EXISTS followup_visits;
+CREATE TABLE followup_visits (
+  followup_id INT AUTO_INCREMENT PRIMARY KEY,
+  patient_id VARCHAR(20) NOT NULL,
+  visit_date DATE,
+  visit_type VARCHAR(20),
+  FOREIGN KEY (patient_id) REFERENCES patients(patient_id) ON DELETE CASCADE
+);
+
 -- 补充之前遗漏的表
 -- 14. 既往用药史
 DROP TABLE IF EXISTS followup_medication_history;
