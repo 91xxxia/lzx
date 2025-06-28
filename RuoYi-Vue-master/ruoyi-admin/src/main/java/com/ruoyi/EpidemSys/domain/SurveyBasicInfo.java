@@ -11,13 +11,13 @@ import com.ruoyi.common.core.domain.BaseEntity;
  * 患儿基本信息对象 survey_basic_info
  * 
  * @author ruoyi
- * @date 2025-06-27
+ * @date 2025-06-28
  */
 public class SurveyBasicInfo extends BaseEntity
 {
     private static final long serialVersionUID = 1L;
 
-    /** 患者号 */
+    /** 基本信息号 */
     private Long surveyId;
 
     /** 病人号 */
@@ -65,24 +65,24 @@ public class SurveyBasicInfo extends BaseEntity
     @Excel(name = "既往过敏史")
     private Integer allergyHistory;
 
-    /** 有无鼻炎 */
-    @Excel(name = "有无鼻炎")
+    /** 既往鼻炎 */
+    @Excel(name = "既往鼻炎")
     private Integer hasRhinitis;
 
-    /** 有无哮喘 */
-    @Excel(name = "有无哮喘")
+    /** 既往哮喘 */
+    @Excel(name = "既往哮喘")
     private Integer hasAsthma;
 
-    /** 有无皮炎 */
-    @Excel(name = "有无皮炎")
+    /** 既往皮炎 */
+    @Excel(name = "既往皮炎")
     private Integer hasDermatitis;
 
-    /** 有无结膜炎 */
-    @Excel(name = "有无结膜炎")
+    /** 既往结膜炎 */
+    @Excel(name = "既往结膜炎")
     private Integer hasConjunctivitis;
 
-    /** 有无荨麻疹 */
-    @Excel(name = "有无荨麻疹")
+    /** 既往荨麻疹 */
+    @Excel(name = "既往荨麻疹")
     private Integer hasUrticaria;
 
     /** 诊断鼻炎 */

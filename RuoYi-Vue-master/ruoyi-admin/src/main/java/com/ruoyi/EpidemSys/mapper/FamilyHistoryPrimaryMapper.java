@@ -7,7 +7,7 @@ import com.ruoyi.EpidemSys.domain.FamilyHistoryPrimary;
  * 一级亲属过敏史Mapper接口
  * 
  * @author ruoyi
- * @date 2025-06-27
+ * @date 2025-06-28
  */
 public interface FamilyHistoryPrimaryMapper 
 {

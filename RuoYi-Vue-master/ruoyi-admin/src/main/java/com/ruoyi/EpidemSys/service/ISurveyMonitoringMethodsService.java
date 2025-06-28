@@ -7,7 +7,7 @@ import com.ruoyi.EpidemSys.domain.SurveyMonitoringMethods;
  * 环境监测方法Service接口
  * 
  * @author ruoyi
- * @date 2025-06-27
+ * @date 2025-06-28
  */
 public interface ISurveyMonitoringMethodsService 
 {

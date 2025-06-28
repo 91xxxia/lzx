@@ -63,18 +63,18 @@
 
     <el-table v-loading="loading" :data="methodsList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center" />
-      <el-table-column label="方法号" align="center" prop="methodId" />
+      <el-table-column label="检测方法号" align="center" prop="methodId" />
       <el-table-column label="患者号" align="center" prop="surveyId" />
-      <el-table-column label="pm2.5监测仪器号" align="center" prop="pm25DetectorModel" />
-      <el-table-column label="花粉重力沉降法" align="center" prop="pollenGravitySettle" />
-      <el-table-column label="花粉体积采样法" align="center" prop="pollenVolumeSampling" />
-      <el-table-column label="花粉分子检测法" align="center" prop="pollenMolecularDetection" />
-      <el-table-column label="尘螨过敏原蛋白检测法" align="center" prop="miteProteinDetection" />
-      <el-table-column label="尘螨显微镜直接计数法" align="center" prop="miteMicroscopeCount" />
-      <el-table-column label="尘螨PCR分子检测法" align="center" prop="mitePcr" />
+      <el-table-column label="PM2.5监测异型号" align="center" prop="pm25DetectorModel" />
+      <el-table-column label="重力沉降法" align="center" prop="pollenGravitySettle" />
+      <el-table-column label="体积采样法" align="center" prop="pollenVolumeSampling" />
+      <el-table-column label="分子检测" align="center" prop="pollenMolecularDetection" />
+      <el-table-column label="过敏源蛋白检测法" align="center" prop="miteProteinDetection" />
+      <el-table-column label="显微镜直接计数法" align="center" prop="miteMicroscopeCount" />
+      <el-table-column label="PCR分子检测法" align="center" prop="mitePcr" />
       <el-table-column label="尘螨代谢产物检测法" align="center" prop="miteMetabolite" />
-      <el-table-column label="尘螨空气采样法" align="center" prop="miteAirSampling" />
-      <el-table-column label="尘螨环境传感器技术" align="center" prop="miteSensorTech" />
+      <el-table-column label="空气采样法" align="center" prop="miteAirSampling" />
+      <el-table-column label="环境传感器技术" align="center" prop="miteSensorTech" />
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button
@@ -109,35 +109,35 @@
         <el-form-item label="患者号" prop="surveyId">
           <el-input v-model="form.surveyId" placeholder="请输入患者号" />
         </el-form-item>
-        <el-form-item label="pm2.5监测仪器号" prop="pm25DetectorModel">
-          <el-input v-model="form.pm25DetectorModel" placeholder="请输入pm2.5监测仪器号" />
+        <el-form-item label="PM2.5监测异型号" prop="pm25DetectorModel">
+          <el-input v-model="form.pm25DetectorModel" placeholder="请输入PM2.5监测异型号" />
         </el-form-item>
-        <el-form-item label="花粉重力沉降法" prop="pollenGravitySettle">
-          <el-input v-model="form.pollenGravitySettle" placeholder="请输入花粉重力沉降法" />
+        <el-form-item label="重力沉降法" prop="pollenGravitySettle">
+          <el-input v-model="form.pollenGravitySettle" placeholder="请输入重力沉降法" />
         </el-form-item>
-        <el-form-item label="花粉体积采样法" prop="pollenVolumeSampling">
-          <el-input v-model="form.pollenVolumeSampling" placeholder="请输入花粉体积采样法" />
+        <el-form-item label="体积采样法" prop="pollenVolumeSampling">
+          <el-input v-model="form.pollenVolumeSampling" placeholder="请输入体积采样法" />
         </el-form-item>
-        <el-form-item label="花粉分子检测法" prop="pollenMolecularDetection">
-          <el-input v-model="form.pollenMolecularDetection" placeholder="请输入花粉分子检测法" />
+        <el-form-item label="分子检测" prop="pollenMolecularDetection">
+          <el-input v-model="form.pollenMolecularDetection" placeholder="请输入分子检测" />
         </el-form-item>
-        <el-form-item label="尘螨过敏原蛋白检测法" prop="miteProteinDetection">
-          <el-input v-model="form.miteProteinDetection" placeholder="请输入尘螨过敏原蛋白检测法" />
+        <el-form-item label="过敏源蛋白检测法" prop="miteProteinDetection">
+          <el-input v-model="form.miteProteinDetection" placeholder="请输入过敏源蛋白检测法" />
         </el-form-item>
-        <el-form-item label="尘螨显微镜直接计数法" prop="miteMicroscopeCount">
-          <el-input v-model="form.miteMicroscopeCount" placeholder="请输入尘螨显微镜直接计数法" />
+        <el-form-item label="显微镜直接计数法" prop="miteMicroscopeCount">
+          <el-input v-model="form.miteMicroscopeCount" placeholder="请输入显微镜直接计数法" />
         </el-form-item>
-        <el-form-item label="尘螨PCR分子检测法" prop="mitePcr">
-          <el-input v-model="form.mitePcr" placeholder="请输入尘螨PCR分子检测法" />
+        <el-form-item label="PCR分子检测法" prop="mitePcr">
+          <el-input v-model="form.mitePcr" placeholder="请输入PCR分子检测法" />
         </el-form-item>
         <el-form-item label="尘螨代谢产物检测法" prop="miteMetabolite">
           <el-input v-model="form.miteMetabolite" placeholder="请输入尘螨代谢产物检测法" />
         </el-form-item>
-        <el-form-item label="尘螨空气采样法" prop="miteAirSampling">
-          <el-input v-model="form.miteAirSampling" placeholder="请输入尘螨空气采样法" />
+        <el-form-item label="空气采样法" prop="miteAirSampling">
+          <el-input v-model="form.miteAirSampling" placeholder="请输入空气采样法" />
         </el-form-item>
-        <el-form-item label="尘螨环境传感器技术" prop="miteSensorTech">
-          <el-input v-model="form.miteSensorTech" placeholder="请输入尘螨环境传感器技术" />
+        <el-form-item label="环境传感器技术" prop="miteSensorTech">
+          <el-input v-model="form.miteSensorTech" placeholder="请输入环境传感器技术" />
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">

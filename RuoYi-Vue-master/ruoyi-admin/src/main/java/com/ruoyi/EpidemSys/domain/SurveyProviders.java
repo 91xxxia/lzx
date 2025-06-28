@@ -9,13 +9,13 @@ import com.ruoyi.common.core.domain.BaseEntity;
  * 医疗调查服务者标识信息对象 survey_providers
  * 
  * @author ruoyi
- * @date 2025-06-27
+ * @date 2025-06-28
  */
 public class SurveyProviders extends BaseEntity
 {
     private static final long serialVersionUID = 1L;
 
-    /** 调查者号 */
+    /** 信息号 */
     private Long providerId;
 
     /** 患者号 */

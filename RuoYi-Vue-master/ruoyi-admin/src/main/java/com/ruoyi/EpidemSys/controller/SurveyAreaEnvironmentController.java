@@ -22,22 +22,22 @@ import com.ruoyi.common.utils.poi.ExcelUtil;
 import com.ruoyi.common.core.page.TableDataInfo;
 
 /**
- * 城乡环境监测Controller
+ * 城乡环境监测数据Controller
  * 
  * @author ruoyi
- * @date 2025-06-27
+ * @date 2025-06-28
  */
 @RestController
-@RequestMapping("/EpidemSys/environment")
+@RequestMapping("/EpidemSys/SAenvironment")
 public class SurveyAreaEnvironmentController extends BaseController
 {
     @Autowired
     private ISurveyAreaEnvironmentService surveyAreaEnvironmentService;
 
     /**
-     * 查询城乡环境监测列表
+     * 查询城乡环境监测数据列表
      */
-    @PreAuthorize("@ss.hasPermi('EpidemSys:environment:list')")
+    @PreAuthorize("@ss.hasPermi('EpidemSys:SAenvironment:list')")
     @GetMapping("/list")
     public TableDataInfo list(SurveyAreaEnvironment surveyAreaEnvironment)
     {
@@ -47,22 +47,22 @@ public class SurveyAreaEnvironmentController extends BaseController
     }
 
     /**
-     * 导出城乡环境监测列表
+     * 导出城乡环境监测数据列表
      */
-    @PreAuthorize("@ss.hasPermi('EpidemSys:environment:export')")
-    @Log(title = "城乡环境监测", businessType = BusinessType.EXPORT)
+    @PreAuthorize("@ss.hasPermi('EpidemSys:SAenvironment:export')")
+    @Log(title = "城乡环境监测数据", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
     public void export(HttpServletResponse response, SurveyAreaEnvironment surveyAreaEnvironment)
     {
         List<SurveyAreaEnvironment> list = surveyAreaEnvironmentService.selectSurveyAreaEnvironmentList(surveyAreaEnvironment);
         ExcelUtil<SurveyAreaEnvironment> util = new ExcelUtil<SurveyAreaEnvironment>(SurveyAreaEnvironment.class);
-        util.exportExcel(response, list, "城乡环境监测数据");
+        util.exportExcel(response, list, "城乡环境监测数据数据");
     }
 
     /**
-     * 获取城乡环境监测详细信息
+     * 获取城乡环境监测数据详细信息
      */
-    @PreAuthorize("@ss.hasPermi('EpidemSys:environment:query')")
+    @PreAuthorize("@ss.hasPermi('EpidemSys:SAenvironment:query')")
     @GetMapping(value = "/{envAreaId}")
     public AjaxResult getInfo(@PathVariable("envAreaId") Long envAreaId)
     {
@@ -70,10 +70,10 @@ public class SurveyAreaEnvironmentController extends BaseController
     }
 
     /**
-     * 新增城乡环境监测
+     * 新增城乡环境监测数据
      */
-    @PreAuthorize("@ss.hasPermi('EpidemSys:environment:add')")
-    @Log(title = "城乡环境监测", businessType = BusinessType.INSERT)
+    @PreAuthorize("@ss.hasPermi('EpidemSys:SAenvironment:add')")
+    @Log(title = "城乡环境监测数据", businessType = BusinessType.INSERT)
     @PostMapping
     public AjaxResult add(@RequestBody SurveyAreaEnvironment surveyAreaEnvironment)
     {
@@ -81,10 +81,10 @@ public class SurveyAreaEnvironmentController extends BaseController
     }
 
     /**
-     * 修改城乡环境监测
+     * 修改城乡环境监测数据
      */
-    @PreAuthorize("@ss.hasPermi('EpidemSys:environment:edit')")
-    @Log(title = "城乡环境监测", businessType = BusinessType.UPDATE)
+    @PreAuthorize("@ss.hasPermi('EpidemSys:SAenvironment:edit')")
+    @Log(title = "城乡环境监测数据", businessType = BusinessType.UPDATE)
     @PutMapping
     public AjaxResult edit(@RequestBody SurveyAreaEnvironment surveyAreaEnvironment)
     {
@@ -92,10 +92,10 @@ public class SurveyAreaEnvironmentController extends BaseController
     }
 
     /**
-     * 删除城乡环境监测
+     * 删除城乡环境监测数据
      */
-    @PreAuthorize("@ss.hasPermi('EpidemSys:environment:remove')")
-    @Log(title = "城乡环境监测", businessType = BusinessType.DELETE)
+    @PreAuthorize("@ss.hasPermi('EpidemSys:SAenvironment:remove')")
+    @Log(title = "城乡环境监测数据", businessType = BusinessType.DELETE)
 	@DeleteMapping("/{envAreaIds}")
     public AjaxResult remove(@PathVariable Long[] envAreaIds)
     {

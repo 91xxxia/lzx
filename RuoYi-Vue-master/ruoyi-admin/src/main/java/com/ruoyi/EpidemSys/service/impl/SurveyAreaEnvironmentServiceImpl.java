@@ -8,10 +8,10 @@ import com.ruoyi.EpidemSys.domain.SurveyAreaEnvironment;
 import com.ruoyi.EpidemSys.service.ISurveyAreaEnvironmentService;
 
 /**
- * 城乡环境监测Service业务层处理
+ * 城乡环境监测数据Service业务层处理
  * 
  * @author ruoyi
- * @date 2025-06-27
+ * @date 2025-06-28
  */
 @Service
 public class SurveyAreaEnvironmentServiceImpl implements ISurveyAreaEnvironmentService 
@@ -20,10 +20,10 @@ public class SurveyAreaEnvironmentServiceImpl implements ISurveyAreaEnvironmentS
     private SurveyAreaEnvironmentMapper surveyAreaEnvironmentMapper;
 
     /**
-     * 查询城乡环境监测
+     * 查询城乡环境监测数据
      * 
-     * @param envAreaId 城乡环境监测主键
-     * @return 城乡环境监测
+     * @param envAreaId 城乡环境监测数据主键
+     * @return 城乡环境监测数据
      */
     @Override
     public SurveyAreaEnvironment selectSurveyAreaEnvironmentByEnvAreaId(Long envAreaId)
@@ -32,10 +32,10 @@ public class SurveyAreaEnvironmentServiceImpl implements ISurveyAreaEnvironmentS
     }
 
     /**
-     * 查询城乡环境监测列表
+     * 查询城乡环境监测数据列表
      * 
-     * @param surveyAreaEnvironment 城乡环境监测
-     * @return 城乡环境监测
+     * @param surveyAreaEnvironment 城乡环境监测数据
+     * @return 城乡环境监测数据
      */
     @Override
     public List<SurveyAreaEnvironment> selectSurveyAreaEnvironmentList(SurveyAreaEnvironment surveyAreaEnvironment)
@@ -44,9 +44,9 @@ public class SurveyAreaEnvironmentServiceImpl implements ISurveyAreaEnvironmentS
     }
 
     /**
-     * 新增城乡环境监测
+     * 新增城乡环境监测数据
      * 
-     * @param surveyAreaEnvironment 城乡环境监测
+     * @param surveyAreaEnvironment 城乡环境监测数据
      * @return 结果
      */
     @Override
@@ -56,9 +56,9 @@ public class SurveyAreaEnvironmentServiceImpl implements ISurveyAreaEnvironmentS
     }
 
     /**
-     * 修改城乡环境监测
+     * 修改城乡环境监测数据
      * 
-     * @param surveyAreaEnvironment 城乡环境监测
+     * @param surveyAreaEnvironment 城乡环境监测数据
      * @return 结果
      */
     @Override
@@ -68,9 +68,9 @@ public class SurveyAreaEnvironmentServiceImpl implements ISurveyAreaEnvironmentS
     }
 
     /**
-     * 批量删除城乡环境监测
+     * 批量删除城乡环境监测数据
      * 
-     * @param envAreaIds 需要删除的城乡环境监测主键
+     * @param envAreaIds 需要删除的城乡环境监测数据主键
      * @return 结果
      */
     @Override
@@ -80,9 +80,9 @@ public class SurveyAreaEnvironmentServiceImpl implements ISurveyAreaEnvironmentS
     }
 
     /**
-     * 删除城乡环境监测信息
+     * 删除城乡环境监测数据信息
      * 
-     * @param envAreaId 城乡环境监测主键
+     * @param envAreaId 城乡环境监测数据主键
      * @return 结果
      */
     @Override

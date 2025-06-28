@@ -11,7 +11,7 @@ import com.ruoyi.common.core.domain.BaseEntity;
  * 家庭环境暴露信息对象 survey_environment_exposure
  * 
  * @author ruoyi
- * @date 2025-06-27
+ * @date 2025-06-28
  */
 public class SurveyEnvironmentExposure extends BaseEntity
 {
@@ -56,8 +56,8 @@ public class SurveyEnvironmentExposure extends BaseEntity
     @Excel(name = "空调滤网清洁频率")
     private String acFilterCleaningFreq;
 
-    /** 暖气类型 */
-    @Excel(name = "暖气类型")
+    /** 暖气使用频率 */
+    @Excel(name = "暖气使用频率")
     private String heatingType;
 
     /** 室温范围 */
@@ -72,8 +72,8 @@ public class SurveyEnvironmentExposure extends BaseEntity
     @Excel(name = "有无毛绒玩具")
     private Integer hasSoftToys;
 
-    /** pm2.5家庭年均浓度 */
-    @Excel(name = "pm2.5家庭年均浓度")
+    /** PM2.5家庭年均浓度 */
+    @Excel(name = "PM2.5家庭年均浓度")
     private Long pm25Avg;
 
     /** 花粉信息 */
@@ -125,8 +125,8 @@ public class SurveyEnvironmentExposure extends BaseEntity
     @Excel(name = "昼夜节律紊乱")
     private Integer circadianDisruption;
 
-    /** 吸烟暴露类型 */
-    @Excel(name = "吸烟暴露类型")
+    /** 烟酒暴露情况 */
+    @Excel(name = "烟酒暴露情况")
     private String smokeExposureType;
 
     /** 清洁频率 */

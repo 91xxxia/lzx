@@ -9,14 +9,6 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="姓名" prop="name">
-        <el-input
-          v-model="queryParams.name"
-          placeholder="请输入姓名"
-          clearable
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
       <el-form-item>
         <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
         <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
@@ -71,7 +63,7 @@
 
     <el-table v-loading="loading" :data="providersList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center" />
-      <el-table-column label="调查者号" align="center" prop="providerId" />
+      <el-table-column label="信息号" align="center" prop="providerId" />
       <el-table-column label="患者号" align="center" prop="surveyId" />
       <el-table-column label="姓名" align="center" prop="name" />
       <el-table-column label="职称" align="center" prop="title" />
@@ -112,6 +104,9 @@
         <el-form-item label="姓名" prop="name">
           <el-input v-model="form.name" placeholder="请输入姓名" />
         </el-form-item>
+        <el-form-item label="职称" prop="title">
+          <el-input v-model="form.title" placeholder="请输入职称" />
+        </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button type="primary" @click="submitForm">确 定</el-button>
@@ -151,7 +146,6 @@ export default {
         pageNum: 1,
         pageSize: 10,
         surveyId: null,
-        name: null,
       },
       // 表单参数
       form: {},

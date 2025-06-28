@@ -9,14 +9,6 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="共同暴露因素：吸烟" prop="sharedSmokingExposure">
-        <el-input
-          v-model="queryParams.sharedSmokingExposure"
-          placeholder="请输入共同暴露因素：吸烟"
-          clearable
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
       <el-form-item>
         <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
         <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
@@ -31,7 +23,7 @@
           icon="el-icon-plus"
           size="mini"
           @click="handleAdd"
-          v-hasPermi="['EpidemSys:env:add']"
+          v-hasPermi="['EpidemSys:SFenv:add']"
         >新增</el-button>
       </el-col>
       <el-col :span="1.5">
@@ -42,7 +34,7 @@
           size="mini"
           :disabled="single"
           @click="handleUpdate"
-          v-hasPermi="['EpidemSys:env:edit']"
+          v-hasPermi="['EpidemSys:SFenv:edit']"
         >修改</el-button>
       </el-col>
       <el-col :span="1.5">
@@ -53,7 +45,7 @@
           size="mini"
           :disabled="multiple"
           @click="handleDelete"
-          v-hasPermi="['EpidemSys:env:remove']"
+          v-hasPermi="['EpidemSys:SFenv:remove']"
         >删除</el-button>
       </el-col>
       <el-col :span="1.5">
@@ -63,17 +55,17 @@
           icon="el-icon-download"
           size="mini"
           @click="handleExport"
-          v-hasPermi="['EpidemSys:env:export']"
+          v-hasPermi="['EpidemSys:SFenv:export']"
         >导出</el-button>
       </el-col>
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
     </el-row>
 
-    <el-table v-loading="loading" :data="envList" @selection-change="handleSelectionChange">
+    <el-table v-loading="loading" :data="SFenvList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center" />
       <el-table-column label="家族环境号" align="center" prop="familyEnvId" />
       <el-table-column label="患者号" align="center" prop="surveyId" />
-      <el-table-column label="共同暴露因素：吸烟" align="center" prop="sharedSmokingExposure" />
+      <el-table-column label="共同暴露吸烟环境" align="center" prop="sharedSmokingExposure" />
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button
@@ -81,14 +73,14 @@
             type="text"
             icon="el-icon-edit"
             @click="handleUpdate(scope.row)"
-            v-hasPermi="['EpidemSys:env:edit']"
+            v-hasPermi="['EpidemSys:SFenv:edit']"
           >修改</el-button>
           <el-button
             size="mini"
             type="text"
             icon="el-icon-delete"
             @click="handleDelete(scope.row)"
-            v-hasPermi="['EpidemSys:env:remove']"
+            v-hasPermi="['EpidemSys:SFenv:remove']"
           >删除</el-button>
         </template>
       </el-table-column>
@@ -102,14 +94,14 @@
       @pagination="getList"
     />
 
-    <!-- 添加或修改家族环境对话框 -->
+    <!-- 添加或修改家族环境居住相似性对话框 -->
     <el-dialog :title="title" :visible.sync="open" width="500px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
         <el-form-item label="患者号" prop="surveyId">
           <el-input v-model="form.surveyId" placeholder="请输入患者号" />
         </el-form-item>
-        <el-form-item label="共同暴露因素：吸烟" prop="sharedSmokingExposure">
-          <el-input v-model="form.sharedSmokingExposure" placeholder="请输入共同暴露因素：吸烟" />
+        <el-form-item label="共同暴露吸烟环境" prop="sharedSmokingExposure">
+          <el-input v-model="form.sharedSmokingExposure" placeholder="请输入共同暴露吸烟环境" />
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -121,10 +113,10 @@
 </template>
 
 <script>
-import { listEnv, getEnv, delEnv, addEnv, updateEnv } from "@/api/EpidemSys/env"
+import { listSFenv, getSFenv, delSFenv, addSFenv, updateSFenv } from "@/api/EpidemSys/SFenv"
 
 export default {
-  name: "Env",
+  name: "SFenv",
   data() {
     return {
       // 遮罩层
@@ -139,8 +131,8 @@ export default {
       showSearch: true,
       // 总条数
       total: 0,
-      // 家族环境表格数据
-      envList: [],
+      // 家族环境居住相似性表格数据
+      SFenvList: [],
       // 弹出层标题
       title: "",
       // 是否显示弹出层
@@ -150,7 +142,6 @@ export default {
         pageNum: 1,
         pageSize: 10,
         surveyId: null,
-        sharedSmokingExposure: null
       },
       // 表单参数
       form: {},
@@ -166,11 +157,11 @@ export default {
     this.getList()
   },
   methods: {
-    /** 查询家族环境列表 */
+    /** 查询家族环境居住相似性列表 */
     getList() {
       this.loading = true
-      listEnv(this.queryParams).then(response => {
-        this.envList = response.rows
+      listSFenv(this.queryParams).then(response => {
+        this.SFenvList = response.rows
         this.total = response.total
         this.loading = false
       })
@@ -209,16 +200,16 @@ export default {
     handleAdd() {
       this.reset()
       this.open = true
-      this.title = "添加家族环境"
+      this.title = "添加家族环境居住相似性"
     },
     /** 修改按钮操作 */
     handleUpdate(row) {
       this.reset()
       const familyEnvId = row.familyEnvId || this.ids
-      getEnv(familyEnvId).then(response => {
+      getSFenv(familyEnvId).then(response => {
         this.form = response.data
         this.open = true
-        this.title = "修改家族环境"
+        this.title = "修改家族环境居住相似性"
       })
     },
     /** 提交按钮 */
@@ -226,13 +217,13 @@ export default {
       this.$refs["form"].validate(valid => {
         if (valid) {
           if (this.form.familyEnvId != null) {
-            updateEnv(this.form).then(response => {
+            updateSFenv(this.form).then(response => {
               this.$modal.msgSuccess("修改成功")
               this.open = false
               this.getList()
             })
           } else {
-            addEnv(this.form).then(response => {
+            addSFenv(this.form).then(response => {
               this.$modal.msgSuccess("新增成功")
               this.open = false
               this.getList()
@@ -244,8 +235,8 @@ export default {
     /** 删除按钮操作 */
     handleDelete(row) {
       const familyEnvIds = row.familyEnvId || this.ids
-      this.$modal.confirm('是否确认删除家族环境编号为"' + familyEnvIds + '"的数据项？').then(function() {
-        return delEnv(familyEnvIds)
+      this.$modal.confirm('是否确认删除家族环境居住相似性编号为"' + familyEnvIds + '"的数据项？').then(function() {
+        return delSFenv(familyEnvIds)
       }).then(() => {
         this.getList()
         this.$modal.msgSuccess("删除成功")
@@ -253,9 +244,9 @@ export default {
     },
     /** 导出按钮操作 */
     handleExport() {
-      this.download('EpidemSys/env/export', {
+      this.download('EpidemSys/SFenv/export', {
         ...this.queryParams
-      }, `env_${new Date().getTime()}.xlsx`)
+      }, `SFenv_${new Date().getTime()}.xlsx`)
     }
   }
 }

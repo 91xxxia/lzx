@@ -6,10 +6,10 @@ import com.ruoyi.common.annotation.Excel;
 import com.ruoyi.common.core.domain.BaseEntity;
 
 /**
- * 家族环境对象 survey_family_env
+ * 家族环境居住相似性对象 survey_family_env
  * 
  * @author ruoyi
- * @date 2025-06-27
+ * @date 2025-06-28
  */
 public class SurveyFamilyEnv extends BaseEntity
 {
@@ -22,8 +22,8 @@ public class SurveyFamilyEnv extends BaseEntity
     @Excel(name = "患者号")
     private Long surveyId;
 
-    /** 共同暴露因素：吸烟 */
-    @Excel(name = "共同暴露因素：吸烟")
+    /** 共同暴露吸烟环境 */
+    @Excel(name = "共同暴露吸烟环境")
     private Integer sharedSmokingExposure;
 
     public void setFamilyEnvId(Long familyEnvId) 

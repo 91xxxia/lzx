@@ -8,10 +8,10 @@ import com.ruoyi.EpidemSys.domain.SurveyLearningWorkEnv;
 import com.ruoyi.EpidemSys.service.ISurveyLearningWorkEnvService;
 
 /**
- * 学习/工作环境号Service业务层处理
+ * 学习/工作环境信息Service业务层处理
  * 
  * @author ruoyi
- * @date 2025-06-27
+ * @date 2025-06-28
  */
 @Service
 public class SurveyLearningWorkEnvServiceImpl implements ISurveyLearningWorkEnvService 
@@ -20,10 +20,10 @@ public class SurveyLearningWorkEnvServiceImpl implements ISurveyLearningWorkEnvS
     private SurveyLearningWorkEnvMapper surveyLearningWorkEnvMapper;
 
     /**
-     * 查询学习/工作环境号
+     * 查询学习/工作环境信息
      * 
-     * @param learnEnvId 学习/工作环境号主键
-     * @return 学习/工作环境号
+     * @param learnEnvId 学习/工作环境信息主键
+     * @return 学习/工作环境信息
      */
     @Override
     public SurveyLearningWorkEnv selectSurveyLearningWorkEnvByLearnEnvId(Long learnEnvId)
@@ -32,10 +32,10 @@ public class SurveyLearningWorkEnvServiceImpl implements ISurveyLearningWorkEnvS
     }
 
     /**
-     * 查询学习/工作环境号列表
+     * 查询学习/工作环境信息列表
      * 
-     * @param surveyLearningWorkEnv 学习/工作环境号
-     * @return 学习/工作环境号
+     * @param surveyLearningWorkEnv 学习/工作环境信息
+     * @return 学习/工作环境信息
      */
     @Override
     public List<SurveyLearningWorkEnv> selectSurveyLearningWorkEnvList(SurveyLearningWorkEnv surveyLearningWorkEnv)
@@ -44,9 +44,9 @@ public class SurveyLearningWorkEnvServiceImpl implements ISurveyLearningWorkEnvS
     }
 
     /**
-     * 新增学习/工作环境号
+     * 新增学习/工作环境信息
      * 
-     * @param surveyLearningWorkEnv 学习/工作环境号
+     * @param surveyLearningWorkEnv 学习/工作环境信息
      * @return 结果
      */
     @Override
@@ -56,9 +56,9 @@ public class SurveyLearningWorkEnvServiceImpl implements ISurveyLearningWorkEnvS
     }
 
     /**
-     * 修改学习/工作环境号
+     * 修改学习/工作环境信息
      * 
-     * @param surveyLearningWorkEnv 学习/工作环境号
+     * @param surveyLearningWorkEnv 学习/工作环境信息
      * @return 结果
      */
     @Override
@@ -68,9 +68,9 @@ public class SurveyLearningWorkEnvServiceImpl implements ISurveyLearningWorkEnvS
     }
 
     /**
-     * 批量删除学习/工作环境号
+     * 批量删除学习/工作环境信息
      * 
-     * @param learnEnvIds 需要删除的学习/工作环境号主键
+     * @param learnEnvIds 需要删除的学习/工作环境信息主键
      * @return 结果
      */
     @Override
@@ -80,9 +80,9 @@ public class SurveyLearningWorkEnvServiceImpl implements ISurveyLearningWorkEnvS
     }
 
     /**
-     * 删除学习/工作环境号信息
+     * 删除学习/工作环境信息信息
      * 
-     * @param learnEnvId 学习/工作环境号主键
+     * @param learnEnvId 学习/工作环境信息主键
      * @return 结果
      */
     @Override

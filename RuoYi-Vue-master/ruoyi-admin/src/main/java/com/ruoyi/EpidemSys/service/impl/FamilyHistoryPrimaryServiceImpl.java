@@ -11,7 +11,7 @@ import com.ruoyi.EpidemSys.service.IFamilyHistoryPrimaryService;
  * 一级亲属过敏史Service业务层处理
  * 
  * @author ruoyi
- * @date 2025-06-27
+ * @date 2025-06-28
  */
 @Service
 public class FamilyHistoryPrimaryServiceImpl implements IFamilyHistoryPrimaryService 

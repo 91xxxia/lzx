@@ -9,57 +9,57 @@ import com.ruoyi.common.core.domain.BaseEntity;
  * 环境监测方法对象 survey_monitoring_methods
  * 
  * @author ruoyi
- * @date 2025-06-27
+ * @date 2025-06-28
  */
 public class SurveyMonitoringMethods extends BaseEntity
 {
     private static final long serialVersionUID = 1L;
 
-    /** 方法号 */
+    /** 检测方法号 */
     private Long methodId;
 
     /** 患者号 */
     @Excel(name = "患者号")
     private Long surveyId;
 
-    /** pm2.5监测仪器号 */
-    @Excel(name = "pm2.5监测仪器号")
+    /** PM2.5监测异型号 */
+    @Excel(name = "PM2.5监测异型号")
     private String pm25DetectorModel;
 
-    /** 花粉重力沉降法 */
-    @Excel(name = "花粉重力沉降法")
+    /** 重力沉降法 */
+    @Excel(name = "重力沉降法")
     private Integer pollenGravitySettle;
 
-    /** 花粉体积采样法 */
-    @Excel(name = "花粉体积采样法")
+    /** 体积采样法 */
+    @Excel(name = "体积采样法")
     private Integer pollenVolumeSampling;
 
-    /** 花粉分子检测法 */
-    @Excel(name = "花粉分子检测法")
+    /** 分子检测 */
+    @Excel(name = "分子检测")
     private Integer pollenMolecularDetection;
 
-    /** 尘螨过敏原蛋白检测法 */
-    @Excel(name = "尘螨过敏原蛋白检测法")
+    /** 过敏源蛋白检测法 */
+    @Excel(name = "过敏源蛋白检测法")
     private Integer miteProteinDetection;
 
-    /** 尘螨显微镜直接计数法 */
-    @Excel(name = "尘螨显微镜直接计数法")
+    /** 显微镜直接计数法 */
+    @Excel(name = "显微镜直接计数法")
     private Integer miteMicroscopeCount;
 
-    /** 尘螨PCR分子检测法 */
-    @Excel(name = "尘螨PCR分子检测法")
+    /** PCR分子检测法 */
+    @Excel(name = "PCR分子检测法")
     private Integer mitePcr;
 
     /** 尘螨代谢产物检测法 */
     @Excel(name = "尘螨代谢产物检测法")
     private Integer miteMetabolite;
 
-    /** 尘螨空气采样法 */
-    @Excel(name = "尘螨空气采样法")
+    /** 空气采样法 */
+    @Excel(name = "空气采样法")
     private Integer miteAirSampling;
 
-    /** 尘螨环境传感器技术 */
-    @Excel(name = "尘螨环境传感器技术")
+    /** 环境传感器技术 */
+    @Excel(name = "环境传感器技术")
     private Integer miteSensorTech;
 
     public void setMethodId(Long methodId) 

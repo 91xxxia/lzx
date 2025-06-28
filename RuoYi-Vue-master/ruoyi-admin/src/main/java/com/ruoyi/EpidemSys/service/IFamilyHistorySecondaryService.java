@@ -7,7 +7,7 @@ import com.ruoyi.EpidemSys.domain.FamilyHistorySecondary;
  * 二级亲属过敏史Service接口
  * 
  * @author ruoyi
- * @date 2025-06-27
+ * @date 2025-06-28
  */
 public interface IFamilyHistorySecondaryService 
 {

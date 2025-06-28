@@ -25,7 +25,7 @@ import com.ruoyi.common.core.page.TableDataInfo;
  * 环境监测方法Controller
  * 
  * @author ruoyi
- * @date 2025-06-27
+ * @date 2025-06-28
  */
 @RestController
 @RequestMapping("/EpidemSys/methods")

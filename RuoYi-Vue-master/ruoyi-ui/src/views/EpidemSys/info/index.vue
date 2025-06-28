@@ -79,11 +79,11 @@
       <el-table-column label="身高" align="center" prop="height" />
       <el-table-column label="体重" align="center" prop="weight" />
       <el-table-column label="既往过敏史" align="center" prop="allergyHistory" />
-      <el-table-column label="有无鼻炎" align="center" prop="hasRhinitis" />
-      <el-table-column label="有无哮喘" align="center" prop="hasAsthma" />
-      <el-table-column label="有无皮炎" align="center" prop="hasDermatitis" />
-      <el-table-column label="有无结膜炎" align="center" prop="hasConjunctivitis" />
-      <el-table-column label="有无荨麻疹" align="center" prop="hasUrticaria" />
+      <el-table-column label="既往鼻炎" align="center" prop="hasRhinitis" />
+      <el-table-column label="既往哮喘" align="center" prop="hasAsthma" />
+      <el-table-column label="既往皮炎" align="center" prop="hasDermatitis" />
+      <el-table-column label="既往结膜炎" align="center" prop="hasConjunctivitis" />
+      <el-table-column label="既往荨麻疹" align="center" prop="hasUrticaria" />
       <el-table-column label="诊断鼻炎" align="center" prop="diagnosedRhinitis" />
       <el-table-column label="诊断哮喘" align="center" prop="diagnosedAsthma" />
       <el-table-column label="诊断皮炎" align="center" prop="diagnosedDermatitis" />
@@ -108,7 +108,7 @@
         </template>
       </el-table-column>
     </el-table>
-    
+
     <pagination
       v-show="total>0"
       :total="total"
@@ -140,6 +140,9 @@
         <el-form-item label="年龄" prop="age">
           <el-input v-model="form.age" placeholder="请输入年龄" />
         </el-form-item>
+        <el-form-item label="居住地类型" prop="residenceType">
+          <el-input v-model="form.residenceType" placeholder="请输入居住地类型" />
+        </el-form-item>
         <el-form-item label="居住时长" prop="residenceYears">
           <el-input v-model="form.residenceYears" placeholder="请输入居住时长" />
         </el-form-item>
@@ -155,20 +158,20 @@
         <el-form-item label="既往过敏史" prop="allergyHistory">
           <el-input v-model="form.allergyHistory" placeholder="请输入既往过敏史" />
         </el-form-item>
-        <el-form-item label="有无鼻炎" prop="hasRhinitis">
-          <el-input v-model="form.hasRhinitis" placeholder="请输入有无鼻炎" />
+        <el-form-item label="既往鼻炎" prop="hasRhinitis">
+          <el-input v-model="form.hasRhinitis" placeholder="请输入既往鼻炎" />
         </el-form-item>
-        <el-form-item label="有无哮喘" prop="hasAsthma">
-          <el-input v-model="form.hasAsthma" placeholder="请输入有无哮喘" />
+        <el-form-item label="既往哮喘" prop="hasAsthma">
+          <el-input v-model="form.hasAsthma" placeholder="请输入既往哮喘" />
         </el-form-item>
-        <el-form-item label="有无皮炎" prop="hasDermatitis">
-          <el-input v-model="form.hasDermatitis" placeholder="请输入有无皮炎" />
+        <el-form-item label="既往皮炎" prop="hasDermatitis">
+          <el-input v-model="form.hasDermatitis" placeholder="请输入既往皮炎" />
         </el-form-item>
-        <el-form-item label="有无结膜炎" prop="hasConjunctivitis">
-          <el-input v-model="form.hasConjunctivitis" placeholder="请输入有无结膜炎" />
+        <el-form-item label="既往结膜炎" prop="hasConjunctivitis">
+          <el-input v-model="form.hasConjunctivitis" placeholder="请输入既往结膜炎" />
         </el-form-item>
-        <el-form-item label="有无荨麻疹" prop="hasUrticaria">
-          <el-input v-model="form.hasUrticaria" placeholder="请输入有无荨麻疹" />
+        <el-form-item label="既往荨麻疹" prop="hasUrticaria">
+          <el-input v-model="form.hasUrticaria" placeholder="请输入既往荨麻疹" />
         </el-form-item>
         <el-form-item label="诊断鼻炎" prop="diagnosedRhinitis">
           <el-input v-model="form.diagnosedRhinitis" placeholder="请输入诊断鼻炎" />

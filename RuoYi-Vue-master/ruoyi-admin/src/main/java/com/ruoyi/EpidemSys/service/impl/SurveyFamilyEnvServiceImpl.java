@@ -8,10 +8,10 @@ import com.ruoyi.EpidemSys.domain.SurveyFamilyEnv;
 import com.ruoyi.EpidemSys.service.ISurveyFamilyEnvService;
 
 /**
- * 家族环境Service业务层处理
+ * 家族环境居住相似性Service业务层处理
  * 
  * @author ruoyi
- * @date 2025-06-27
+ * @date 2025-06-28
  */
 @Service
 public class SurveyFamilyEnvServiceImpl implements ISurveyFamilyEnvService 
@@ -20,10 +20,10 @@ public class SurveyFamilyEnvServiceImpl implements ISurveyFamilyEnvService
     private SurveyFamilyEnvMapper surveyFamilyEnvMapper;
 
     /**
-     * 查询家族环境
+     * 查询家族环境居住相似性
      * 
-     * @param familyEnvId 家族环境主键
-     * @return 家族环境
+     * @param familyEnvId 家族环境居住相似性主键
+     * @return 家族环境居住相似性
      */
     @Override
     public SurveyFamilyEnv selectSurveyFamilyEnvByFamilyEnvId(Long familyEnvId)
@@ -32,10 +32,10 @@ public class SurveyFamilyEnvServiceImpl implements ISurveyFamilyEnvService
     }
 
     /**
-     * 查询家族环境列表
+     * 查询家族环境居住相似性列表
      * 
-     * @param surveyFamilyEnv 家族环境
-     * @return 家族环境
+     * @param surveyFamilyEnv 家族环境居住相似性
+     * @return 家族环境居住相似性
      */
     @Override
     public List<SurveyFamilyEnv> selectSurveyFamilyEnvList(SurveyFamilyEnv surveyFamilyEnv)
@@ -44,9 +44,9 @@ public class SurveyFamilyEnvServiceImpl implements ISurveyFamilyEnvService
     }
 
     /**
-     * 新增家族环境
+     * 新增家族环境居住相似性
      * 
-     * @param surveyFamilyEnv 家族环境
+     * @param surveyFamilyEnv 家族环境居住相似性
      * @return 结果
      */
     @Override
@@ -56,9 +56,9 @@ public class SurveyFamilyEnvServiceImpl implements ISurveyFamilyEnvService
     }
 
     /**
-     * 修改家族环境
+     * 修改家族环境居住相似性
      * 
-     * @param surveyFamilyEnv 家族环境
+     * @param surveyFamilyEnv 家族环境居住相似性
      * @return 结果
      */
     @Override
@@ -68,9 +68,9 @@ public class SurveyFamilyEnvServiceImpl implements ISurveyFamilyEnvService
     }
 
     /**
-     * 批量删除家族环境
+     * 批量删除家族环境居住相似性
      * 
-     * @param familyEnvIds 需要删除的家族环境主键
+     * @param familyEnvIds 需要删除的家族环境居住相似性主键
      * @return 结果
      */
     @Override
@@ -80,9 +80,9 @@ public class SurveyFamilyEnvServiceImpl implements ISurveyFamilyEnvService
     }
 
     /**
-     * 删除家族环境信息
+     * 删除家族环境居住相似性信息
      * 
-     * @param familyEnvId 家族环境主键
+     * @param familyEnvId 家族环境居住相似性主键
      * @return 结果
      */
     @Override

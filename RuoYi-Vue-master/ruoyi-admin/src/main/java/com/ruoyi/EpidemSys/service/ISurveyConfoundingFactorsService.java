@@ -7,7 +7,7 @@ import com.ruoyi.EpidemSys.domain.SurveyConfoundingFactors;
  * 其他潜在混杂因素Service接口
  * 
  * @author ruoyi
- * @date 2025-06-27
+ * @date 2025-06-28
  */
 public interface ISurveyConfoundingFactorsService 
 {
