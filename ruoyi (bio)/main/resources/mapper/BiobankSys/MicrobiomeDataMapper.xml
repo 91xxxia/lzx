@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.BiobankSys.mapper.MicrobiomeDataMapper">
+    
+    <resultMap type="MicrobiomeData" id="MicrobiomeDataResult">
+        <result property="microbiomeId"    column="microbiome_id"    />
+        <result property="specimenId"    column="specimen_id"    />
+        <result property="analysisDate"    column="analysis_date"    />
+        <result property="sequencingMethod"    column="sequencing_method"    />
+        <result property="alphaDiversity"    column="alpha_diversity"    />
+        <result property="betaDiversityMetrics"    column="beta_diversity_metrics"    />
+        <result property="predominantPhylum"    column="predominant_phylum"    />
+        <result property="predominantGenus"    column="predominant_genus"    />
+        <result property="firmicutesBacteroidetesRatio"    column="firmicutes_bacteroidetes_ratio"    />
+        <result property="pathogenDetected"    column="pathogen_detected"    />
+        <result property="fullTaxonomyReport"    column="full_taxonomy_report"    />
+        <result property="dataFilePath"    column="data_file_path"    />
+    </resultMap>
+
+    <sql id="selectMicrobiomeDataVo">
+        select microbiome_id, specimen_id, analysis_date, sequencing_method, alpha_diversity, beta_diversity_metrics, predominant_phylum, predominant_genus, firmicutes_bacteroidetes_ratio, pathogen_detected, full_taxonomy_report, data_file_path from microbiome_data
+    </sql>
+
+    <select id="selectMicrobiomeDataList" parameterType="MicrobiomeData" resultMap="MicrobiomeDataResult">
+        <include refid="selectMicrobiomeDataVo"/>
+        <where>  
+            <if test="specimenId != null  and specimenId != ''"> and specimen_id = #{specimenId}</if>
+            <if test="analysisDate != null "> and analysis_date = #{analysisDate}</if>
+            <if test="sequencingMethod != null  and sequencingMethod != ''"> and sequencing_method = #{sequencingMethod}</if>
+            <if test="alphaDiversity != null "> and alpha_diversity = #{alphaDiversity}</if>
+            <if test="betaDiversityMetrics != null  and betaDiversityMetrics != ''"> and beta_diversity_metrics = #{betaDiversityMetrics}</if>
+            <if test="predominantPhylum != null  and predominantPhylum != ''"> and predominant_phylum = #{predominantPhylum}</if>
+            <if test="predominantGenus != null  and predominantGenus != ''"> and predominant_genus = #{predominantGenus}</if>
+            <if test="firmicutesBacteroidetesRatio != null "> and firmicutes_bacteroidetes_ratio = #{firmicutesBacteroidetesRatio}</if>
+            <if test="pathogenDetected != null "> and pathogen_detected = #{pathogenDetected}</if>
+            <if test="fullTaxonomyReport != null  and fullTaxonomyReport != ''"> and full_taxonomy_report = #{fullTaxonomyReport}</if>
+            <if test="dataFilePath != null  and dataFilePath != ''"> and data_file_path = #{dataFilePath}</if>
+        </where>
+    </select>
+    
+    <select id="selectMicrobiomeDataByMicrobiomeId" parameterType="Long" resultMap="MicrobiomeDataResult">
+        <include refid="selectMicrobiomeDataVo"/>
+        where microbiome_id = #{microbiomeId}
+    </select>
+
+    <insert id="insertMicrobiomeData" parameterType="MicrobiomeData" useGeneratedKeys="true" keyProperty="microbiomeId">
+        insert into microbiome_data
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="specimenId != null and specimenId != ''">specimen_id,</if>
+            <if test="analysisDate != null">analysis_date,</if>
+            <if test="sequencingMethod != null">sequencing_method,</if>
+            <if test="alphaDiversity != null">alpha_diversity,</if>
+            <if test="betaDiversityMetrics != null">beta_diversity_metrics,</if>
+            <if test="predominantPhylum != null">predominant_phylum,</if>
+            <if test="predominantGenus != null">predominant_genus,</if>
+            <if test="firmicutesBacteroidetesRatio != null">firmicutes_bacteroidetes_ratio,</if>
+            <if test="pathogenDetected != null">pathogen_detected,</if>
+            <if test="fullTaxonomyReport != null">full_taxonomy_report,</if>
+            <if test="dataFilePath != null">data_file_path,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="specimenId != null and specimenId != ''">#{specimenId},</if>
+            <if test="analysisDate != null">#{analysisDate},</if>
+            <if test="sequencingMethod != null">#{sequencingMethod},</if>
+            <if test="alphaDiversity != null">#{alphaDiversity},</if>
+            <if test="betaDiversityMetrics != null">#{betaDiversityMetrics},</if>
+            <if test="predominantPhylum != null">#{predominantPhylum},</if>
+            <if test="predominantGenus != null">#{predominantGenus},</if>
+            <if test="firmicutesBacteroidetesRatio != null">#{firmicutesBacteroidetesRatio},</if>
+            <if test="pathogenDetected != null">#{pathogenDetected},</if>
+            <if test="fullTaxonomyReport != null">#{fullTaxonomyReport},</if>
+            <if test="dataFilePath != null">#{dataFilePath},</if>
+         </trim>
+    </insert>
+
+    <update id="updateMicrobiomeData" parameterType="MicrobiomeData">
+        update microbiome_data
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="specimenId != null and specimenId != ''">specimen_id = #{specimenId},</if>
+            <if test="analysisDate != null">analysis_date = #{analysisDate},</if>
+            <if test="sequencingMethod != null">sequencing_method = #{sequencingMethod},</if>
+            <if test="alphaDiversity != null">alpha_diversity = #{alphaDiversity},</if>
+            <if test="betaDiversityMetrics != null">beta_diversity_metrics = #{betaDiversityMetrics},</if>
+            <if test="predominantPhylum != null">predominant_phylum = #{predominantPhylum},</if>
+            <if test="predominantGenus != null">predominant_genus = #{predominantGenus},</if>
+            <if test="firmicutesBacteroidetesRatio != null">firmicutes_bacteroidetes_ratio = #{firmicutesBacteroidetesRatio},</if>
+            <if test="pathogenDetected != null">pathogen_detected = #{pathogenDetected},</if>
+            <if test="fullTaxonomyReport != null">full_taxonomy_report = #{fullTaxonomyReport},</if>
+            <if test="dataFilePath != null">data_file_path = #{dataFilePath},</if>
+        </trim>
+        where microbiome_id = #{microbiomeId}
+    </update>
+
+    <delete id="deleteMicrobiomeDataByMicrobiomeId" parameterType="Long">
+        delete from microbiome_data where microbiome_id = #{microbiomeId}
+    </delete>
+
+    <delete id="deleteMicrobiomeDataByMicrobiomeIds" parameterType="String">
+        delete from microbiome_data where microbiome_id in 
+        <foreach item="microbiomeId" collection="array" open="(" separator="," close=")">
+            #{microbiomeId}
+        </foreach>
+    </delete>
+</mapper>

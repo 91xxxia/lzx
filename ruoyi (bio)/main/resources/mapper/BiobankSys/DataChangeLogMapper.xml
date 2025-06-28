@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.BiobankSys.mapper.DataChangeLogMapper">
+    
+    <resultMap type="DataChangeLog" id="DataChangeLogResult">
+        <result property="logId"    column="log_id"    />
+        <result property="tableName"    column="table_name"    />
+        <result property="recordId"    column="record_id"    />
+        <result property="changeType"    column="change_type"    />
+        <result property="changedBy"    column="changed_by"    />
+        <result property="changeTime"    column="change_time"    />
+        <result property="previousData"    column="previous_data"    />
+        <result property="changeReason"    column="change_reason"    />
+    </resultMap>
+
+    <sql id="selectDataChangeLogVo">
+        select log_id, table_name, record_id, change_type, changed_by, change_time, previous_data, change_reason from data_change_log
+    </sql>
+
+    <select id="selectDataChangeLogList" parameterType="DataChangeLog" resultMap="DataChangeLogResult">
+        <include refid="selectDataChangeLogVo"/>
+        <where>  
+            <if test="tableName != null  and tableName != ''"> and table_name like concat('%', #{tableName}, '%')</if>
+            <if test="recordId != null  and recordId != ''"> and record_id = #{recordId}</if>
+            <if test="changeType != null  and changeType != ''"> and change_type = #{changeType}</if>
+            <if test="changedBy != null  and changedBy != ''"> and changed_by = #{changedBy}</if>
+            <if test="changeTime != null "> and change_time = #{changeTime}</if>
+            <if test="previousData != null  and previousData != ''"> and previous_data = #{previousData}</if>
+        </where>
+    </select>
+    
+    <select id="selectDataChangeLogByLogId" parameterType="Long" resultMap="DataChangeLogResult">
+        <include refid="selectDataChangeLogVo"/>
+        where log_id = #{logId}
+    </select>
+
+    <insert id="insertDataChangeLog" parameterType="DataChangeLog" useGeneratedKeys="true" keyProperty="logId">
+        insert into data_change_log
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="tableName != null and tableName != ''">table_name,</if>
+            <if test="recordId != null and recordId != ''">record_id,</if>
+            <if test="changeType != null">change_type,</if>
+            <if test="changedBy != null and changedBy != ''">changed_by,</if>
+            <if test="changeTime != null">change_time,</if>
+            <if test="previousData != null">previous_data,</if>
+            <if test="changeReason != null">change_reason,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="tableName != null and tableName != ''">#{tableName},</if>
+            <if test="recordId != null and recordId != ''">#{recordId},</if>
+            <if test="changeType != null">#{changeType},</if>
+            <if test="changedBy != null and changedBy != ''">#{changedBy},</if>
+            <if test="changeTime != null">#{changeTime},</if>
+            <if test="previousData != null">#{previousData},</if>
+            <if test="changeReason != null">#{changeReason},</if>
+         </trim>
+    </insert>
+
+    <update id="updateDataChangeLog" parameterType="DataChangeLog">
+        update data_change_log
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="tableName != null and tableName != ''">table_name = #{tableName},</if>
+            <if test="recordId != null and recordId != ''">record_id = #{recordId},</if>
+            <if test="changeType != null">change_type = #{changeType},</if>
+            <if test="changedBy != null and changedBy != ''">changed_by = #{changedBy},</if>
+            <if test="changeTime != null">change_time = #{changeTime},</if>
+            <if test="previousData != null">previous_data = #{previousData},</if>
+            <if test="changeReason != null">change_reason = #{changeReason},</if>
+        </trim>
+        where log_id = #{logId}
+    </update>
+
+    <delete id="deleteDataChangeLogByLogId" parameterType="Long">
+        delete from data_change_log where log_id = #{logId}
+    </delete>
+
+    <delete id="deleteDataChangeLogByLogIds" parameterType="String">
+        delete from data_change_log where log_id in 
+        <foreach item="logId" collection="array" open="(" separator="," close=")">
+            #{logId}
+        </foreach>
+    </delete>
+</mapper>
