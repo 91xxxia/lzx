@@ -28,7 +28,7 @@ import com.ruoyi.common.core.page.TableDataInfo;
  * @date 2025-06-27
  */
 @RestController
-@RequestMapping("/ClinicalSys/medications_history")
+@RequestMapping("/ClinicalSys/medicationshistory")
 public class MedicationsHistoryController extends BaseController
 {
     @Autowired
@@ -37,7 +37,7 @@ public class MedicationsHistoryController extends BaseController
     /**
      * 查询既往用药史列表
      */
-    @PreAuthorize("@ss.hasPermi('ClinicalSys:medications_history:list')")
+    @PreAuthorize("@ss.hasPermi('ClinicalSys:medicationshistory:list')")
     @GetMapping("/list")
     public TableDataInfo list(MedicationsHistory medicationsHistory)
     {
@@ -49,7 +49,7 @@ public class MedicationsHistoryController extends BaseController
     /**
      * 导出既往用药史列表
      */
-    @PreAuthorize("@ss.hasPermi('ClinicalSys:medications_history:export')")
+    @PreAuthorize("@ss.hasPermi('ClinicalSys:medicationshistory:export')")
     @Log(title = "既往用药史", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
     public void export(HttpServletResponse response, MedicationsHistory medicationsHistory)
@@ -62,7 +62,7 @@ public class MedicationsHistoryController extends BaseController
     /**
      * 获取既往用药史详细信息
      */
-    @PreAuthorize("@ss.hasPermi('ClinicalSys:medications_history:query')")
+    @PreAuthorize("@ss.hasPermi('ClinicalSys:medicationshistory:query')")
     @GetMapping(value = "/{medHisId}")
     public AjaxResult getInfo(@PathVariable("medHisId") Long medHisId)
     {
@@ -72,7 +72,7 @@ public class MedicationsHistoryController extends BaseController
     /**
      * 新增既往用药史
      */
-    @PreAuthorize("@ss.hasPermi('ClinicalSys:medications_history:add')")
+    @PreAuthorize("@ss.hasPermi('ClinicalSys:medicationshistory:add')")
     @Log(title = "既往用药史", businessType = BusinessType.INSERT)
     @PostMapping
     public AjaxResult add(@RequestBody MedicationsHistory medicationsHistory)
@@ -83,7 +83,7 @@ public class MedicationsHistoryController extends BaseController
     /**
      * 修改既往用药史
      */
-    @PreAuthorize("@ss.hasPermi('ClinicalSys:medications_history:edit')")
+    @PreAuthorize("@ss.hasPermi('ClinicalSys:medicationshistory:edit')")
     @Log(title = "既往用药史", businessType = BusinessType.UPDATE)
     @PutMapping
     public AjaxResult edit(@RequestBody MedicationsHistory medicationsHistory)
@@ -94,7 +94,7 @@ public class MedicationsHistoryController extends BaseController
     /**
      * 删除既往用药史
      */
-    @PreAuthorize("@ss.hasPermi('ClinicalSys:medications_history:remove')")
+    @PreAuthorize("@ss.hasPermi('ClinicalSys:medicationshistory:remove')")
     @Log(title = "既往用药史", businessType = BusinessType.DELETE)
 	@DeleteMapping("/{medHisIds}")
     public AjaxResult remove(@PathVariable Long[] medHisIds)

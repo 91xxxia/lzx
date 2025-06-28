@@ -101,6 +101,9 @@
         <el-form-item label="病人号" prop="patientId">
           <el-input v-model="form.patientId" placeholder="请输入病人号" />
         </el-form-item>
+        <el-form-item label="费用类别" prop="expenseType">
+          <el-input v-model="form.expenseType" placeholder="请输入费用类别" />
+        </el-form-item>
         <el-form-item label="费用" prop="amount">
           <el-input v-model="form.amount" placeholder="请输入费用" />
         </el-form-item>

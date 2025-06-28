@@ -23,7 +23,7 @@
           icon="el-icon-plus"
           size="mini"
           @click="handleAdd"
-          v-hasPermi="['ClinicalSys:lung_tests:add']"
+          v-hasPermi="['ClinicalSys:lungtests:add']"
         >新增</el-button>
       </el-col>
       <el-col :span="1.5">
@@ -34,7 +34,7 @@
           size="mini"
           :disabled="single"
           @click="handleUpdate"
-          v-hasPermi="['ClinicalSys:lung_tests:edit']"
+          v-hasPermi="['ClinicalSys:lungtests:edit']"
         >修改</el-button>
       </el-col>
       <el-col :span="1.5">
@@ -45,7 +45,7 @@
           size="mini"
           :disabled="multiple"
           @click="handleDelete"
-          v-hasPermi="['ClinicalSys:lung_tests:remove']"
+          v-hasPermi="['ClinicalSys:lungtests:remove']"
         >删除</el-button>
       </el-col>
       <el-col :span="1.5">
@@ -55,13 +55,13 @@
           icon="el-icon-download"
           size="mini"
           @click="handleExport"
-          v-hasPermi="['ClinicalSys:lung_tests:export']"
+          v-hasPermi="['ClinicalSys:lungtests:export']"
         >导出</el-button>
       </el-col>
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
     </el-row>
 
-    <el-table v-loading="loading" :data="lung_testsList" @selection-change="handleSelectionChange">
+    <el-table v-loading="loading" :data="lungtestsList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center" />
       <el-table-column label="肺功能检查号" align="center" prop="lungId" />
       <el-table-column label="病人号" align="center" prop="patientId" />
@@ -79,14 +79,14 @@
             type="text"
             icon="el-icon-edit"
             @click="handleUpdate(scope.row)"
-            v-hasPermi="['ClinicalSys:lung_tests:edit']"
+            v-hasPermi="['ClinicalSys:lungtests:edit']"
           >修改</el-button>
           <el-button
             size="mini"
             type="text"
             icon="el-icon-delete"
             @click="handleDelete(scope.row)"
-            v-hasPermi="['ClinicalSys:lung_tests:remove']"
+            v-hasPermi="['ClinicalSys:lungtests:remove']"
           >删除</el-button>
         </template>
       </el-table-column>
@@ -130,10 +130,10 @@
 </template>
 
 <script>
-import { listLung_tests, getLung_tests, delLung_tests, addLung_tests, updateLung_tests } from "@/api/ClinicalSys/lung_tests"
+import { listLungtests, getLungtests, delLungtests, addLungtests, updateLungtests } from "@/api/ClinicalSys/lungtests"
 
 export default {
-  name: "Lung_tests",
+  name: "Lungtests",
   data() {
     return {
       // 遮罩层
@@ -149,7 +149,7 @@ export default {
       // 总条数
       total: 0,
       // 肺功能检查表格数据
-      lung_testsList: [],
+      lungtestsList: [],
       // 弹出层标题
       title: "",
       // 是否显示弹出层
@@ -177,8 +177,8 @@ export default {
     /** 查询肺功能检查列表 */
     getList() {
       this.loading = true
-      listLung_tests(this.queryParams).then(response => {
-        this.lung_testsList = response.rows
+      listLungtests(this.queryParams).then(response => {
+        this.lungtestsList = response.rows
         this.total = response.total
         this.loading = false
       })
@@ -225,7 +225,7 @@ export default {
     handleUpdate(row) {
       this.reset()
       const lungId = row.lungId || this.ids
-      getLung_tests(lungId).then(response => {
+      getLungtests(lungId).then(response => {
         this.form = response.data
         this.open = true
         this.title = "修改肺功能检查"
@@ -236,13 +236,13 @@ export default {
       this.$refs["form"].validate(valid => {
         if (valid) {
           if (this.form.lungId != null) {
-            updateLung_tests(this.form).then(response => {
+            updateLungtests(this.form).then(response => {
               this.$modal.msgSuccess("修改成功")
               this.open = false
               this.getList()
             })
           } else {
-            addLung_tests(this.form).then(response => {
+            addLungtests(this.form).then(response => {
               this.$modal.msgSuccess("新增成功")
               this.open = false
               this.getList()
@@ -255,7 +255,7 @@ export default {
     handleDelete(row) {
       const lungIds = row.lungId || this.ids
       this.$modal.confirm('是否确认删除肺功能检查编号为"' + lungIds + '"的数据项？').then(function() {
-        return delLung_tests(lungIds)
+        return delLungtests(lungIds)
       }).then(() => {
         this.getList()
         this.$modal.msgSuccess("删除成功")
@@ -263,9 +263,9 @@ export default {
     },
     /** 导出按钮操作 */
     handleExport() {
-      this.download('ClinicalSys/lung_tests/export', {
+      this.download('ClinicalSys/lungtests/export', {
         ...this.queryParams
-      }, `lung_tests_${new Date().getTime()}.xlsx`)
+      }, `lungtests_${new Date().getTime()}.xlsx`)
     }
   }
 }

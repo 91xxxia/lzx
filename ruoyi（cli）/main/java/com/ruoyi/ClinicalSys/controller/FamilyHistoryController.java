@@ -28,7 +28,7 @@ import com.ruoyi.common.core.page.TableDataInfo;
  * @date 2025-06-27
  */
 @RestController
-@RequestMapping("/ClinicalSys/family_history")
+@RequestMapping("/ClinicalSys/familyhistory")
 public class FamilyHistoryController extends BaseController
 {
     @Autowired
@@ -37,7 +37,7 @@ public class FamilyHistoryController extends BaseController
     /**
      * 查询家族史列表
      */
-    @PreAuthorize("@ss.hasPermi('ClinicalSys:family_history:list')")
+    @PreAuthorize("@ss.hasPermi('ClinicalSys:familyhistory:list')")
     @GetMapping("/list")
     public TableDataInfo list(FamilyHistory familyHistory)
     {
@@ -49,7 +49,7 @@ public class FamilyHistoryController extends BaseController
     /**
      * 导出家族史列表
      */
-    @PreAuthorize("@ss.hasPermi('ClinicalSys:family_history:export')")
+    @PreAuthorize("@ss.hasPermi('ClinicalSys:familyhistory:export')")
     @Log(title = "家族史", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
     public void export(HttpServletResponse response, FamilyHistory familyHistory)
@@ -62,7 +62,7 @@ public class FamilyHistoryController extends BaseController
     /**
      * 获取家族史详细信息
      */
-    @PreAuthorize("@ss.hasPermi('ClinicalSys:family_history:query')")
+    @PreAuthorize("@ss.hasPermi('ClinicalSys:familyhistory:query')")
     @GetMapping(value = "/{famId}")
     public AjaxResult getInfo(@PathVariable("famId") Long famId)
     {
@@ -72,7 +72,7 @@ public class FamilyHistoryController extends BaseController
     /**
      * 新增家族史
      */
-    @PreAuthorize("@ss.hasPermi('ClinicalSys:family_history:add')")
+    @PreAuthorize("@ss.hasPermi('ClinicalSys:familyhistory:add')")
     @Log(title = "家族史", businessType = BusinessType.INSERT)
     @PostMapping
     public AjaxResult add(@RequestBody FamilyHistory familyHistory)
@@ -83,7 +83,7 @@ public class FamilyHistoryController extends BaseController
     /**
      * 修改家族史
      */
-    @PreAuthorize("@ss.hasPermi('ClinicalSys:family_history:edit')")
+    @PreAuthorize("@ss.hasPermi('ClinicalSys:familyhistory:edit')")
     @Log(title = "家族史", businessType = BusinessType.UPDATE)
     @PutMapping
     public AjaxResult edit(@RequestBody FamilyHistory familyHistory)
@@ -94,7 +94,7 @@ public class FamilyHistoryController extends BaseController
     /**
      * 删除家族史
      */
-    @PreAuthorize("@ss.hasPermi('ClinicalSys:family_history:remove')")
+    @PreAuthorize("@ss.hasPermi('ClinicalSys:familyhistory:remove')")
     @Log(title = "家族史", businessType = BusinessType.DELETE)
 	@DeleteMapping("/{famIds}")
     public AjaxResult remove(@PathVariable Long[] famIds)

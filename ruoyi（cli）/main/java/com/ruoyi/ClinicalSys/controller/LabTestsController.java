@@ -28,7 +28,7 @@ import com.ruoyi.common.core.page.TableDataInfo;
  * @date 2025-06-27
  */
 @RestController
-@RequestMapping("/ClinicalSys/lab_tests")
+@RequestMapping("/ClinicalSys/labtests")
 public class LabTestsController extends BaseController
 {
     @Autowired
@@ -37,7 +37,7 @@ public class LabTestsController extends BaseController
     /**
      * 查询实验室检查列表
      */
-    @PreAuthorize("@ss.hasPermi('ClinicalSys:lab_tests:list')")
+    @PreAuthorize("@ss.hasPermi('ClinicalSys:labtests:list')")
     @GetMapping("/list")
     public TableDataInfo list(LabTests labTests)
     {
@@ -49,7 +49,7 @@ public class LabTestsController extends BaseController
     /**
      * 导出实验室检查列表
      */
-    @PreAuthorize("@ss.hasPermi('ClinicalSys:lab_tests:export')")
+    @PreAuthorize("@ss.hasPermi('ClinicalSys:labtests:export')")
     @Log(title = "实验室检查", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
     public void export(HttpServletResponse response, LabTests labTests)
@@ -62,7 +62,7 @@ public class LabTestsController extends BaseController
     /**
      * 获取实验室检查详细信息
      */
-    @PreAuthorize("@ss.hasPermi('ClinicalSys:lab_tests:query')")
+    @PreAuthorize("@ss.hasPermi('ClinicalSys:labtests:query')")
     @GetMapping(value = "/{testId}")
     public AjaxResult getInfo(@PathVariable("testId") Long testId)
     {
@@ -72,7 +72,7 @@ public class LabTestsController extends BaseController
     /**
      * 新增实验室检查
      */
-    @PreAuthorize("@ss.hasPermi('ClinicalSys:lab_tests:add')")
+    @PreAuthorize("@ss.hasPermi('ClinicalSys:labtests:add')")
     @Log(title = "实验室检查", businessType = BusinessType.INSERT)
     @PostMapping
     public AjaxResult add(@RequestBody LabTests labTests)
@@ -83,7 +83,7 @@ public class LabTestsController extends BaseController
     /**
      * 修改实验室检查
      */
-    @PreAuthorize("@ss.hasPermi('ClinicalSys:lab_tests:edit')")
+    @PreAuthorize("@ss.hasPermi('ClinicalSys:labtests:edit')")
     @Log(title = "实验室检查", businessType = BusinessType.UPDATE)
     @PutMapping
     public AjaxResult edit(@RequestBody LabTests labTests)
@@ -94,7 +94,7 @@ public class LabTestsController extends BaseController
     /**
      * 删除实验室检查
      */
-    @PreAuthorize("@ss.hasPermi('ClinicalSys:lab_tests:remove')")
+    @PreAuthorize("@ss.hasPermi('ClinicalSys:labtests:remove')")
     @Log(title = "实验室检查", businessType = BusinessType.DELETE)
 	@DeleteMapping("/{testIds}")
     public AjaxResult remove(@PathVariable Long[] testIds)

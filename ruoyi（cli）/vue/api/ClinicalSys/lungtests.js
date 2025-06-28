@@ -1,44 +1,44 @@
 import request from '@/utils/request'
 
 // 查询肺功能检查列表
-export function listLung_tests(query) {
+export function listLungtests(query) {
   return request({
-    url: '/ClinicalSys/lung_tests/list',
+    url: '/ClinicalSys/lungtests/list',
     method: 'get',
     params: query
   })
 }
 
 // 查询肺功能检查详细
-export function getLung_tests(lungId) {
+export function getLungtests(lungId) {
   return request({
-    url: '/ClinicalSys/lung_tests/' + lungId,
+    url: '/ClinicalSys/lungtests/' + lungId,
     method: 'get'
   })
 }
 
 // 新增肺功能检查
-export function addLung_tests(data) {
+export function addLungtests(data) {
   return request({
-    url: '/ClinicalSys/lung_tests',
+    url: '/ClinicalSys/lungtests',
     method: 'post',
     data: data
   })
 }
 
 // 修改肺功能检查
-export function updateLung_tests(data) {
+export function updateLungtests(data) {
   return request({
-    url: '/ClinicalSys/lung_tests',
+    url: '/ClinicalSys/lungtests',
     method: 'put',
     data: data
   })
 }
 
 // 删除肺功能检查
-export function delLung_tests(lungId) {
+export function delLungtests(lungId) {
   return request({
-    url: '/ClinicalSys/lung_tests/' + lungId,
+    url: '/ClinicalSys/lungtests/' + lungId,
     method: 'delete'
   })
 }

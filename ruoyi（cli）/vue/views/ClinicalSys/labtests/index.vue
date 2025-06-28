@@ -23,7 +23,7 @@
           icon="el-icon-plus"
           size="mini"
           @click="handleAdd"
-          v-hasPermi="['ClinicalSys:lab_tests:add']"
+          v-hasPermi="['ClinicalSys:labtests:add']"
         >新增</el-button>
       </el-col>
       <el-col :span="1.5">
@@ -34,7 +34,7 @@
           size="mini"
           :disabled="single"
           @click="handleUpdate"
-          v-hasPermi="['ClinicalSys:lab_tests:edit']"
+          v-hasPermi="['ClinicalSys:labtests:edit']"
         >修改</el-button>
       </el-col>
       <el-col :span="1.5">
@@ -45,7 +45,7 @@
           size="mini"
           :disabled="multiple"
           @click="handleDelete"
-          v-hasPermi="['ClinicalSys:lab_tests:remove']"
+          v-hasPermi="['ClinicalSys:labtests:remove']"
         >删除</el-button>
       </el-col>
       <el-col :span="1.5">
@@ -55,13 +55,13 @@
           icon="el-icon-download"
           size="mini"
           @click="handleExport"
-          v-hasPermi="['ClinicalSys:lab_tests:export']"
+          v-hasPermi="['ClinicalSys:labtests:export']"
         >导出</el-button>
       </el-col>
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
     </el-row>
 
-    <el-table v-loading="loading" :data="lab_testsList" @selection-change="handleSelectionChange">
+    <el-table v-loading="loading" :data="labtestsList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center" />
       <el-table-column label="实验室检查号" align="center" prop="testId" />
       <el-table-column label="病人号" align="center" prop="patientId" />
@@ -79,14 +79,14 @@
             type="text"
             icon="el-icon-edit"
             @click="handleUpdate(scope.row)"
-            v-hasPermi="['ClinicalSys:lab_tests:edit']"
+            v-hasPermi="['ClinicalSys:labtests:edit']"
           >修改</el-button>
           <el-button
             size="mini"
             type="text"
             icon="el-icon-delete"
             @click="handleDelete(scope.row)"
-            v-hasPermi="['ClinicalSys:lab_tests:remove']"
+            v-hasPermi="['ClinicalSys:labtests:remove']"
           >删除</el-button>
         </template>
       </el-table-column>
@@ -130,10 +130,10 @@
 </template>
 
 <script>
-import { listLab_tests, getLab_tests, delLab_tests, addLab_tests, updateLab_tests } from "@/api/ClinicalSys/lab_tests"
+import { listLabtests, getLabtests, delLabtests, addLabtests, updateLabtests } from "@/api/ClinicalSys/labtests"
 
 export default {
-  name: "Lab_tests",
+  name: "Labtests",
   data() {
     return {
       // 遮罩层
@@ -149,7 +149,7 @@ export default {
       // 总条数
       total: 0,
       // 实验室检查表格数据
-      lab_testsList: [],
+      labtestsList: [],
       // 弹出层标题
       title: "",
       // 是否显示弹出层
@@ -177,8 +177,8 @@ export default {
     /** 查询实验室检查列表 */
     getList() {
       this.loading = true
-      listLab_tests(this.queryParams).then(response => {
-        this.lab_testsList = response.rows
+      listLabtests(this.queryParams).then(response => {
+        this.labtestsList = response.rows
         this.total = response.total
         this.loading = false
       })
@@ -225,7 +225,7 @@ export default {
     handleUpdate(row) {
       this.reset()
       const testId = row.testId || this.ids
-      getLab_tests(testId).then(response => {
+      getLabtests(testId).then(response => {
         this.form = response.data
         this.open = true
         this.title = "修改实验室检查"
@@ -236,13 +236,13 @@ export default {
       this.$refs["form"].validate(valid => {
         if (valid) {
           if (this.form.testId != null) {
-            updateLab_tests(this.form).then(response => {
+            updateLabtests(this.form).then(response => {
               this.$modal.msgSuccess("修改成功")
               this.open = false
               this.getList()
             })
           } else {
-            addLab_tests(this.form).then(response => {
+            addLabtests(this.form).then(response => {
               this.$modal.msgSuccess("新增成功")
               this.open = false
               this.getList()
@@ -255,7 +255,7 @@ export default {
     handleDelete(row) {
       const testIds = row.testId || this.ids
       this.$modal.confirm('是否确认删除实验室检查编号为"' + testIds + '"的数据项？').then(function() {
-        return delLab_tests(testIds)
+        return delLabtests(testIds)
       }).then(() => {
         this.getList()
         this.$modal.msgSuccess("删除成功")
@@ -263,9 +263,9 @@ export default {
     },
     /** 导出按钮操作 */
     handleExport() {
-      this.download('ClinicalSys/lab_tests/export', {
+      this.download('ClinicalSys/labtests/export', {
         ...this.queryParams
-      }, `lab_tests_${new Date().getTime()}.xlsx`)
+      }, `labtests_${new Date().getTime()}.xlsx`)
     }
   }
 }

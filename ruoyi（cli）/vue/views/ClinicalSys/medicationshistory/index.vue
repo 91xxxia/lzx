@@ -23,7 +23,7 @@
           icon="el-icon-plus"
           size="mini"
           @click="handleAdd"
-          v-hasPermi="['ClinicalSys:family_history:add']"
+          v-hasPermi="['ClinicalSys:medicationshistory:add']"
         >新增</el-button>
       </el-col>
       <el-col :span="1.5">
@@ -34,7 +34,7 @@
           size="mini"
           :disabled="single"
           @click="handleUpdate"
-          v-hasPermi="['ClinicalSys:family_history:edit']"
+          v-hasPermi="['ClinicalSys:medicationshistory:edit']"
         >修改</el-button>
       </el-col>
       <el-col :span="1.5">
@@ -45,7 +45,7 @@
           size="mini"
           :disabled="multiple"
           @click="handleDelete"
-          v-hasPermi="['ClinicalSys:family_history:remove']"
+          v-hasPermi="['ClinicalSys:medicationshistory:remove']"
         >删除</el-button>
       </el-col>
       <el-col :span="1.5">
@@ -55,18 +55,18 @@
           icon="el-icon-download"
           size="mini"
           @click="handleExport"
-          v-hasPermi="['ClinicalSys:family_history:export']"
+          v-hasPermi="['ClinicalSys:medicationshistory:export']"
         >导出</el-button>
       </el-col>
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
     </el-row>
 
-    <el-table v-loading="loading" :data="family_historyList" @selection-change="handleSelectionChange">
+    <el-table v-loading="loading" :data="medicationshistoryList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center" />
-      <el-table-column label="家族号" align="center" prop="famId" />
+      <el-table-column label="既往用药号" align="center" prop="medHisId" />
       <el-table-column label="病人号" align="center" prop="patientId" />
-      <el-table-column label="相对关系" align="center" prop="relativeRelation" />
-      <el-table-column label="过敏性疾病" align="center" prop="allergyDisease" />
+      <el-table-column label="药物名称" align="center" prop="medicationName" />
+      <el-table-column label="药物使用天数" align="center" prop="durationDays" />
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button
@@ -74,14 +74,14 @@
             type="text"
             icon="el-icon-edit"
             @click="handleUpdate(scope.row)"
-            v-hasPermi="['ClinicalSys:family_history:edit']"
+            v-hasPermi="['ClinicalSys:medicationshistory:edit']"
           >修改</el-button>
           <el-button
             size="mini"
             type="text"
             icon="el-icon-delete"
             @click="handleDelete(scope.row)"
-            v-hasPermi="['ClinicalSys:family_history:remove']"
+            v-hasPermi="['ClinicalSys:medicationshistory:remove']"
           >删除</el-button>
         </template>
       </el-table-column>
@@ -95,17 +95,17 @@
       @pagination="getList"
     />
 
-    <!-- 添加或修改家族史对话框 -->
+    <!-- 添加或修改既往用药史对话框 -->
     <el-dialog :title="title" :visible.sync="open" width="500px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
         <el-form-item label="病人号" prop="patientId">
           <el-input v-model="form.patientId" placeholder="请输入病人号" />
         </el-form-item>
-        <el-form-item label="相对关系" prop="relativeRelation">
-          <el-input v-model="form.relativeRelation" placeholder="请输入相对关系" />
+        <el-form-item label="药物名称" prop="medicationName">
+          <el-input v-model="form.medicationName" placeholder="请输入药物名称" />
         </el-form-item>
-        <el-form-item label="过敏性疾病" prop="allergyDisease">
-          <el-input v-model="form.allergyDisease" type="textarea" placeholder="请输入内容" />
+        <el-form-item label="药物使用天数" prop="durationDays">
+          <el-input v-model="form.durationDays" placeholder="请输入药物使用天数" />
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -117,10 +117,10 @@
 </template>
 
 <script>
-import { listFamily_history, getFamily_history, delFamily_history, addFamily_history, updateFamily_history } from "@/api/ClinicalSys/family_history"
+import { listMedicationshistory, getMedicationshistory, delMedicationshistory, addMedicationshistory, updateMedicationshistory } from "@/api/ClinicalSys/medicationshistory"
 
 export default {
-  name: "Family_history",
+  name: "Medicationshistory",
   data() {
     return {
       // 遮罩层
@@ -135,8 +135,8 @@ export default {
       showSearch: true,
       // 总条数
       total: 0,
-      // 家族史表格数据
-      family_historyList: [],
+      // 既往用药史表格数据
+      medicationshistoryList: [],
       // 弹出层标题
       title: "",
       // 是否显示弹出层
@@ -161,11 +161,11 @@ export default {
     this.getList()
   },
   methods: {
-    /** 查询家族史列表 */
+    /** 查询既往用药史列表 */
     getList() {
       this.loading = true
-      listFamily_history(this.queryParams).then(response => {
-        this.family_historyList = response.rows
+      listMedicationshistory(this.queryParams).then(response => {
+        this.medicationshistoryList = response.rows
         this.total = response.total
         this.loading = false
       })
@@ -178,10 +178,10 @@ export default {
     // 表单重置
     reset() {
       this.form = {
-        famId: null,
+        medHisId: null,
         patientId: null,
-        relativeRelation: null,
-        allergyDisease: null
+        medicationName: null,
+        durationDays: null
       }
       this.resetForm("form")
     },
@@ -197,7 +197,7 @@ export default {
     },
     // 多选框选中数据
     handleSelectionChange(selection) {
-      this.ids = selection.map(item => item.famId)
+      this.ids = selection.map(item => item.medHisId)
       this.single = selection.length!==1
       this.multiple = !selection.length
     },
@@ -205,30 +205,30 @@ export default {
     handleAdd() {
       this.reset()
       this.open = true
-      this.title = "添加家族史"
+      this.title = "添加既往用药史"
     },
     /** 修改按钮操作 */
     handleUpdate(row) {
       this.reset()
-      const famId = row.famId || this.ids
-      getFamily_history(famId).then(response => {
+      const medHisId = row.medHisId || this.ids
+      getMedicationshistory(medHisId).then(response => {
         this.form = response.data
         this.open = true
-        this.title = "修改家族史"
+        this.title = "修改既往用药史"
       })
     },
     /** 提交按钮 */
     submitForm() {
       this.$refs["form"].validate(valid => {
         if (valid) {
-          if (this.form.famId != null) {
-            updateFamily_history(this.form).then(response => {
+          if (this.form.medHisId != null) {
+            updateMedicationshistory(this.form).then(response => {
               this.$modal.msgSuccess("修改成功")
               this.open = false
               this.getList()
             })
           } else {
-            addFamily_history(this.form).then(response => {
+            addMedicationshistory(this.form).then(response => {
               this.$modal.msgSuccess("新增成功")
               this.open = false
               this.getList()
@@ -239,9 +239,9 @@ export default {
     },
     /** 删除按钮操作 */
     handleDelete(row) {
-      const famIds = row.famId || this.ids
-      this.$modal.confirm('是否确认删除家族史编号为"' + famIds + '"的数据项？').then(function() {
-        return delFamily_history(famIds)
+      const medHisIds = row.medHisId || this.ids
+      this.$modal.confirm('是否确认删除既往用药史编号为"' + medHisIds + '"的数据项？').then(function() {
+        return delMedicationshistory(medHisIds)
       }).then(() => {
         this.getList()
         this.$modal.msgSuccess("删除成功")
@@ -249,9 +249,9 @@ export default {
     },
     /** 导出按钮操作 */
     handleExport() {
-      this.download('ClinicalSys/family_history/export', {
+      this.download('ClinicalSys/medicationshistory/export', {
         ...this.queryParams
-      }, `family_history_${new Date().getTime()}.xlsx`)
+      }, `medicationshistory_${new Date().getTime()}.xlsx`)
     }
   }
 }
