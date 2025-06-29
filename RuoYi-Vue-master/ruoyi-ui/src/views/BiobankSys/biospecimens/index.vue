@@ -102,7 +102,7 @@
         </template>
       </el-table-column>
     </el-table>
-    
+
     <pagination
       v-show="total>0"
       :total="total"
@@ -114,6 +114,9 @@
     <!-- 添加或修改样本采集主表对话框 -->
     <el-dialog :title="title" :visible.sync="open" width="500px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
+        <el-form-item label="样本号" prop="specimenId">
+          <el-input v-model="form.specimenId" placeholder="请输入样本号" />
+        </el-form-item>
         <el-form-item label="病人号" prop="patientId">
           <el-input v-model="form.patientId" placeholder="请输入病人号" />
         </el-form-item>
@@ -173,6 +176,8 @@ export default {
   name: "Biospecimens",
   data() {
     return {
+      // 添加新记录标识
+      isNewRecord: true,
       // 遮罩层
       loading: true,
       // 选中数组
@@ -201,6 +206,10 @@ export default {
       form: {},
       // 表单校验
       rules: {
+        specimenId: [ // 添加样本号验证规则
+          { required: true, message: "样本号不能为空", trigger: "blur" },
+          { min: 1, max: 20, message: "长度在 1 到 20 个字符", trigger: "blur" }
+        ],
         patientId: [
           { required: true, message: "病人号不能为空", trigger: "blur" }
         ],
@@ -217,6 +226,13 @@ export default {
     this.getList()
   },
   methods: {
+    /** 新增按钮操作 */
+    handleAdd() {
+      this.reset()
+      this.open = true
+      this.title = "添加样本采集主表"
+      this.isNewRecord = true // 标记为新记录
+    },
     /** 查询样本采集主表列表 */
     getList() {
       this.loading = true
@@ -274,28 +290,35 @@ export default {
     /** 修改按钮操作 */
     handleUpdate(row) {
       this.reset()
-      const specimenId = row.specimenId || this.ids
+      const specimenId = row.specimenId
       getBiospecimens(specimenId).then(response => {
         this.form = response.data
         this.open = true
         this.title = "修改样本采集主表"
+        this.isNewRecord = false // 标记为更新记录
       })
     },
     /** 提交按钮 */
     submitForm() {
       this.$refs["form"].validate(valid => {
         if (valid) {
-          if (this.form.specimenId != null) {
+          // 修改判断逻辑：只有specimenId存在且不是新增时才更新
+          if (this.form.specimenId && !this.isNewRecord) {
             updateBiospecimens(this.form).then(response => {
               this.$modal.msgSuccess("修改成功")
               this.open = false
               this.getList()
+            }).catch(error => {
+              this.$modal.msgError("修改失败: " + (error.msg || error.message))
             })
           } else {
+            // 新增操作
             addBiospecimens(this.form).then(response => {
               this.$modal.msgSuccess("新增成功")
               this.open = false
               this.getList()
+            }).catch(error => {
+              this.$modal.msgError("新增失败: " + (error.msg || error.message))
             })
           }
         }
