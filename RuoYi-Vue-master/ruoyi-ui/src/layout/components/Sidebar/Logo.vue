@@ -35,7 +35,7 @@ export default {
   },
   data() {
     return {
-      title: process.env.VUE_APP_TITLE,
+      title: '专病库管理系统',
       logo: logoImg
     }
   }
