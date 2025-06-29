@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.BiobankSys.mapper.SpecimenQcMapper">
+    
+    <resultMap type="SpecimenQc" id="SpecimenQcResult">
+        <result property="qcId"    column="qc_id"    />
+        <result property="specimenId"    column="specimen_id"    />
+        <result property="qcDate"    column="qc_date"    />
+        <result property="dnaConcentration"    column="dna_concentration"    />
+        <result property="dnaQualityRatio"    column="dna_quality_ratio"    />
+        <result property="rnaIntegrityNumber"    column="rna_integrity_number"    />
+        <result property="proteinConcentration"    column="protein_concentration"    />
+        <result property="hemolysisLevel"    column="hemolysis_level"    />
+        <result property="contaminationStatus"    column="contamination_status"    />
+        <result property="qcOperator"    column="qc_operator"    />
+        <result property="qcMethod"    column="qc_method"    />
+        <result property="qcNotes"    column="qc_notes"    />
+    </resultMap>
+
+    <sql id="selectSpecimenQcVo">
+        select qc_id, specimen_id, qc_date, dna_concentration, dna_quality_ratio, rna_integrity_number, protein_concentration, hemolysis_level, contamination_status, qc_operator, qc_method, qc_notes from specimen_qc
+    </sql>
+
+    <select id="selectSpecimenQcList" parameterType="SpecimenQc" resultMap="SpecimenQcResult">
+        <include refid="selectSpecimenQcVo"/>
+        <where>  
+            <if test="specimenId != null  and specimenId != ''"> and specimen_id = #{specimenId}</if>
+        </where>
+    </select>
+    
+    <select id="selectSpecimenQcByQcId" parameterType="Long" resultMap="SpecimenQcResult">
+        <include refid="selectSpecimenQcVo"/>
+        where qc_id = #{qcId}
+    </select>
+
+    <insert id="insertSpecimenQc" parameterType="SpecimenQc" useGeneratedKeys="true" keyProperty="qcId">
+        insert into specimen_qc
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="specimenId != null and specimenId != ''">specimen_id,</if>
+            <if test="qcDate != null">qc_date,</if>
+            <if test="dnaConcentration != null">dna_concentration,</if>
+            <if test="dnaQualityRatio != null">dna_quality_ratio,</if>
+            <if test="rnaIntegrityNumber != null">rna_integrity_number,</if>
+            <if test="proteinConcentration != null">protein_concentration,</if>
+            <if test="hemolysisLevel != null">hemolysis_level,</if>
+            <if test="contaminationStatus != null">contamination_status,</if>
+            <if test="qcOperator != null">qc_operator,</if>
+            <if test="qcMethod != null">qc_method,</if>
+            <if test="qcNotes != null">qc_notes,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="specimenId != null and specimenId != ''">#{specimenId},</if>
+            <if test="qcDate != null">#{qcDate},</if>
+            <if test="dnaConcentration != null">#{dnaConcentration},</if>
+            <if test="dnaQualityRatio != null">#{dnaQualityRatio},</if>
+            <if test="rnaIntegrityNumber != null">#{rnaIntegrityNumber},</if>
+            <if test="proteinConcentration != null">#{proteinConcentration},</if>
+            <if test="hemolysisLevel != null">#{hemolysisLevel},</if>
+            <if test="contaminationStatus != null">#{contaminationStatus},</if>
+            <if test="qcOperator != null">#{qcOperator},</if>
+            <if test="qcMethod != null">#{qcMethod},</if>
+            <if test="qcNotes != null">#{qcNotes},</if>
+         </trim>
+    </insert>
+
+    <update id="updateSpecimenQc" parameterType="SpecimenQc">
+        update specimen_qc
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="specimenId != null and specimenId != ''">specimen_id = #{specimenId},</if>
+            <if test="qcDate != null">qc_date = #{qcDate},</if>
+            <if test="dnaConcentration != null">dna_concentration = #{dnaConcentration},</if>
+            <if test="dnaQualityRatio != null">dna_quality_ratio = #{dnaQualityRatio},</if>
+            <if test="rnaIntegrityNumber != null">rna_integrity_number = #{rnaIntegrityNumber},</if>
+            <if test="proteinConcentration != null">protein_concentration = #{proteinConcentration},</if>
+            <if test="hemolysisLevel != null">hemolysis_level = #{hemolysisLevel},</if>
+            <if test="contaminationStatus != null">contamination_status = #{contaminationStatus},</if>
+            <if test="qcOperator != null">qc_operator = #{qcOperator},</if>
+            <if test="qcMethod != null">qc_method = #{qcMethod},</if>
+            <if test="qcNotes != null">qc_notes = #{qcNotes},</if>
+        </trim>
+        where qc_id = #{qcId}
+    </update>
+
+    <delete id="deleteSpecimenQcByQcId" parameterType="Long">
+        delete from specimen_qc where qc_id = #{qcId}
+    </delete>
+
+    <delete id="deleteSpecimenQcByQcIds" parameterType="String">
+        delete from specimen_qc where qc_id in 
+        <foreach item="qcId" collection="array" open="(" separator="," close=")">
+            #{qcId}
+        </foreach>
+    </delete>
+</mapper>
