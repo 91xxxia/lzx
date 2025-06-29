@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.BiobankSys.mapper.CollectionEventsMapper">
+    
+    <resultMap type="CollectionEvents" id="CollectionEventsResult">
+        <result property="eventId"    column="event_id"    />
+        <result property="patientId"    column="patient_id"    />
+        <result property="clinicalVisitId"    column="clinical_visit_id"    />
+        <result property="eventName"    column="event_name"    />
+        <result property="eventDate"    column="event_date"    />
+        <result property="protocolVersion"    column="protocol_version"    />
+        <result property="collectorId"    column="collector_id"    />
+    </resultMap>
+
+    <sql id="selectCollectionEventsVo">
+        select event_id, patient_id, clinical_visit_id, event_name, event_date, protocol_version, collector_id from collection_events
+    </sql>
+
+    <select id="selectCollectionEventsList" parameterType="CollectionEvents" resultMap="CollectionEventsResult">
+        <include refid="selectCollectionEventsVo"/>
+        <where>  
+            <if test="patientId != null  and patientId != ''"> and patient_id = #{patientId}</if>
+        </where>
+    </select>
+    
+    <select id="selectCollectionEventsByEventId" parameterType="Long" resultMap="CollectionEventsResult">
+        <include refid="selectCollectionEventsVo"/>
+        where event_id = #{eventId}
+    </select>
+
+    <insert id="insertCollectionEvents" parameterType="CollectionEvents" useGeneratedKeys="true" keyProperty="eventId">
+        insert into collection_events
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="patientId != null and patientId != ''">patient_id,</if>
+            <if test="clinicalVisitId != null">clinical_visit_id,</if>
+            <if test="eventName != null">event_name,</if>
+            <if test="eventDate != null">event_date,</if>
+            <if test="protocolVersion != null">protocol_version,</if>
+            <if test="collectorId != null">collector_id,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="patientId != null and patientId != ''">#{patientId},</if>
+            <if test="clinicalVisitId != null">#{clinicalVisitId},</if>
+            <if test="eventName != null">#{eventName},</if>
+            <if test="eventDate != null">#{eventDate},</if>
+            <if test="protocolVersion != null">#{protocolVersion},</if>
+            <if test="collectorId != null">#{collectorId},</if>
+         </trim>
+    </insert>
+
+    <update id="updateCollectionEvents" parameterType="CollectionEvents">
+        update collection_events
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="patientId != null and patientId != ''">patient_id = #{patientId},</if>
+            <if test="clinicalVisitId != null">clinical_visit_id = #{clinicalVisitId},</if>
+            <if test="eventName != null">event_name = #{eventName},</if>
+            <if test="eventDate != null">event_date = #{eventDate},</if>
+            <if test="protocolVersion != null">protocol_version = #{protocolVersion},</if>
+            <if test="collectorId != null">collector_id = #{collectorId},</if>
+        </trim>
+        where event_id = #{eventId}
+    </update>
+
+    <delete id="deleteCollectionEventsByEventId" parameterType="Long">
+        delete from collection_events where event_id = #{eventId}
+    </delete>
+
+    <delete id="deleteCollectionEventsByEventIds" parameterType="String">
+        delete from collection_events where event_id in 
+        <foreach item="eventId" collection="array" open="(" separator="," close=")">
+            #{eventId}
+        </foreach>
+    </delete>
+</mapper>

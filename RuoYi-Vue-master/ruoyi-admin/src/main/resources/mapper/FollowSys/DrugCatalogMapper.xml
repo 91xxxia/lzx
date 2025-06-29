@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.FollowSys.mapper.DrugCatalogMapper">
+    
+    <resultMap type="DrugCatalog" id="DrugCatalogResult">
+        <result property="drugId"    column="drug_id"    />
+        <result property="name"    column="name"    />
+        <result property="brand"    column="brand"    />
+        <result property="type"    column="type"    />
+        <result property="isSteroid"    column="is_steroid"    />
+        <result property="isAntihistamine"    column="is_antihistamine"    />
+        <result property="isLtra"    column="is_ltra"    />
+        <result property="isBronchodilator"    column="is_bronchodilator"    />
+        <result property="isAntibiotic"    column="is_antibiotic"    />
+        <result property="isTopical"    column="is_topical"    />
+        <result property="isNasal"    column="is_nasal"    />
+        <result property="isExpectorant"    column="is_expectorant"    />
+        <result property="isImmunotherapy"    column="is_immunotherapy"    />
+        <result property="isAntiIge"    column="is_anti_IgE"    />
+        <result property="isTargeted"    column="is_targeted"    />
+    </resultMap>
+
+    <sql id="selectDrugCatalogVo">
+        select drug_id, name, brand, type, is_steroid, is_antihistamine, is_ltra, is_bronchodilator, is_antibiotic, is_topical, is_nasal, is_expectorant, is_immunotherapy, is_anti_IgE, is_targeted from drug_catalog
+    </sql>
+
+    <select id="selectDrugCatalogList" parameterType="DrugCatalog" resultMap="DrugCatalogResult">
+        <include refid="selectDrugCatalogVo"/>
+        <where>  
+            <if test="name != null  and name != ''"> and name like concat('%', #{name}, '%')</if>
+        </where>
+    </select>
+    
+    <select id="selectDrugCatalogByDrugId" parameterType="Long" resultMap="DrugCatalogResult">
+        <include refid="selectDrugCatalogVo"/>
+        where drug_id = #{drugId}
+    </select>
+
+    <insert id="insertDrugCatalog" parameterType="DrugCatalog" useGeneratedKeys="true" keyProperty="drugId">
+        insert into drug_catalog
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="name != null and name != ''">name,</if>
+            <if test="brand != null">brand,</if>
+            <if test="type != null">type,</if>
+            <if test="isSteroid != null">is_steroid,</if>
+            <if test="isAntihistamine != null">is_antihistamine,</if>
+            <if test="isLtra != null">is_ltra,</if>
+            <if test="isBronchodilator != null">is_bronchodilator,</if>
+            <if test="isAntibiotic != null">is_antibiotic,</if>
+            <if test="isTopical != null">is_topical,</if>
+            <if test="isNasal != null">is_nasal,</if>
+            <if test="isExpectorant != null">is_expectorant,</if>
+            <if test="isImmunotherapy != null">is_immunotherapy,</if>
+            <if test="isAntiIge != null">is_anti_IgE,</if>
+            <if test="isTargeted != null">is_targeted,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="name != null and name != ''">#{name},</if>
+            <if test="brand != null">#{brand},</if>
+            <if test="type != null">#{type},</if>
+            <if test="isSteroid != null">#{isSteroid},</if>
+            <if test="isAntihistamine != null">#{isAntihistamine},</if>
+            <if test="isLtra != null">#{isLtra},</if>
+            <if test="isBronchodilator != null">#{isBronchodilator},</if>
+            <if test="isAntibiotic != null">#{isAntibiotic},</if>
+            <if test="isTopical != null">#{isTopical},</if>
+            <if test="isNasal != null">#{isNasal},</if>
+            <if test="isExpectorant != null">#{isExpectorant},</if>
+            <if test="isImmunotherapy != null">#{isImmunotherapy},</if>
+            <if test="isAntiIge != null">#{isAntiIge},</if>
+            <if test="isTargeted != null">#{isTargeted},</if>
+         </trim>
+    </insert>
+
+    <update id="updateDrugCatalog" parameterType="DrugCatalog">
+        update drug_catalog
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="name != null and name != ''">name = #{name},</if>
+            <if test="brand != null">brand = #{brand},</if>
+            <if test="type != null">type = #{type},</if>
+            <if test="isSteroid != null">is_steroid = #{isSteroid},</if>
+            <if test="isAntihistamine != null">is_antihistamine = #{isAntihistamine},</if>
+            <if test="isLtra != null">is_ltra = #{isLtra},</if>
+            <if test="isBronchodilator != null">is_bronchodilator = #{isBronchodilator},</if>
+            <if test="isAntibiotic != null">is_antibiotic = #{isAntibiotic},</if>
+            <if test="isTopical != null">is_topical = #{isTopical},</if>
+            <if test="isNasal != null">is_nasal = #{isNasal},</if>
+            <if test="isExpectorant != null">is_expectorant = #{isExpectorant},</if>
+            <if test="isImmunotherapy != null">is_immunotherapy = #{isImmunotherapy},</if>
+            <if test="isAntiIge != null">is_anti_IgE = #{isAntiIge},</if>
+            <if test="isTargeted != null">is_targeted = #{isTargeted},</if>
+        </trim>
+        where drug_id = #{drugId}
+    </update>
+
+    <delete id="deleteDrugCatalogByDrugId" parameterType="Long">
+        delete from drug_catalog where drug_id = #{drugId}
+    </delete>
+
+    <delete id="deleteDrugCatalogByDrugIds" parameterType="String">
+        delete from drug_catalog where drug_id in 
+        <foreach item="drugId" collection="array" open="(" separator="," close=")">
+            #{drugId}
+        </foreach>
+    </delete>
+</mapper>

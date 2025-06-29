@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.FollowSys.mapper.FollowupAdverseReactionsMapper">
+    
+    <resultMap type="FollowupAdverseReactions" id="FollowupAdverseReactionsResult">
+        <result property="reactionId"    column="reaction_id"    />
+        <result property="patientId"    column="patient_id"    />
+        <result property="medicationName"    column="medication_name"    />
+        <result property="reactionOnsetDate"    column="reaction_onset_date"    />
+        <result property="usageMethod"    column="usage_method"    />
+        <result property="durationDays"    column="duration_days"    />
+        <result property="rash"    column="rash"    />
+        <result property="itching"    column="itching"    />
+        <result property="abdominalPain"    column="abdominal_pain"    />
+        <result property="nausea"    column="nausea"    />
+        <result property="vomiting"    column="vomiting"    />
+        <result property="chestTightness"    column="chest_tightness"    />
+        <result property="palpitations"    column="palpitations"    />
+        <result property="dyspnea"    column="dyspnea"    />
+        <result property="otherReaction"    column="other_reaction"    />
+        <result property="severityLevel"    column="severity_level"    />
+    </resultMap>
+
+    <sql id="selectFollowupAdverseReactionsVo">
+        select reaction_id, patient_id, medication_name, reaction_onset_date, usage_method, duration_days, rash, itching, abdominal_pain, nausea, vomiting, chest_tightness, palpitations, dyspnea, other_reaction, severity_level from followup_adverse_reactions
+    </sql>
+
+    <select id="selectFollowupAdverseReactionsList" parameterType="FollowupAdverseReactions" resultMap="FollowupAdverseReactionsResult">
+        <include refid="selectFollowupAdverseReactionsVo"/>
+        <where>  
+            <if test="patientId != null  and patientId != ''"> and patient_id = #{patientId}</if>
+        </where>
+    </select>
+    
+    <select id="selectFollowupAdverseReactionsByReactionId" parameterType="Long" resultMap="FollowupAdverseReactionsResult">
+        <include refid="selectFollowupAdverseReactionsVo"/>
+        where reaction_id = #{reactionId}
+    </select>
+
+    <insert id="insertFollowupAdverseReactions" parameterType="FollowupAdverseReactions" useGeneratedKeys="true" keyProperty="reactionId">
+        insert into followup_adverse_reactions
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="patientId != null and patientId != ''">patient_id,</if>
+            <if test="medicationName != null">medication_name,</if>
+            <if test="reactionOnsetDate != null">reaction_onset_date,</if>
+            <if test="usageMethod != null">usage_method,</if>
+            <if test="durationDays != null">duration_days,</if>
+            <if test="rash != null">rash,</if>
+            <if test="itching != null">itching,</if>
+            <if test="abdominalPain != null">abdominal_pain,</if>
+            <if test="nausea != null">nausea,</if>
+            <if test="vomiting != null">vomiting,</if>
+            <if test="chestTightness != null">chest_tightness,</if>
+            <if test="palpitations != null">palpitations,</if>
+            <if test="dyspnea != null">dyspnea,</if>
+            <if test="otherReaction != null">other_reaction,</if>
+            <if test="severityLevel != null">severity_level,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="patientId != null and patientId != ''">#{patientId},</if>
+            <if test="medicationName != null">#{medicationName},</if>
+            <if test="reactionOnsetDate != null">#{reactionOnsetDate},</if>
+            <if test="usageMethod != null">#{usageMethod},</if>
+            <if test="durationDays != null">#{durationDays},</if>
+            <if test="rash != null">#{rash},</if>
+            <if test="itching != null">#{itching},</if>
+            <if test="abdominalPain != null">#{abdominalPain},</if>
+            <if test="nausea != null">#{nausea},</if>
+            <if test="vomiting != null">#{vomiting},</if>
+            <if test="chestTightness != null">#{chestTightness},</if>
+            <if test="palpitations != null">#{palpitations},</if>
+            <if test="dyspnea != null">#{dyspnea},</if>
+            <if test="otherReaction != null">#{otherReaction},</if>
+            <if test="severityLevel != null">#{severityLevel},</if>
+         </trim>
+    </insert>
+
+    <update id="updateFollowupAdverseReactions" parameterType="FollowupAdverseReactions">
+        update followup_adverse_reactions
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="patientId != null and patientId != ''">patient_id = #{patientId},</if>
+            <if test="medicationName != null">medication_name = #{medicationName},</if>
+            <if test="reactionOnsetDate != null">reaction_onset_date = #{reactionOnsetDate},</if>
+            <if test="usageMethod != null">usage_method = #{usageMethod},</if>
+            <if test="durationDays != null">duration_days = #{durationDays},</if>
+            <if test="rash != null">rash = #{rash},</if>
+            <if test="itching != null">itching = #{itching},</if>
+            <if test="abdominalPain != null">abdominal_pain = #{abdominalPain},</if>
+            <if test="nausea != null">nausea = #{nausea},</if>
+            <if test="vomiting != null">vomiting = #{vomiting},</if>
+            <if test="chestTightness != null">chest_tightness = #{chestTightness},</if>
+            <if test="palpitations != null">palpitations = #{palpitations},</if>
+            <if test="dyspnea != null">dyspnea = #{dyspnea},</if>
+            <if test="otherReaction != null">other_reaction = #{otherReaction},</if>
+            <if test="severityLevel != null">severity_level = #{severityLevel},</if>
+        </trim>
+        where reaction_id = #{reactionId}
+    </update>
+
+    <delete id="deleteFollowupAdverseReactionsByReactionId" parameterType="Long">
+        delete from followup_adverse_reactions where reaction_id = #{reactionId}
+    </delete>
+
+    <delete id="deleteFollowupAdverseReactionsByReactionIds" parameterType="String">
+        delete from followup_adverse_reactions where reaction_id in 
+        <foreach item="reactionId" collection="array" open="(" separator="," close=")">
+            #{reactionId}
+        </foreach>
+    </delete>
+</mapper>

@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.FollowSys.mapper.FollowupOtherTreatmentsMapper">
+    
+    <resultMap type="FollowupOtherTreatments" id="FollowupOtherTreatmentsResult">
+        <result property="treatmentId"    column="treatment_id"    />
+        <result property="patientId"    column="patient_id"    />
+        <result property="treatmentMethod"    column="treatment_method"    />
+        <result property="startDate"    column="start_date"    />
+        <result property="endDate"    column="end_date"    />
+        <result property="notes"    column="notes"    />
+        <result property="bronchoscopyDate"    column="bronchoscopy_date"    />
+        <result property="bronchoscopyConclusion"    column="bronchoscopy_conclusion"    />
+        <result property="bronchoscopyImagePath"    column="bronchoscopy_image_path"    />
+        <result property="oxygenNasalCatheter"    column="oxygen_nasal_catheter"    />
+        <result property="oxygenMask"    column="oxygen_mask"    />
+        <result property="oxygenHighFlow"    column="oxygen_high_flow"    />
+        <result property="mechanicalVentilation"    column="mechanical_ventilation"    />
+    </resultMap>
+
+    <sql id="selectFollowupOtherTreatmentsVo">
+        select treatment_id, patient_id, treatment_method, start_date, end_date, notes, bronchoscopy_date, bronchoscopy_conclusion, bronchoscopy_image_path, oxygen_nasal_catheter, oxygen_mask, oxygen_high_flow, mechanical_ventilation from followup_other_treatments
+    </sql>
+
+    <select id="selectFollowupOtherTreatmentsList" parameterType="FollowupOtherTreatments" resultMap="FollowupOtherTreatmentsResult">
+        <include refid="selectFollowupOtherTreatmentsVo"/>
+        <where>  
+            <if test="patientId != null  and patientId != ''"> and patient_id = #{patientId}</if>
+        </where>
+    </select>
+    
+    <select id="selectFollowupOtherTreatmentsByTreatmentId" parameterType="Long" resultMap="FollowupOtherTreatmentsResult">
+        <include refid="selectFollowupOtherTreatmentsVo"/>
+        where treatment_id = #{treatmentId}
+    </select>
+
+    <insert id="insertFollowupOtherTreatments" parameterType="FollowupOtherTreatments" useGeneratedKeys="true" keyProperty="treatmentId">
+        insert into followup_other_treatments
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="patientId != null and patientId != ''">patient_id,</if>
+            <if test="treatmentMethod != null">treatment_method,</if>
+            <if test="startDate != null">start_date,</if>
+            <if test="endDate != null">end_date,</if>
+            <if test="notes != null">notes,</if>
+            <if test="bronchoscopyDate != null">bronchoscopy_date,</if>
+            <if test="bronchoscopyConclusion != null">bronchoscopy_conclusion,</if>
+            <if test="bronchoscopyImagePath != null">bronchoscopy_image_path,</if>
+            <if test="oxygenNasalCatheter != null">oxygen_nasal_catheter,</if>
+            <if test="oxygenMask != null">oxygen_mask,</if>
+            <if test="oxygenHighFlow != null">oxygen_high_flow,</if>
+            <if test="mechanicalVentilation != null">mechanical_ventilation,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="patientId != null and patientId != ''">#{patientId},</if>
+            <if test="treatmentMethod != null">#{treatmentMethod},</if>
+            <if test="startDate != null">#{startDate},</if>
+            <if test="endDate != null">#{endDate},</if>
+            <if test="notes != null">#{notes},</if>
+            <if test="bronchoscopyDate != null">#{bronchoscopyDate},</if>
+            <if test="bronchoscopyConclusion != null">#{bronchoscopyConclusion},</if>
+            <if test="bronchoscopyImagePath != null">#{bronchoscopyImagePath},</if>
+            <if test="oxygenNasalCatheter != null">#{oxygenNasalCatheter},</if>
+            <if test="oxygenMask != null">#{oxygenMask},</if>
+            <if test="oxygenHighFlow != null">#{oxygenHighFlow},</if>
+            <if test="mechanicalVentilation != null">#{mechanicalVentilation},</if>
+         </trim>
+    </insert>
+
+    <update id="updateFollowupOtherTreatments" parameterType="FollowupOtherTreatments">
+        update followup_other_treatments
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="patientId != null and patientId != ''">patient_id = #{patientId},</if>
+            <if test="treatmentMethod != null">treatment_method = #{treatmentMethod},</if>
+            <if test="startDate != null">start_date = #{startDate},</if>
+            <if test="endDate != null">end_date = #{endDate},</if>
+            <if test="notes != null">notes = #{notes},</if>
+            <if test="bronchoscopyDate != null">bronchoscopy_date = #{bronchoscopyDate},</if>
+            <if test="bronchoscopyConclusion != null">bronchoscopy_conclusion = #{bronchoscopyConclusion},</if>
+            <if test="bronchoscopyImagePath != null">bronchoscopy_image_path = #{bronchoscopyImagePath},</if>
+            <if test="oxygenNasalCatheter != null">oxygen_nasal_catheter = #{oxygenNasalCatheter},</if>
+            <if test="oxygenMask != null">oxygen_mask = #{oxygenMask},</if>
+            <if test="oxygenHighFlow != null">oxygen_high_flow = #{oxygenHighFlow},</if>
+            <if test="mechanicalVentilation != null">mechanical_ventilation = #{mechanicalVentilation},</if>
+        </trim>
+        where treatment_id = #{treatmentId}
+    </update>
+
+    <delete id="deleteFollowupOtherTreatmentsByTreatmentId" parameterType="Long">
+        delete from followup_other_treatments where treatment_id = #{treatmentId}
+    </delete>
+
+    <delete id="deleteFollowupOtherTreatmentsByTreatmentIds" parameterType="String">
+        delete from followup_other_treatments where treatment_id in 
+        <foreach item="treatmentId" collection="array" open="(" separator="," close=")">
+            #{treatmentId}
+        </foreach>
+    </delete>
+</mapper>

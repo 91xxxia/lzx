@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.BiobankSys.mapper.MetabolomicDataMapper">
+    
+    <resultMap type="MetabolomicData" id="MetabolomicDataResult">
+        <result property="metabolomicId"    column="metabolomic_id"    />
+        <result property="specimenId"    column="specimen_id"    />
+        <result property="analysisDate"    column="analysis_date"    />
+        <result property="analysisPlatform"    column="analysis_platform"    />
+        <result property="histamineLevel"    column="histamine_level"    />
+        <result property="leukotrienesLevel"    column="leukotrienes_level"    />
+        <result property="prostaglandinsLevel"    column="prostaglandins_level"    />
+        <result property="otherMetabolites"    column="other_metabolites"    />
+        <result property="dataFilePath"    column="data_file_path"    />
+    </resultMap>
+
+    <sql id="selectMetabolomicDataVo">
+        select metabolomic_id, specimen_id, analysis_date, analysis_platform, histamine_level, leukotrienes_level, prostaglandins_level, other_metabolites, data_file_path from metabolomic_data
+    </sql>
+
+    <select id="selectMetabolomicDataList" parameterType="MetabolomicData" resultMap="MetabolomicDataResult">
+        <include refid="selectMetabolomicDataVo"/>
+        <where>  
+            <if test="specimenId != null  and specimenId != ''"> and specimen_id = #{specimenId}</if>
+        </where>
+    </select>
+    
+    <select id="selectMetabolomicDataByMetabolomicId" parameterType="Long" resultMap="MetabolomicDataResult">
+        <include refid="selectMetabolomicDataVo"/>
+        where metabolomic_id = #{metabolomicId}
+    </select>
+
+    <insert id="insertMetabolomicData" parameterType="MetabolomicData" useGeneratedKeys="true" keyProperty="metabolomicId">
+        insert into metabolomic_data
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="specimenId != null and specimenId != ''">specimen_id,</if>
+            <if test="analysisDate != null">analysis_date,</if>
+            <if test="analysisPlatform != null">analysis_platform,</if>
+            <if test="histamineLevel != null">histamine_level,</if>
+            <if test="leukotrienesLevel != null">leukotrienes_level,</if>
+            <if test="prostaglandinsLevel != null">prostaglandins_level,</if>
+            <if test="otherMetabolites != null">other_metabolites,</if>
+            <if test="dataFilePath != null">data_file_path,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="specimenId != null and specimenId != ''">#{specimenId},</if>
+            <if test="analysisDate != null">#{analysisDate},</if>
+            <if test="analysisPlatform != null">#{analysisPlatform},</if>
+            <if test="histamineLevel != null">#{histamineLevel},</if>
+            <if test="leukotrienesLevel != null">#{leukotrienesLevel},</if>
+            <if test="prostaglandinsLevel != null">#{prostaglandinsLevel},</if>
+            <if test="otherMetabolites != null">#{otherMetabolites},</if>
+            <if test="dataFilePath != null">#{dataFilePath},</if>
+         </trim>
+    </insert>
+
+    <update id="updateMetabolomicData" parameterType="MetabolomicData">
+        update metabolomic_data
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="specimenId != null and specimenId != ''">specimen_id = #{specimenId},</if>
+            <if test="analysisDate != null">analysis_date = #{analysisDate},</if>
+            <if test="analysisPlatform != null">analysis_platform = #{analysisPlatform},</if>
+            <if test="histamineLevel != null">histamine_level = #{histamineLevel},</if>
+            <if test="leukotrienesLevel != null">leukotrienes_level = #{leukotrienesLevel},</if>
+            <if test="prostaglandinsLevel != null">prostaglandins_level = #{prostaglandinsLevel},</if>
+            <if test="otherMetabolites != null">other_metabolites = #{otherMetabolites},</if>
+            <if test="dataFilePath != null">data_file_path = #{dataFilePath},</if>
+        </trim>
+        where metabolomic_id = #{metabolomicId}
+    </update>
+
+    <delete id="deleteMetabolomicDataByMetabolomicId" parameterType="Long">
+        delete from metabolomic_data where metabolomic_id = #{metabolomicId}
+    </delete>
+
+    <delete id="deleteMetabolomicDataByMetabolomicIds" parameterType="String">
+        delete from metabolomic_data where metabolomic_id in 
+        <foreach item="metabolomicId" collection="array" open="(" separator="," close=")">
+            #{metabolomicId}
+        </foreach>
+    </delete>
+</mapper>

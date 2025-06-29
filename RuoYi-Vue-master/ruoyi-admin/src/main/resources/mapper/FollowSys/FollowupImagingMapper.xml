@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.FollowSys.mapper.FollowupImagingMapper">
+    
+    <resultMap type="FollowupImaging" id="FollowupImagingResult">
+        <result property="imagingId"    column="imaging_id"    />
+        <result property="followupId"    column="followup_id"    />
+        <result property="testName"    column="test_name"    />
+        <result property="testDate"    column="test_date"    />
+        <result property="imagePath"    column="image_path"    />
+        <result property="conclusion"    column="conclusion"    />
+    </resultMap>
+
+    <sql id="selectFollowupImagingVo">
+        select imaging_id, followup_id, test_name, test_date, image_path, conclusion from followup_imaging
+    </sql>
+
+    <select id="selectFollowupImagingList" parameterType="FollowupImaging" resultMap="FollowupImagingResult">
+        <include refid="selectFollowupImagingVo"/>
+        <where>  
+            <if test="followupId != null "> and followup_id = #{followupId}</if>
+        </where>
+    </select>
+    
+    <select id="selectFollowupImagingByImagingId" parameterType="Long" resultMap="FollowupImagingResult">
+        <include refid="selectFollowupImagingVo"/>
+        where imaging_id = #{imagingId}
+    </select>
+
+    <insert id="insertFollowupImaging" parameterType="FollowupImaging" useGeneratedKeys="true" keyProperty="imagingId">
+        insert into followup_imaging
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="followupId != null">followup_id,</if>
+            <if test="testName != null">test_name,</if>
+            <if test="testDate != null">test_date,</if>
+            <if test="imagePath != null">image_path,</if>
+            <if test="conclusion != null">conclusion,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="followupId != null">#{followupId},</if>
+            <if test="testName != null">#{testName},</if>
+            <if test="testDate != null">#{testDate},</if>
+            <if test="imagePath != null">#{imagePath},</if>
+            <if test="conclusion != null">#{conclusion},</if>
+         </trim>
+    </insert>
+
+    <update id="updateFollowupImaging" parameterType="FollowupImaging">
+        update followup_imaging
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="followupId != null">followup_id = #{followupId},</if>
+            <if test="testName != null">test_name = #{testName},</if>
+            <if test="testDate != null">test_date = #{testDate},</if>
+            <if test="imagePath != null">image_path = #{imagePath},</if>
+            <if test="conclusion != null">conclusion = #{conclusion},</if>
+        </trim>
+        where imaging_id = #{imagingId}
+    </update>
+
+    <delete id="deleteFollowupImagingByImagingId" parameterType="Long">
+        delete from followup_imaging where imaging_id = #{imagingId}
+    </delete>
+
+    <delete id="deleteFollowupImagingByImagingIds" parameterType="String">
+        delete from followup_imaging where imaging_id in 
+        <foreach item="imagingId" collection="array" open="(" separator="," close=")">
+            #{imagingId}
+        </foreach>
+    </delete>
+</mapper>

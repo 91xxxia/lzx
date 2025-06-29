@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.FollowSys.mapper.FollowupSymptomsMapper">
+    
+    <resultMap type="FollowupSymptoms" id="FollowupSymptomsResult">
+        <result property="symptomId"    column="symptom_id"    />
+        <result property="followupId"    column="followup_id"    />
+        <result property="itchyNose"    column="itchy_nose"    />
+        <result property="sneezing"    column="sneezing"    />
+        <result property="clearDischarge"    column="clear_discharge"    />
+        <result property="nasalCongestion"    column="nasal_congestion"    />
+        <result property="itchyEyes"    column="itchy_eyes"    />
+        <result property="tearing"    column="tearing"    />
+        <result property="redEyes"    column="red_eyes"    />
+        <result property="eyeBurning"    column="eye_burning"    />
+        <result property="itchyThroat"    column="itchy_throat"    />
+        <result property="fever"    column="fever"    />
+        <result property="mouthBreathing"    column="mouth_breathing"    />
+        <result property="snoring"    column="snoring"    />
+        <result property="cough"    column="cough"    />
+        <result property="wheezing"    column="wheezing"    />
+        <result property="dyspnea"    column="dyspnea"    />
+        <result property="chestTightness"    column="chest_tightness"    />
+        <result property="sighing"    column="sighing"    />
+        <result property="activityLimitation"    column="activity_limitation"    />
+        <result property="nighttimeAwake"    column="nighttime_awake"    />
+        <result property="morningNightWorse"    column="morning_night_worse"    />
+        <result property="rash"    column="rash"    />
+        <result property="itching"    column="itching"    />
+        <result property="pain"    column="pain"    />
+        <result property="sleepDisorder"    column="sleep_disorder"    />
+        <result property="severity"    column="severity"    />
+        <result property="frequencyPattern"    column="frequency_pattern"    />
+        <result property="startDate"    column="start_date"    />
+        <result property="triggerSmoke"    column="trigger_smoke"    />
+        <result property="triggerDustMite"    column="trigger_dust_mite"    />
+        <result property="triggerPollen"    column="trigger_pollen"    />
+        <result property="triggerVirus"    column="trigger_virus"    />
+        <result property="triggerMold"    column="trigger_mold"    />
+        <result property="triggerColdAir"    column="trigger_cold_air"    />
+        <result property="triggerWeatherChange"    column="trigger_weather_change"    />
+        <result property="triggerExercise"    column="trigger_exercise"    />
+        <result property="triggerCrying"    column="trigger_crying"    />
+        <result property="triggerFood"    column="trigger_food"    />
+        <result property="triggerMedication"    column="trigger_medication"    />
+        <result property="triggerOther"    column="trigger_other"    />
+    </resultMap>
+
+    <sql id="selectFollowupSymptomsVo">
+        select symptom_id, followup_id, itchy_nose, sneezing, clear_discharge, nasal_congestion, itchy_eyes, tearing, red_eyes, eye_burning, itchy_throat, fever, mouth_breathing, snoring, cough, wheezing, dyspnea, chest_tightness, sighing, activity_limitation, nighttime_awake, morning_night_worse, rash, itching, pain, sleep_disorder, severity, frequency_pattern, start_date, trigger_smoke, trigger_dust_mite, trigger_pollen, trigger_virus, trigger_mold, trigger_cold_air, trigger_weather_change, trigger_exercise, trigger_crying, trigger_food, trigger_medication, trigger_other from followup_symptoms
+    </sql>
+
+    <select id="selectFollowupSymptomsList" parameterType="FollowupSymptoms" resultMap="FollowupSymptomsResult">
+        <include refid="selectFollowupSymptomsVo"/>
+        <where>  
+            <if test="followupId != null "> and followup_id = #{followupId}</if>
+        </where>
+    </select>
+    
+    <select id="selectFollowupSymptomsBySymptomId" parameterType="Long" resultMap="FollowupSymptomsResult">
+        <include refid="selectFollowupSymptomsVo"/>
+        where symptom_id = #{symptomId}
+    </select>
+
+    <insert id="insertFollowupSymptoms" parameterType="FollowupSymptoms" useGeneratedKeys="true" keyProperty="symptomId">
+        insert into followup_symptoms
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="followupId != null">followup_id,</if>
+            <if test="itchyNose != null">itchy_nose,</if>
+            <if test="sneezing != null">sneezing,</if>
+            <if test="clearDischarge != null">clear_discharge,</if>
+            <if test="nasalCongestion != null">nasal_congestion,</if>
+            <if test="itchyEyes != null">itchy_eyes,</if>
+            <if test="tearing != null">tearing,</if>
+            <if test="redEyes != null">red_eyes,</if>
+            <if test="eyeBurning != null">eye_burning,</if>
+            <if test="itchyThroat != null">itchy_throat,</if>
+            <if test="fever != null">fever,</if>
+            <if test="mouthBreathing != null">mouth_breathing,</if>
+            <if test="snoring != null">snoring,</if>
+            <if test="cough != null">cough,</if>
+            <if test="wheezing != null">wheezing,</if>
+            <if test="dyspnea != null">dyspnea,</if>
+            <if test="chestTightness != null">chest_tightness,</if>
+            <if test="sighing != null">sighing,</if>
+            <if test="activityLimitation != null">activity_limitation,</if>
+            <if test="nighttimeAwake != null">nighttime_awake,</if>
+            <if test="morningNightWorse != null">morning_night_worse,</if>
+            <if test="rash != null">rash,</if>
+            <if test="itching != null">itching,</if>
+            <if test="pain != null">pain,</if>
+            <if test="sleepDisorder != null">sleep_disorder,</if>
+            <if test="severity != null">severity,</if>
+            <if test="frequencyPattern != null">frequency_pattern,</if>
+            <if test="startDate != null">start_date,</if>
+            <if test="triggerSmoke != null">trigger_smoke,</if>
+            <if test="triggerDustMite != null">trigger_dust_mite,</if>
+            <if test="triggerPollen != null">trigger_pollen,</if>
+            <if test="triggerVirus != null">trigger_virus,</if>
+            <if test="triggerMold != null">trigger_mold,</if>
+            <if test="triggerColdAir != null">trigger_cold_air,</if>
+            <if test="triggerWeatherChange != null">trigger_weather_change,</if>
+            <if test="triggerExercise != null">trigger_exercise,</if>
+            <if test="triggerCrying != null">trigger_crying,</if>
+            <if test="triggerFood != null">trigger_food,</if>
+            <if test="triggerMedication != null">trigger_medication,</if>
+            <if test="triggerOther != null">trigger_other,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="followupId != null">#{followupId},</if>
+            <if test="itchyNose != null">#{itchyNose},</if>
+            <if test="sneezing != null">#{sneezing},</if>
+            <if test="clearDischarge != null">#{clearDischarge},</if>
+            <if test="nasalCongestion != null">#{nasalCongestion},</if>
+            <if test="itchyEyes != null">#{itchyEyes},</if>
+            <if test="tearing != null">#{tearing},</if>
+            <if test="redEyes != null">#{redEyes},</if>
+            <if test="eyeBurning != null">#{eyeBurning},</if>
+            <if test="itchyThroat != null">#{itchyThroat},</if>
+            <if test="fever != null">#{fever},</if>
+            <if test="mouthBreathing != null">#{mouthBreathing},</if>
+            <if test="snoring != null">#{snoring},</if>
+            <if test="cough != null">#{cough},</if>
+            <if test="wheezing != null">#{wheezing},</if>
+            <if test="dyspnea != null">#{dyspnea},</if>
+            <if test="chestTightness != null">#{chestTightness},</if>
+            <if test="sighing != null">#{sighing},</if>
+            <if test="activityLimitation != null">#{activityLimitation},</if>
+            <if test="nighttimeAwake != null">#{nighttimeAwake},</if>
+            <if test="morningNightWorse != null">#{morningNightWorse},</if>
+            <if test="rash != null">#{rash},</if>
+            <if test="itching != null">#{itching},</if>
+            <if test="pain != null">#{pain},</if>
+            <if test="sleepDisorder != null">#{sleepDisorder},</if>
+            <if test="severity != null">#{severity},</if>
+            <if test="frequencyPattern != null">#{frequencyPattern},</if>
+            <if test="startDate != null">#{startDate},</if>
+            <if test="triggerSmoke != null">#{triggerSmoke},</if>
+            <if test="triggerDustMite != null">#{triggerDustMite},</if>
+            <if test="triggerPollen != null">#{triggerPollen},</if>
+            <if test="triggerVirus != null">#{triggerVirus},</if>
+            <if test="triggerMold != null">#{triggerMold},</if>
+            <if test="triggerColdAir != null">#{triggerColdAir},</if>
+            <if test="triggerWeatherChange != null">#{triggerWeatherChange},</if>
+            <if test="triggerExercise != null">#{triggerExercise},</if>
+            <if test="triggerCrying != null">#{triggerCrying},</if>
+            <if test="triggerFood != null">#{triggerFood},</if>
+            <if test="triggerMedication != null">#{triggerMedication},</if>
+            <if test="triggerOther != null">#{triggerOther},</if>
+         </trim>
+    </insert>
+
+    <update id="updateFollowupSymptoms" parameterType="FollowupSymptoms">
+        update followup_symptoms
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="followupId != null">followup_id = #{followupId},</if>
+            <if test="itchyNose != null">itchy_nose = #{itchyNose},</if>
+            <if test="sneezing != null">sneezing = #{sneezing},</if>
+            <if test="clearDischarge != null">clear_discharge = #{clearDischarge},</if>
+            <if test="nasalCongestion != null">nasal_congestion = #{nasalCongestion},</if>
+            <if test="itchyEyes != null">itchy_eyes = #{itchyEyes},</if>
+            <if test="tearing != null">tearing = #{tearing},</if>
+            <if test="redEyes != null">red_eyes = #{redEyes},</if>
+            <if test="eyeBurning != null">eye_burning = #{eyeBurning},</if>
+            <if test="itchyThroat != null">itchy_throat = #{itchyThroat},</if>
+            <if test="fever != null">fever = #{fever},</if>
+            <if test="mouthBreathing != null">mouth_breathing = #{mouthBreathing},</if>
+            <if test="snoring != null">snoring = #{snoring},</if>
+            <if test="cough != null">cough = #{cough},</if>
+            <if test="wheezing != null">wheezing = #{wheezing},</if>
+            <if test="dyspnea != null">dyspnea = #{dyspnea},</if>
+            <if test="chestTightness != null">chest_tightness = #{chestTightness},</if>
+            <if test="sighing != null">sighing = #{sighing},</if>
+            <if test="activityLimitation != null">activity_limitation = #{activityLimitation},</if>
+            <if test="nighttimeAwake != null">nighttime_awake = #{nighttimeAwake},</if>
+            <if test="morningNightWorse != null">morning_night_worse = #{morningNightWorse},</if>
+            <if test="rash != null">rash = #{rash},</if>
+            <if test="itching != null">itching = #{itching},</if>
+            <if test="pain != null">pain = #{pain},</if>
+            <if test="sleepDisorder != null">sleep_disorder = #{sleepDisorder},</if>
+            <if test="severity != null">severity = #{severity},</if>
+            <if test="frequencyPattern != null">frequency_pattern = #{frequencyPattern},</if>
+            <if test="startDate != null">start_date = #{startDate},</if>
+            <if test="triggerSmoke != null">trigger_smoke = #{triggerSmoke},</if>
+            <if test="triggerDustMite != null">trigger_dust_mite = #{triggerDustMite},</if>
+            <if test="triggerPollen != null">trigger_pollen = #{triggerPollen},</if>
+            <if test="triggerVirus != null">trigger_virus = #{triggerVirus},</if>
+            <if test="triggerMold != null">trigger_mold = #{triggerMold},</if>
+            <if test="triggerColdAir != null">trigger_cold_air = #{triggerColdAir},</if>
+            <if test="triggerWeatherChange != null">trigger_weather_change = #{triggerWeatherChange},</if>
+            <if test="triggerExercise != null">trigger_exercise = #{triggerExercise},</if>
+            <if test="triggerCrying != null">trigger_crying = #{triggerCrying},</if>
+            <if test="triggerFood != null">trigger_food = #{triggerFood},</if>
+            <if test="triggerMedication != null">trigger_medication = #{triggerMedication},</if>
+            <if test="triggerOther != null">trigger_other = #{triggerOther},</if>
+        </trim>
+        where symptom_id = #{symptomId}
+    </update>
+
+    <delete id="deleteFollowupSymptomsBySymptomId" parameterType="Long">
+        delete from followup_symptoms where symptom_id = #{symptomId}
+    </delete>
+
+    <delete id="deleteFollowupSymptomsBySymptomIds" parameterType="String">
+        delete from followup_symptoms where symptom_id in 
+        <foreach item="symptomId" collection="array" open="(" separator="," close=")">
+            #{symptomId}
+        </foreach>
+    </delete>
+</mapper>

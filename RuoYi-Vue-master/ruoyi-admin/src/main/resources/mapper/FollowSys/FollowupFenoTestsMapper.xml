@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.FollowSys.mapper.FollowupFenoTestsMapper">
+    
+    <resultMap type="FollowupFenoTests" id="FollowupFenoTestsResult">
+        <result property="fenoId"    column="feno_id"    />
+        <result property="followupId"    column="followup_id"    />
+        <result property="testDate"    column="test_date"    />
+        <result property="feno50"    column="feno50"    />
+        <result property="feno200"    column="feno200"    />
+        <result property="cano"    column="cano"    />
+    </resultMap>
+
+    <sql id="selectFollowupFenoTestsVo">
+        select feno_id, followup_id, test_date, feno50, feno200, cano from followup_feno_tests
+    </sql>
+
+    <select id="selectFollowupFenoTestsList" parameterType="FollowupFenoTests" resultMap="FollowupFenoTestsResult">
+        <include refid="selectFollowupFenoTestsVo"/>
+        <where>  
+            <if test="followupId != null "> and followup_id = #{followupId}</if>
+        </where>
+    </select>
+    
+    <select id="selectFollowupFenoTestsByFenoId" parameterType="Long" resultMap="FollowupFenoTestsResult">
+        <include refid="selectFollowupFenoTestsVo"/>
+        where feno_id = #{fenoId}
+    </select>
+
+    <insert id="insertFollowupFenoTests" parameterType="FollowupFenoTests" useGeneratedKeys="true" keyProperty="fenoId">
+        insert into followup_feno_tests
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="followupId != null">followup_id,</if>
+            <if test="testDate != null">test_date,</if>
+            <if test="feno50 != null">feno50,</if>
+            <if test="feno200 != null">feno200,</if>
+            <if test="cano != null">cano,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="followupId != null">#{followupId},</if>
+            <if test="testDate != null">#{testDate},</if>
+            <if test="feno50 != null">#{feno50},</if>
+            <if test="feno200 != null">#{feno200},</if>
+            <if test="cano != null">#{cano},</if>
+         </trim>
+    </insert>
+
+    <update id="updateFollowupFenoTests" parameterType="FollowupFenoTests">
+        update followup_feno_tests
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="followupId != null">followup_id = #{followupId},</if>
+            <if test="testDate != null">test_date = #{testDate},</if>
+            <if test="feno50 != null">feno50 = #{feno50},</if>
+            <if test="feno200 != null">feno200 = #{feno200},</if>
+            <if test="cano != null">cano = #{cano},</if>
+        </trim>
+        where feno_id = #{fenoId}
+    </update>
+
+    <delete id="deleteFollowupFenoTestsByFenoId" parameterType="Long">
+        delete from followup_feno_tests where feno_id = #{fenoId}
+    </delete>
+
+    <delete id="deleteFollowupFenoTestsByFenoIds" parameterType="String">
+        delete from followup_feno_tests where feno_id in 
+        <foreach item="fenoId" collection="array" open="(" separator="," close=")">
+            #{fenoId}
+        </foreach>
+    </delete>
+</mapper>

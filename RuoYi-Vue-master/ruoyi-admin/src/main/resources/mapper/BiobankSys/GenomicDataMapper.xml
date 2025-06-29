@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.BiobankSys.mapper.GenomicDataMapper">
+    
+    <resultMap type="GenomicData" id="GenomicDataResult">
+        <result property="genomicId"    column="genomic_id"    />
+        <result property="specimenId"    column="specimen_id"    />
+        <result property="analysisDate"    column="analysis_date"    />
+        <result property="analysisPlatform"    column="analysis_platform"    />
+        <result property="il4Genotype"    column="il4_genotype"    />
+        <result property="il13Genotype"    column="il13_genotype"    />
+        <result property="filaggrinMutation"    column="filaggrin_mutation"    />
+        <result property="tslpVariant"    column="tslp_variant"    />
+        <result property="otherSnpData"    column="other_snp_data"    />
+        <result property="sequencingCoverage"    column="sequencing_coverage"    />
+        <result property="dataFilePath"    column="data_file_path"    />
+        <result property="analysisProtocol"    column="analysis_protocol"    />
+    </resultMap>
+
+    <sql id="selectGenomicDataVo">
+        select genomic_id, specimen_id, analysis_date, analysis_platform, il4_genotype, il13_genotype, filaggrin_mutation, tslp_variant, other_snp_data, sequencing_coverage, data_file_path, analysis_protocol from genomic_data
+    </sql>
+
+    <select id="selectGenomicDataList" parameterType="GenomicData" resultMap="GenomicDataResult">
+        <include refid="selectGenomicDataVo"/>
+        <where>  
+            <if test="specimenId != null  and specimenId != ''"> and specimen_id = #{specimenId}</if>
+        </where>
+    </select>
+    
+    <select id="selectGenomicDataByGenomicId" parameterType="Long" resultMap="GenomicDataResult">
+        <include refid="selectGenomicDataVo"/>
+        where genomic_id = #{genomicId}
+    </select>
+
+    <insert id="insertGenomicData" parameterType="GenomicData" useGeneratedKeys="true" keyProperty="genomicId">
+        insert into genomic_data
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="specimenId != null and specimenId != ''">specimen_id,</if>
+            <if test="analysisDate != null">analysis_date,</if>
+            <if test="analysisPlatform != null">analysis_platform,</if>
+            <if test="il4Genotype != null">il4_genotype,</if>
+            <if test="il13Genotype != null">il13_genotype,</if>
+            <if test="filaggrinMutation != null">filaggrin_mutation,</if>
+            <if test="tslpVariant != null">tslp_variant,</if>
+            <if test="otherSnpData != null">other_snp_data,</if>
+            <if test="sequencingCoverage != null">sequencing_coverage,</if>
+            <if test="dataFilePath != null">data_file_path,</if>
+            <if test="analysisProtocol != null">analysis_protocol,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="specimenId != null and specimenId != ''">#{specimenId},</if>
+            <if test="analysisDate != null">#{analysisDate},</if>
+            <if test="analysisPlatform != null">#{analysisPlatform},</if>
+            <if test="il4Genotype != null">#{il4Genotype},</if>
+            <if test="il13Genotype != null">#{il13Genotype},</if>
+            <if test="filaggrinMutation != null">#{filaggrinMutation},</if>
+            <if test="tslpVariant != null">#{tslpVariant},</if>
+            <if test="otherSnpData != null">#{otherSnpData},</if>
+            <if test="sequencingCoverage != null">#{sequencingCoverage},</if>
+            <if test="dataFilePath != null">#{dataFilePath},</if>
+            <if test="analysisProtocol != null">#{analysisProtocol},</if>
+         </trim>
+    </insert>
+
+    <update id="updateGenomicData" parameterType="GenomicData">
+        update genomic_data
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="specimenId != null and specimenId != ''">specimen_id = #{specimenId},</if>
+            <if test="analysisDate != null">analysis_date = #{analysisDate},</if>
+            <if test="analysisPlatform != null">analysis_platform = #{analysisPlatform},</if>
+            <if test="il4Genotype != null">il4_genotype = #{il4Genotype},</if>
+            <if test="il13Genotype != null">il13_genotype = #{il13Genotype},</if>
+            <if test="filaggrinMutation != null">filaggrin_mutation = #{filaggrinMutation},</if>
+            <if test="tslpVariant != null">tslp_variant = #{tslpVariant},</if>
+            <if test="otherSnpData != null">other_snp_data = #{otherSnpData},</if>
+            <if test="sequencingCoverage != null">sequencing_coverage = #{sequencingCoverage},</if>
+            <if test="dataFilePath != null">data_file_path = #{dataFilePath},</if>
+            <if test="analysisProtocol != null">analysis_protocol = #{analysisProtocol},</if>
+        </trim>
+        where genomic_id = #{genomicId}
+    </update>
+
+    <delete id="deleteGenomicDataByGenomicId" parameterType="Long">
+        delete from genomic_data where genomic_id = #{genomicId}
+    </delete>
+
+    <delete id="deleteGenomicDataByGenomicIds" parameterType="String">
+        delete from genomic_data where genomic_id in 
+        <foreach item="genomicId" collection="array" open="(" separator="," close=")">
+            #{genomicId}
+        </foreach>
+    </delete>
+</mapper>

@@ -1,0 +1,236 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.FollowSys.mapper.FollowupLabTestsMapper">
+    
+    <resultMap type="FollowupLabTests" id="FollowupLabTestsResult">
+        <result property="labtestId"    column="labtest_id"    />
+        <result property="followupId"    column="followup_id"    />
+        <result property="bloodTestDate"    column="blood_test_date"    />
+        <result property="wbcCount"    column="wbc_count"    />
+        <result property="neutrophilCount"    column="neutrophil_count"    />
+        <result property="lymphocyteCount"    column="lymphocyte_count"    />
+        <result property="eosinophilCount"    column="eosinophil_count"    />
+        <result property="neutrophilPercent"    column="neutrophil_percent"    />
+        <result property="lymphocytePercent"    column="lymphocyte_percent"    />
+        <result property="eosinophilPercent"    column="eosinophil_percent"    />
+        <result property="hemoglobin"    column="hemoglobin"    />
+        <result property="rbcCount"    column="rbc_count"    />
+        <result property="plateletCount"    column="platelet_count"    />
+        <result property="cReactiveProtein"    column="c_reactive_protein"    />
+        <result property="allergenComboTestDate"    column="allergen_combo_test_date"    />
+        <result property="totalIge"    column="total_IgE"    />
+        <result property="dustMiteCombo"    column="dust_mite_combo"    />
+        <result property="moldCombo"    column="mold_combo"    />
+        <result property="petDanderCombo"    column="pet_dander_combo"    />
+        <result property="foodCombo"    column="food_combo"    />
+        <result property="nutCombo"    column="nut_combo"    />
+        <result property="singleAllergenTestDate"    column="single_allergen_test_date"    />
+        <result property="houseDustMite"    column="house_dust_mite"    />
+        <result property="dustMite"    column="dust_mite"    />
+        <result property="pollen"    column="pollen"    />
+        <result property="weed"    column="weed"    />
+        <result property="aspergillus"    column="aspergillus"    />
+        <result property="alternaria"    column="alternaria"    />
+        <result property="cockroach"    column="cockroach"    />
+        <result property="catDander"    column="cat_dander"    />
+        <result property="dogDander"    column="dog_dander"    />
+        <result property="eggWhite"    column="egg_white"    />
+        <result property="milk"    column="milk"    />
+        <result property="shrimp"    column="shrimp"    />
+        <result property="crab"    column="crab"    />
+        <result property="soybean"    column="soybean"    />
+        <result property="sesame"    column="sesame"    />
+        <result property="wheat"    column="wheat"    />
+        <result property="nuts"    column="nuts"    />
+        <result property="allergenOther"    column="allergen_other"    />
+        <result property="skinPrickTestDate"    column="skin_prick_test_date"    />
+        <result property="prickHouseDustMite"    column="prick_house_dust_mite"    />
+        <result property="prickDustMite"    column="prick_dust_mite"    />
+        <result property="sputumEosinophilTestDate"    column="sputum_eosinophil_test_date"    />
+        <result property="sputumEosinophilCount"    column="sputum_eosinophil_count"    />
+        <result property="totalIgeRepeatTestDate"    column="total_IgE_repeat_test_date"    />
+        <result property="totalIgeRepeatValue"    column="total_IgE_repeat_value"    />
+    </resultMap>
+
+    <sql id="selectFollowupLabTestsVo">
+        select labtest_id, followup_id, blood_test_date, wbc_count, neutrophil_count, lymphocyte_count, eosinophil_count, neutrophil_percent, lymphocyte_percent, eosinophil_percent, hemoglobin, rbc_count, platelet_count, c_reactive_protein, allergen_combo_test_date, total_IgE, dust_mite_combo, mold_combo, pet_dander_combo, food_combo, nut_combo, single_allergen_test_date, house_dust_mite, dust_mite, pollen, weed, aspergillus, alternaria, cockroach, cat_dander, dog_dander, egg_white, milk, shrimp, crab, soybean, sesame, wheat, nuts, allergen_other, skin_prick_test_date, prick_house_dust_mite, prick_dust_mite, sputum_eosinophil_test_date, sputum_eosinophil_count, total_IgE_repeat_test_date, total_IgE_repeat_value from followup_lab_tests
+    </sql>
+
+    <select id="selectFollowupLabTestsList" parameterType="FollowupLabTests" resultMap="FollowupLabTestsResult">
+        <include refid="selectFollowupLabTestsVo"/>
+        <where>  
+            <if test="followupId != null "> and followup_id = #{followupId}</if>
+        </where>
+    </select>
+    
+    <select id="selectFollowupLabTestsByLabtestId" parameterType="Long" resultMap="FollowupLabTestsResult">
+        <include refid="selectFollowupLabTestsVo"/>
+        where labtest_id = #{labtestId}
+    </select>
+
+    <insert id="insertFollowupLabTests" parameterType="FollowupLabTests" useGeneratedKeys="true" keyProperty="labtestId">
+        insert into followup_lab_tests
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="followupId != null">followup_id,</if>
+            <if test="bloodTestDate != null">blood_test_date,</if>
+            <if test="wbcCount != null">wbc_count,</if>
+            <if test="neutrophilCount != null">neutrophil_count,</if>
+            <if test="lymphocyteCount != null">lymphocyte_count,</if>
+            <if test="eosinophilCount != null">eosinophil_count,</if>
+            <if test="neutrophilPercent != null">neutrophil_percent,</if>
+            <if test="lymphocytePercent != null">lymphocyte_percent,</if>
+            <if test="eosinophilPercent != null">eosinophil_percent,</if>
+            <if test="hemoglobin != null">hemoglobin,</if>
+            <if test="rbcCount != null">rbc_count,</if>
+            <if test="plateletCount != null">platelet_count,</if>
+            <if test="cReactiveProtein != null">c_reactive_protein,</if>
+            <if test="allergenComboTestDate != null">allergen_combo_test_date,</if>
+            <if test="totalIge != null">total_IgE,</if>
+            <if test="dustMiteCombo != null">dust_mite_combo,</if>
+            <if test="moldCombo != null">mold_combo,</if>
+            <if test="petDanderCombo != null">pet_dander_combo,</if>
+            <if test="foodCombo != null">food_combo,</if>
+            <if test="nutCombo != null">nut_combo,</if>
+            <if test="singleAllergenTestDate != null">single_allergen_test_date,</if>
+            <if test="houseDustMite != null">house_dust_mite,</if>
+            <if test="dustMite != null">dust_mite,</if>
+            <if test="pollen != null">pollen,</if>
+            <if test="weed != null">weed,</if>
+            <if test="aspergillus != null">aspergillus,</if>
+            <if test="alternaria != null">alternaria,</if>
+            <if test="cockroach != null">cockroach,</if>
+            <if test="catDander != null">cat_dander,</if>
+            <if test="dogDander != null">dog_dander,</if>
+            <if test="eggWhite != null">egg_white,</if>
+            <if test="milk != null">milk,</if>
+            <if test="shrimp != null">shrimp,</if>
+            <if test="crab != null">crab,</if>
+            <if test="soybean != null">soybean,</if>
+            <if test="sesame != null">sesame,</if>
+            <if test="wheat != null">wheat,</if>
+            <if test="nuts != null">nuts,</if>
+            <if test="allergenOther != null">allergen_other,</if>
+            <if test="skinPrickTestDate != null">skin_prick_test_date,</if>
+            <if test="prickHouseDustMite != null">prick_house_dust_mite,</if>
+            <if test="prickDustMite != null">prick_dust_mite,</if>
+            <if test="sputumEosinophilTestDate != null">sputum_eosinophil_test_date,</if>
+            <if test="sputumEosinophilCount != null">sputum_eosinophil_count,</if>
+            <if test="totalIgeRepeatTestDate != null">total_IgE_repeat_test_date,</if>
+            <if test="totalIgeRepeatValue != null">total_IgE_repeat_value,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="followupId != null">#{followupId},</if>
+            <if test="bloodTestDate != null">#{bloodTestDate},</if>
+            <if test="wbcCount != null">#{wbcCount},</if>
+            <if test="neutrophilCount != null">#{neutrophilCount},</if>
+            <if test="lymphocyteCount != null">#{lymphocyteCount},</if>
+            <if test="eosinophilCount != null">#{eosinophilCount},</if>
+            <if test="neutrophilPercent != null">#{neutrophilPercent},</if>
+            <if test="lymphocytePercent != null">#{lymphocytePercent},</if>
+            <if test="eosinophilPercent != null">#{eosinophilPercent},</if>
+            <if test="hemoglobin != null">#{hemoglobin},</if>
+            <if test="rbcCount != null">#{rbcCount},</if>
+            <if test="plateletCount != null">#{plateletCount},</if>
+            <if test="cReactiveProtein != null">#{cReactiveProtein},</if>
+            <if test="allergenComboTestDate != null">#{allergenComboTestDate},</if>
+            <if test="totalIge != null">#{totalIge},</if>
+            <if test="dustMiteCombo != null">#{dustMiteCombo},</if>
+            <if test="moldCombo != null">#{moldCombo},</if>
+            <if test="petDanderCombo != null">#{petDanderCombo},</if>
+            <if test="foodCombo != null">#{foodCombo},</if>
+            <if test="nutCombo != null">#{nutCombo},</if>
+            <if test="singleAllergenTestDate != null">#{singleAllergenTestDate},</if>
+            <if test="houseDustMite != null">#{houseDustMite},</if>
+            <if test="dustMite != null">#{dustMite},</if>
+            <if test="pollen != null">#{pollen},</if>
+            <if test="weed != null">#{weed},</if>
+            <if test="aspergillus != null">#{aspergillus},</if>
+            <if test="alternaria != null">#{alternaria},</if>
+            <if test="cockroach != null">#{cockroach},</if>
+            <if test="catDander != null">#{catDander},</if>
+            <if test="dogDander != null">#{dogDander},</if>
+            <if test="eggWhite != null">#{eggWhite},</if>
+            <if test="milk != null">#{milk},</if>
+            <if test="shrimp != null">#{shrimp},</if>
+            <if test="crab != null">#{crab},</if>
+            <if test="soybean != null">#{soybean},</if>
+            <if test="sesame != null">#{sesame},</if>
+            <if test="wheat != null">#{wheat},</if>
+            <if test="nuts != null">#{nuts},</if>
+            <if test="allergenOther != null">#{allergenOther},</if>
+            <if test="skinPrickTestDate != null">#{skinPrickTestDate},</if>
+            <if test="prickHouseDustMite != null">#{prickHouseDustMite},</if>
+            <if test="prickDustMite != null">#{prickDustMite},</if>
+            <if test="sputumEosinophilTestDate != null">#{sputumEosinophilTestDate},</if>
+            <if test="sputumEosinophilCount != null">#{sputumEosinophilCount},</if>
+            <if test="totalIgeRepeatTestDate != null">#{totalIgeRepeatTestDate},</if>
+            <if test="totalIgeRepeatValue != null">#{totalIgeRepeatValue},</if>
+         </trim>
+    </insert>
+
+    <update id="updateFollowupLabTests" parameterType="FollowupLabTests">
+        update followup_lab_tests
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="followupId != null">followup_id = #{followupId},</if>
+            <if test="bloodTestDate != null">blood_test_date = #{bloodTestDate},</if>
+            <if test="wbcCount != null">wbc_count = #{wbcCount},</if>
+            <if test="neutrophilCount != null">neutrophil_count = #{neutrophilCount},</if>
+            <if test="lymphocyteCount != null">lymphocyte_count = #{lymphocyteCount},</if>
+            <if test="eosinophilCount != null">eosinophil_count = #{eosinophilCount},</if>
+            <if test="neutrophilPercent != null">neutrophil_percent = #{neutrophilPercent},</if>
+            <if test="lymphocytePercent != null">lymphocyte_percent = #{lymphocytePercent},</if>
+            <if test="eosinophilPercent != null">eosinophil_percent = #{eosinophilPercent},</if>
+            <if test="hemoglobin != null">hemoglobin = #{hemoglobin},</if>
+            <if test="rbcCount != null">rbc_count = #{rbcCount},</if>
+            <if test="plateletCount != null">platelet_count = #{plateletCount},</if>
+            <if test="cReactiveProtein != null">c_reactive_protein = #{cReactiveProtein},</if>
+            <if test="allergenComboTestDate != null">allergen_combo_test_date = #{allergenComboTestDate},</if>
+            <if test="totalIge != null">total_IgE = #{totalIge},</if>
+            <if test="dustMiteCombo != null">dust_mite_combo = #{dustMiteCombo},</if>
+            <if test="moldCombo != null">mold_combo = #{moldCombo},</if>
+            <if test="petDanderCombo != null">pet_dander_combo = #{petDanderCombo},</if>
+            <if test="foodCombo != null">food_combo = #{foodCombo},</if>
+            <if test="nutCombo != null">nut_combo = #{nutCombo},</if>
+            <if test="singleAllergenTestDate != null">single_allergen_test_date = #{singleAllergenTestDate},</if>
+            <if test="houseDustMite != null">house_dust_mite = #{houseDustMite},</if>
+            <if test="dustMite != null">dust_mite = #{dustMite},</if>
+            <if test="pollen != null">pollen = #{pollen},</if>
+            <if test="weed != null">weed = #{weed},</if>
+            <if test="aspergillus != null">aspergillus = #{aspergillus},</if>
+            <if test="alternaria != null">alternaria = #{alternaria},</if>
+            <if test="cockroach != null">cockroach = #{cockroach},</if>
+            <if test="catDander != null">cat_dander = #{catDander},</if>
+            <if test="dogDander != null">dog_dander = #{dogDander},</if>
+            <if test="eggWhite != null">egg_white = #{eggWhite},</if>
+            <if test="milk != null">milk = #{milk},</if>
+            <if test="shrimp != null">shrimp = #{shrimp},</if>
+            <if test="crab != null">crab = #{crab},</if>
+            <if test="soybean != null">soybean = #{soybean},</if>
+            <if test="sesame != null">sesame = #{sesame},</if>
+            <if test="wheat != null">wheat = #{wheat},</if>
+            <if test="nuts != null">nuts = #{nuts},</if>
+            <if test="allergenOther != null">allergen_other = #{allergenOther},</if>
+            <if test="skinPrickTestDate != null">skin_prick_test_date = #{skinPrickTestDate},</if>
+            <if test="prickHouseDustMite != null">prick_house_dust_mite = #{prickHouseDustMite},</if>
+            <if test="prickDustMite != null">prick_dust_mite = #{prickDustMite},</if>
+            <if test="sputumEosinophilTestDate != null">sputum_eosinophil_test_date = #{sputumEosinophilTestDate},</if>
+            <if test="sputumEosinophilCount != null">sputum_eosinophil_count = #{sputumEosinophilCount},</if>
+            <if test="totalIgeRepeatTestDate != null">total_IgE_repeat_test_date = #{totalIgeRepeatTestDate},</if>
+            <if test="totalIgeRepeatValue != null">total_IgE_repeat_value = #{totalIgeRepeatValue},</if>
+        </trim>
+        where labtest_id = #{labtestId}
+    </update>
+
+    <delete id="deleteFollowupLabTestsByLabtestId" parameterType="Long">
+        delete from followup_lab_tests where labtest_id = #{labtestId}
+    </delete>
+
+    <delete id="deleteFollowupLabTestsByLabtestIds" parameterType="String">
+        delete from followup_lab_tests where labtest_id in 
+        <foreach item="labtestId" collection="array" open="(" separator="," close=")">
+            #{labtestId}
+        </foreach>
+    </delete>
+</mapper>

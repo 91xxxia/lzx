@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.FollowSys.mapper.FollowupInfoMapper">
+    
+    <resultMap type="FollowupInfo" id="FollowupInfoResult">
+        <result property="followupId"    column="followup_id"    />
+        <result property="patientId"    column="patient_id"    />
+        <result property="visitNumber"    column="visit_number"    />
+        <result property="visitDate"    column="visit_date"    />
+        <result property="name"    column="name"    />
+        <result property="gender"    column="gender"    />
+        <result property="age"    column="age"    />
+        <result property="address"    column="address"    />
+        <result property="height"    column="height"    />
+        <result property="weight"    column="weight"    />
+        <result property="visitType"    column="visit_type"    />
+    </resultMap>
+
+    <sql id="selectFollowupInfoVo">
+        select followup_id, patient_id, visit_number, visit_date, name, gender, age, address, height, weight, visit_type from followup_info
+    </sql>
+
+    <select id="selectFollowupInfoList" parameterType="FollowupInfo" resultMap="FollowupInfoResult">
+        <include refid="selectFollowupInfoVo"/>
+        <where>  
+            <if test="patientId != null  and patientId != ''"> and patient_id = #{patientId}</if>
+        </where>
+    </select>
+    
+    <select id="selectFollowupInfoByFollowupId" parameterType="Long" resultMap="FollowupInfoResult">
+        <include refid="selectFollowupInfoVo"/>
+        where followup_id = #{followupId}
+    </select>
+
+    <insert id="insertFollowupInfo" parameterType="FollowupInfo" useGeneratedKeys="true" keyProperty="followupId">
+        insert into followup_info
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="patientId != null and patientId != ''">patient_id,</if>
+            <if test="visitNumber != null">visit_number,</if>
+            <if test="visitDate != null">visit_date,</if>
+            <if test="name != null">name,</if>
+            <if test="gender != null">gender,</if>
+            <if test="age != null">age,</if>
+            <if test="address != null">address,</if>
+            <if test="height != null">height,</if>
+            <if test="weight != null">weight,</if>
+            <if test="visitType != null">visit_type,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="patientId != null and patientId != ''">#{patientId},</if>
+            <if test="visitNumber != null">#{visitNumber},</if>
+            <if test="visitDate != null">#{visitDate},</if>
+            <if test="name != null">#{name},</if>
+            <if test="gender != null">#{gender},</if>
+            <if test="age != null">#{age},</if>
+            <if test="address != null">#{address},</if>
+            <if test="height != null">#{height},</if>
+            <if test="weight != null">#{weight},</if>
+            <if test="visitType != null">#{visitType},</if>
+         </trim>
+    </insert>
+
+    <update id="updateFollowupInfo" parameterType="FollowupInfo">
+        update followup_info
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="patientId != null and patientId != ''">patient_id = #{patientId},</if>
+            <if test="visitNumber != null">visit_number = #{visitNumber},</if>
+            <if test="visitDate != null">visit_date = #{visitDate},</if>
+            <if test="name != null">name = #{name},</if>
+            <if test="gender != null">gender = #{gender},</if>
+            <if test="age != null">age = #{age},</if>
+            <if test="address != null">address = #{address},</if>
+            <if test="height != null">height = #{height},</if>
+            <if test="weight != null">weight = #{weight},</if>
+            <if test="visitType != null">visit_type = #{visitType},</if>
+        </trim>
+        where followup_id = #{followupId}
+    </update>
+
+    <delete id="deleteFollowupInfoByFollowupId" parameterType="Long">
+        delete from followup_info where followup_id = #{followupId}
+    </delete>
+
+    <delete id="deleteFollowupInfoByFollowupIds" parameterType="String">
+        delete from followup_info where followup_id in 
+        <foreach item="followupId" collection="array" open="(" separator="," close=")">
+            #{followupId}
+        </foreach>
+    </delete>
+</mapper>

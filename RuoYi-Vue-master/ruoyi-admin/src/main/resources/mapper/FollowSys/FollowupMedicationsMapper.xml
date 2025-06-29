@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.FollowSys.mapper.FollowupMedicationsMapper">
+    
+    <resultMap type="FollowupMedications" id="FollowupMedicationsResult">
+        <result property="medId"    column="med_id"    />
+        <result property="followupId"    column="followup_id"    />
+        <result property="drugId"    column="drug_id"    />
+        <result property="dose"    column="dose"    />
+        <result property="frequency"    column="frequency"    />
+        <result property="route"    column="route"    />
+        <result property="site"    column="site"    />
+        <result property="startDate"    column="start_date"    />
+        <result property="endDate"    column="end_date"    />
+        <result property="guidance"    column="guidance"    />
+        <result property="precautions"    column="precautions"    />
+    </resultMap>
+
+    <sql id="selectFollowupMedicationsVo">
+        select med_id, followup_id, drug_id, dose, frequency, route, site, start_date, end_date, guidance, precautions from followup_medications
+    </sql>
+
+    <select id="selectFollowupMedicationsList" parameterType="FollowupMedications" resultMap="FollowupMedicationsResult">
+        <include refid="selectFollowupMedicationsVo"/>
+        <where>  
+            <if test="followupId != null "> and followup_id = #{followupId}</if>
+        </where>
+    </select>
+    
+    <select id="selectFollowupMedicationsByMedId" parameterType="Long" resultMap="FollowupMedicationsResult">
+        <include refid="selectFollowupMedicationsVo"/>
+        where med_id = #{medId}
+    </select>
+
+    <insert id="insertFollowupMedications" parameterType="FollowupMedications" useGeneratedKeys="true" keyProperty="medId">
+        insert into followup_medications
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="followupId != null">followup_id,</if>
+            <if test="drugId != null">drug_id,</if>
+            <if test="dose != null">dose,</if>
+            <if test="frequency != null">frequency,</if>
+            <if test="route != null">route,</if>
+            <if test="site != null">site,</if>
+            <if test="startDate != null">start_date,</if>
+            <if test="endDate != null">end_date,</if>
+            <if test="guidance != null">guidance,</if>
+            <if test="precautions != null">precautions,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="followupId != null">#{followupId},</if>
+            <if test="drugId != null">#{drugId},</if>
+            <if test="dose != null">#{dose},</if>
+            <if test="frequency != null">#{frequency},</if>
+            <if test="route != null">#{route},</if>
+            <if test="site != null">#{site},</if>
+            <if test="startDate != null">#{startDate},</if>
+            <if test="endDate != null">#{endDate},</if>
+            <if test="guidance != null">#{guidance},</if>
+            <if test="precautions != null">#{precautions},</if>
+         </trim>
+    </insert>
+
+    <update id="updateFollowupMedications" parameterType="FollowupMedications">
+        update followup_medications
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="followupId != null">followup_id = #{followupId},</if>
+            <if test="drugId != null">drug_id = #{drugId},</if>
+            <if test="dose != null">dose = #{dose},</if>
+            <if test="frequency != null">frequency = #{frequency},</if>
+            <if test="route != null">route = #{route},</if>
+            <if test="site != null">site = #{site},</if>
+            <if test="startDate != null">start_date = #{startDate},</if>
+            <if test="endDate != null">end_date = #{endDate},</if>
+            <if test="guidance != null">guidance = #{guidance},</if>
+            <if test="precautions != null">precautions = #{precautions},</if>
+        </trim>
+        where med_id = #{medId}
+    </update>
+
+    <delete id="deleteFollowupMedicationsByMedId" parameterType="Long">
+        delete from followup_medications where med_id = #{medId}
+    </delete>
+
+    <delete id="deleteFollowupMedicationsByMedIds" parameterType="String">
+        delete from followup_medications where med_id in 
+        <foreach item="medId" collection="array" open="(" separator="," close=")">
+            #{medId}
+        </foreach>
+    </delete>
+</mapper>
