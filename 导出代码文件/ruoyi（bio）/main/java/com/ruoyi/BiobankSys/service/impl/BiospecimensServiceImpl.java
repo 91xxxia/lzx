@@ -1,6 +1,8 @@
 package com.ruoyi.BiobankSys.service.impl;
 
 import java.util.List;
+
+import com.ruoyi.common.exception.ServiceException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.ruoyi.BiobankSys.mapper.BiospecimensMapper;
@@ -52,6 +54,11 @@ public class BiospecimensServiceImpl implements IBiospecimensService
     @Override
     public int insertBiospecimens(Biospecimens biospecimens)
     {
+        // 检查样本号是否已存在（可选）
+        Biospecimens existing = selectBiospecimensBySpecimenId(biospecimens.getSpecimenId());
+        if (existing != null) {
+            throw new ServiceException("样本号已存在: " + biospecimens.getSpecimenId());
+        }
         return biospecimensMapper.insertBiospecimens(biospecimens);
     }
 
