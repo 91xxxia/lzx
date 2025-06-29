@@ -1,6 +1,9 @@
 -- 禁用外键检查
 SET FOREIGN_KEY_CHECKS = 0;
 
+-- 重新启用外键检查
+SET FOREIGN_KEY_CHECKS = 1;
+
 -- 创建统一数据库
 CREATE DATABASE IF NOT EXISTS ry-vue;
 USE ry-vue;
@@ -1055,6 +1058,3 @@ CREATE TABLE followup_adverse_reactions (
     severity_level ENUM('轻度', '中度', '重度'),
     FOREIGN KEY (patient_id) REFERENCES patients(patient_id) ON DELETE CASCADE
 )ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
--- 重新启用外键检查
-SET FOREIGN_KEY_CHECKS = 1;
