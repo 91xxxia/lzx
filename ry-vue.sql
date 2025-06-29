@@ -11,7 +11,7 @@
  Target Server Version : 80037 (8.0.37)
  File Encoding         : 65001
 
- Date: 29/06/2025 09:36:22
+ Date: 29/06/2025 10:19:50
 */
 
 SET NAMES utf8mb4;
@@ -42,6 +42,7 @@ CREATE TABLE `biospecimens`  (
 -- ----------------------------
 -- Records of biospecimens
 -- ----------------------------
+INSERT INTO `biospecimens` VALUES ('001', '001', '血液', '2025-06-23 00:00:00', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 
 -- ----------------------------
 -- Table structure for clinical_other_treatments
@@ -164,7 +165,7 @@ CREATE TABLE `diagnoses`  (
   PRIMARY KEY (`diagnosis_id`) USING BTREE,
   INDEX `patient_id`(`patient_id` ASC) USING BTREE,
   CONSTRAINT `fk_patient_diagnoses` FOREIGN KEY (`patient_id`) REFERENCES `patients` (`patient_id`) ON DELETE CASCADE ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of diagnoses
@@ -2158,7 +2159,7 @@ CREATE TABLE `specimen_clinical_link`  (
   CONSTRAINT `specimen_clinical_link_ibfk_3` FOREIGN KEY (`clinical_symptom_id`) REFERENCES `symptoms` (`symptom_id`) ON DELETE SET NULL ON UPDATE RESTRICT,
   CONSTRAINT `specimen_clinical_link_ibfk_4` FOREIGN KEY (`clinical_medication_id`) REFERENCES `medications` (`med_id`) ON DELETE SET NULL ON UPDATE RESTRICT,
   CONSTRAINT `specimen_clinical_link_ibfk_5` FOREIGN KEY (`clinical_test_id`) REFERENCES `lab_tests` (`test_id`) ON DELETE SET NULL ON UPDATE RESTRICT
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of specimen_clinical_link
@@ -3238,7 +3239,7 @@ CREATE TABLE `sys_oper_log`  (
   INDEX `idx_sys_oper_log_bt`(`business_type` ASC) USING BTREE,
   INDEX `idx_sys_oper_log_s`(`status` ASC) USING BTREE,
   INDEX `idx_sys_oper_log_ot`(`oper_time` ASC) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 448 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci COMMENT = '操作日志记录' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 458 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci COMMENT = '操作日志记录' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of sys_oper_log
@@ -3591,6 +3592,16 @@ INSERT INTO `sys_oper_log` VALUES (444, '代码生成', 2, 'com.ruoyi.generator.
 INSERT INTO `sys_oper_log` VALUES (445, '代码生成', 2, 'com.ruoyi.generator.controller.GenController.editSave()', 'PUT', 1, 'admin', '研发部门', '/tool/gen', '127.0.0.1', '内网IP', '{\"businessName\":\"metadata\",\"className\":\"MetabolomicData\",\"columns\":[{\"capJavaField\":\"MetabolomicId\",\"columnComment\":\"代谢组号\",\"columnId\":1103,\"columnName\":\"metabolomic_id\",\"columnType\":\"int\",\"createBy\":\"admin\",\"createTime\":\"2025-06-28 21:38:24\",\"dictType\":\"\",\"edit\":false,\"htmlType\":\"input\",\"increment\":true,\"insert\":true,\"isIncrement\":\"1\",\"isInsert\":\"1\",\"isPk\":\"1\",\"isRequired\":\"0\",\"javaField\":\"metabolomicId\",\"javaType\":\"Long\",\"list\":false,\"params\":{},\"pk\":true,\"query\":false,\"queryType\":\"EQ\",\"required\":false,\"sort\":1,\"superColumn\":false,\"tableId\":86,\"updateBy\":\"\",\"updateTime\":\"2025-06-28 22:43:08\",\"usableColumn\":false},{\"capJavaField\":\"SpecimenId\",\"columnComment\":\"样本号\",\"columnId\":1104,\"columnName\":\"specimen_id\",\"columnType\":\"varchar(20)\",\"createBy\":\"admin\",\"createTime\":\"2025-06-28 21:38:24\",\"dictType\":\"\",\"edit\":true,\"htmlType\":\"input\",\"increment\":false,\"insert\":true,\"isEdit\":\"1\",\"isIncrement\":\"0\",\"isInsert\":\"1\",\"isList\":\"1\",\"isPk\":\"0\",\"isQuery\":\"1\",\"isRequired\":\"1\",\"javaField\":\"specimenId\",\"javaType\":\"String\",\"list\":true,\"params\":{},\"pk\":false,\"query\":true,\"queryType\":\"EQ\",\"required\":true,\"sort\":2,\"superColumn\":false,\"tableId\":86,\"updateBy\":\"\",\"updateTime\":\"2025-06-28 22:43:08\",\"usableColumn\":false},{\"capJavaField\":\"AnalysisDate\",\"columnComment\":\"分析日期\",\"columnId\":1105,\"columnName\":\"analysis_date\",\"columnType\":\"date\",\"createBy\":\"admin\",\"createTime\":\"2025-06-28 21:38:24\",\"dictType\":\"\",\"edit\":true,\"htmlType\":\"datetime\",\"increment\":false,\"insert\":true,\"isEdit\":\"1\",\"isIncrement\":\"0\",\"isInsert\":\"1\",\"isList\":\"1\",\"isPk\":\"0\",\"isQuery\":\"0\",\"isRequired\":\"1\",\"javaField\":\"analysisDate\",\"javaType\":\"Date\",\"list\":true,\"params\":{},\"pk\":false,\"query\":false,\"queryType\":\"EQ\",\"required\":true,\"sort\":3,\"superColumn\":false,\"tableId\":86,\"updateBy\":\"\",\"updateTime\":\"2025-06-28 22:43:08\",\"usableColumn\":false},{\"capJavaField\":\"AnalysisPlatform\",\"columnComment\":\"分析平台\",\"columnId\":1106,\"columnName\":\"analysis_platform\",\"columnType\":\"varchar(100)\",\"createBy\":\"admin\",\"createTime\":\"2025-06-28 21:38:24\",\"di', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-06-29 09:14:36', 17);
 INSERT INTO `sys_oper_log` VALUES (446, '代码生成', 8, 'com.ruoyi.generator.controller.GenController.batchGenCode()', 'GET', 1, 'admin', '研发部门', '/tool/gen/batchGenCode', '127.0.0.1', '内网IP', '{\"tables\":\"specimen_storage,specimen_qc,microbiome_data,proteomic_data,specimen_clinical_link,biospecimens,crf_sample_collection,collection_events,data_change_log,genomic_data,metabolomic_data\"}', NULL, 0, NULL, '2025-06-29 09:15:38', 557);
 INSERT INTO `sys_oper_log` VALUES (447, '样本采集主表', 1, 'com.ruoyi.BiobankSys.controller.BiospecimensController.add()', 'POST', 1, 'admin', '研发部门', '/BiobankSys/biospecimens', '127.0.0.1', '内网IP', '{\"collectionDate\":\"2025-06-25\",\"params\":{},\"patientId\":\"001\",\"specimenType\":\"血液\"}', NULL, 1, '\r\n### Error updating database.  Cause: java.sql.SQLException: Field \'specimen_id\' doesn\'t have a default value\r\n### The error may exist in file [E:\\RuoYi-Vue-master\\ruoyi-admin\\target\\classes\\mapper\\BiobankSys\\BiospecimensMapper.xml]\r\n### The error may involve com.ruoyi.BiobankSys.mapper.BiospecimensMapper.insertBiospecimens-Inline\r\n### The error occurred while setting parameters\r\n### SQL: insert into biospecimens          ( patient_id,             specimen_type,             collection_date )           values ( ?,             ?,             ? )\r\n### Cause: java.sql.SQLException: Field \'specimen_id\' doesn\'t have a default value\n; Field \'specimen_id\' doesn\'t have a default value; nested exception is java.sql.SQLException: Field \'specimen_id\' doesn\'t have a default value', '2025-06-29 09:25:37', 161);
+INSERT INTO `sys_oper_log` VALUES (448, '样本采集主表', 2, 'com.ruoyi.BiobankSys.controller.BiospecimensController.edit()', 'PUT', 1, 'admin', '研发部门', '/BiobankSys/biospecimens', '127.0.0.1', '内网IP', '{\"collectionDate\":\"2025-06-23\",\"params\":{},\"patientId\":\"001\",\"specimenId\":\"001\",\"specimenType\":\"血液\"}', '{\"msg\":\"操作失败\",\"code\":500}', 0, NULL, '2025-06-29 09:54:05', 16);
+INSERT INTO `sys_oper_log` VALUES (449, '样本采集主表', 2, 'com.ruoyi.BiobankSys.controller.BiospecimensController.edit()', 'PUT', 1, 'admin', '研发部门', '/BiobankSys/biospecimens', '127.0.0.1', '内网IP', '{\"aliquotCount\":1,\"clinicalContext\":\"1\",\"collectionDate\":\"2025-06-23\",\"collectionMethod\":\"1\",\"collectionSite\":\"1\",\"collectionTubeType\":\"1\",\"collectionVolume\":1,\"initialProcessingTime\":\"2025-06-25\",\"params\":{},\"patientId\":\"001\",\"processingMethod\":\"1\",\"specimenId\":\"001\",\"specimenType\":\"血液\"}', '{\"msg\":\"操作失败\",\"code\":500}', 0, NULL, '2025-06-29 09:57:31', 6);
+INSERT INTO `sys_oper_log` VALUES (450, '样本采集主表', 1, 'com.ruoyi.BiobankSys.controller.BiospecimensController.add()', 'POST', 1, 'admin', '研发部门', '/BiobankSys/biospecimens', '127.0.0.1', '内网IP', '{\"collectionDate\":\"2025-06-23\",\"params\":{},\"patientId\":\"001\",\"specimenId\":\"001\",\"specimenType\":\"血液\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-06-29 10:11:30', 110);
+INSERT INTO `sys_oper_log` VALUES (451, '样本临床关联', 1, 'com.ruoyi.BiobankSys.controller.SpecimenClinicalLinkController.add()', 'POST', 1, 'admin', '研发部门', '/BiobankSys/link', '127.0.0.1', '内网IP', '{\"clinicalDiagnosisId\":1,\"params\":{},\"specimenId\":\"001\"}', NULL, 1, '\r\n### Error updating database.  Cause: java.sql.SQLIntegrityConstraintViolationException: Cannot add or update a child row: a foreign key constraint fails (`ry-vue`.`specimen_clinical_link`, CONSTRAINT `specimen_clinical_link_ibfk_2` FOREIGN KEY (`clinical_diagnosis_id`) REFERENCES `diagnoses` (`diagnosis_id`) ON DELETE SET NULL)\r\n### The error may exist in file [E:\\RuoYi-Vue-master\\ruoyi-admin\\target\\classes\\mapper\\BiobankSys\\SpecimenClinicalLinkMapper.xml]\r\n### The error may involve com.ruoyi.BiobankSys.mapper.SpecimenClinicalLinkMapper.insertSpecimenClinicalLink-Inline\r\n### The error occurred while setting parameters\r\n### SQL: insert into specimen_clinical_link          ( specimen_id,             clinical_diagnosis_id )           values ( ?,             ? )\r\n### Cause: java.sql.SQLIntegrityConstraintViolationException: Cannot add or update a child row: a foreign key constraint fails (`ry-vue`.`specimen_clinical_link`, CONSTRAINT `specimen_clinical_link_ibfk_2` FOREIGN KEY (`clinical_diagnosis_id`) REFERENCES `diagnoses` (`diagnosis_id`) ON DELETE SET NULL)\n; Cannot add or update a child row: a foreign key constraint fails (`ry-vue`.`specimen_clinical_link`, CONSTRAINT `specimen_clinical_link_ibfk_2` FOREIGN KEY (`clinical_diagnosis_id`) REFERENCES `diagnoses` (`diagnosis_id`) ON DELETE SET NULL); nested exception is java.sql.SQLIntegrityConstraintViolationException: Cannot add or update a child row: a foreign key constraint fails (`ry-vue`.`specimen_clinical_link`, CONSTRAINT `specimen_clinical_link_ibfk_2` FOREIGN KEY (`clinical_diagnosis_id`) REFERENCES `diagnoses` (`diagnosis_id`) ON DELETE SET NULL)', '2025-06-29 10:11:57', 64);
+INSERT INTO `sys_oper_log` VALUES (452, '样本临床关联', 1, 'com.ruoyi.BiobankSys.controller.SpecimenClinicalLinkController.add()', 'POST', 1, 'admin', '研发部门', '/BiobankSys/link', '127.0.0.1', '内网IP', '{\"linkId\":2,\"params\":{},\"specimenId\":\"001\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-06-29 10:12:07', 6);
+INSERT INTO `sys_oper_log` VALUES (453, '疾病诊断', 1, 'com.ruoyi.ClinicalSys.controller.DiagnosesController.add()', 'POST', 1, 'admin', '研发部门', '/ClinicalSys/diagnoses', '127.0.0.1', '内网IP', '{\"diagnosisId\":2,\"params\":{},\"patientId\":\"001\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-06-29 10:12:41', 0);
+INSERT INTO `sys_oper_log` VALUES (454, '样本临床关联', 3, 'com.ruoyi.BiobankSys.controller.SpecimenClinicalLinkController.remove()', 'DELETE', 1, 'admin', '研发部门', '/BiobankSys/link/2', '127.0.0.1', '内网IP', '[2]', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-06-29 10:12:53', 8);
+INSERT INTO `sys_oper_log` VALUES (455, '样本临床关联', 1, 'com.ruoyi.BiobankSys.controller.SpecimenClinicalLinkController.add()', 'POST', 1, 'admin', '研发部门', '/BiobankSys/link', '127.0.0.1', '内网IP', '{\"clinicalDiagnosisId\":2,\"linkId\":3,\"params\":{},\"specimenId\":\"001\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-06-29 10:12:57', 4);
+INSERT INTO `sys_oper_log` VALUES (456, '疾病诊断', 3, 'com.ruoyi.ClinicalSys.controller.DiagnosesController.remove()', 'DELETE', 1, 'admin', '研发部门', '/ClinicalSys/diagnoses/2', '127.0.0.1', '内网IP', '[2]', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-06-29 10:13:58', 6);
+INSERT INTO `sys_oper_log` VALUES (457, '样本临床关联', 3, 'com.ruoyi.BiobankSys.controller.SpecimenClinicalLinkController.remove()', 'DELETE', 1, 'admin', '研发部门', '/BiobankSys/link/3', '127.0.0.1', '内网IP', '[3]', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-06-29 10:14:15', 5);
 
 -- ----------------------------
 -- Table structure for sys_post
